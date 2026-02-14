@@ -1,0 +1,194 @@
+"use client"
+
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+
+import { Card, CardContent } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form"
+import { CtaButton } from "@/components/custom/CtaButton"
+import { SectionHeader } from "@/components/custom/SectionHeader"
+import {
+  contactSchema,
+  type ContactFormValues,
+} from "@/schemas/contact.schema"
+
+export function ContactFormCard() {
+  const form = useForm<ContactFormValues>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      emailOrPhone: "",
+      message: "",
+    },
+  })
+
+  const onSubmit = (values: ContactFormValues) => {
+    console.log("Form submitted successfully: ", values)
+    form.reset()
+  }
+
+  return (
+    <Card className="border-none shadow-none py-8">
+      <CardContent className="space-y-8 px-5 md:px-8">
+        <SectionHeader
+          align="left"
+          size="md"
+          className="border-b border-border/35 pb-6"
+          eyebrow="Contact"
+          title="Start the Conversation"
+          description="Tell us about your operations, challenges, and long-term goals. We’ll respond with clarity — not a generic pitch."
+        />
+
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6"
+          >
+            {/* First + Last Name */}
+            <div className="grid gap-4 md:grid-cols-2">
+              {/* First Name */}
+              <FormField
+                control={form.control}
+                name="firstName"
+                render={({ field }) => (
+                  <FormItem className="">
+                    <div className="relative rounded-lg bg-card">
+                      <FormControl>
+                        <Input
+                          {...field}
+                          id="firstName"
+                          placeholder=" "
+                          className="peer h-12 md:h-14 text-base placeholder-transparent bg-transparent border-border/60 ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        />
+                      </FormControl>
+
+                      <label
+                        htmlFor="firstName"
+                        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-card px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
+                        peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
+                        peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
+                      >
+                        First Name
+                      </label>
+                    </div>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
+
+              {/* Last Name */}
+              <FormField
+                control={form.control}
+                name="lastName"
+                render={({ field }) => (
+                  <FormItem className="">
+                    <div className="relative rounded-lg bg-card">
+                      <FormControl>
+                        <Input
+                          {...field}
+                          id="lastName"
+                          placeholder=" "
+                          className="peer h-12 md:h-14 text-base placeholder-transparent bg-transparent border-border/60 ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        />
+                      </FormControl>
+
+                      <label
+                        htmlFor="lastName"
+                        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-card px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
+                        peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
+                        peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
+                      >
+                        Last Name
+                      </label>
+                    </div>
+                    <FormMessage className="text-xs" />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            {/* Email / Phone */}
+            <FormField
+              control={form.control}
+              name="emailOrPhone"
+              render={({ field }) => (
+                <FormItem className="">
+                  <div className="relative rounded-lg bg-card">
+                    <FormControl>
+                      <Input
+                        {...field}
+                        id="contactDetail"
+                        placeholder=" "
+                        className="peer h-12 md:h-14 text-base placeholder-transparent bg-transparent border-border/60 ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                      />
+                    </FormControl>
+
+                    <label
+                      htmlFor="contactDetail"
+                      className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-card px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
+                      peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
+                      peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
+                    >
+                      Email or Phone
+                    </label>
+                  </div>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
+
+            {/* Message */}
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem className="">
+                  <div className="relative rounded-lg bg-card">
+                    <FormControl>
+                      <Textarea
+                        {...field}
+                        id="projectDescription"
+                        placeholder=" "
+                        className="peer min-h-[140px] text-base resize-none placeholder-transparent bg-transparent border-border/60 ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                      />
+                    </FormControl>
+
+                    <label
+                      htmlFor="projectDescription"
+                      className="pointer-events-none absolute left-3 top-4 -translate-y-1/2 bg-card px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
+                      peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
+                      peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
+                    >
+                      Project Context
+                    </label>
+                  </div>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
+
+            <div className="pt-4 flex justify-end">
+              <CtaButton
+                variant="primary"
+                buttonType="submit"
+                className="h-14 px-8 rounded-md font-semibold"
+                disabled={form.formState.isSubmitting}
+              >
+                Start the Conversation
+              </CtaButton>
+            </div>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
+  )
+}
