@@ -1,10 +1,40 @@
+"use client"
+
+import { useEffect, useRef } from "react"
 import Image from "next/image"
 
 import { AutoCarousel } from "@/components/custom/AutoCarousel"
 import { CtaButton } from "@/components/custom/CtaButton"
 import { cn } from "@/lib/utils"
+import { animateHeroIntro } from "@/lib/animations"
 
 export default function HeroSection() {
+  const eyebrowRef = useRef<HTMLParagraphElement | null>(null)
+  const headingRef = useRef<HTMLHeadingElement | null>(null)
+  const descriptionRef = useRef<HTMLParagraphElement | null>(null)
+  const ctaGroupRef = useRef<HTMLDivElement | null>(null)
+  const heroMediaRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (
+      !eyebrowRef.current ||
+      !headingRef.current ||
+      !descriptionRef.current ||
+      !ctaGroupRef.current ||
+      !heroMediaRef.current
+    ) {
+      return
+    }
+
+    animateHeroIntro({
+      eyebrow: eyebrowRef.current,
+      heading: headingRef.current,
+      description: descriptionRef.current,
+      ctaGroup: ctaGroupRef.current,
+      media: heroMediaRef.current,
+    })
+  }, [])
+
   return (
     <section id="home" className="py-10 md:py-14">
       <div className="max-w-7xl mx-auto px-6">
@@ -12,6 +42,7 @@ export default function HeroSection() {
           <div className="flex flex-col gap-7 text-center lg:text-left items-center lg:items-start">
             <div className="space-y-2">
               <p
+                ref={eyebrowRef}
                 className={cn(
                   "text-[0.7rem] font-semibold uppercase tracking-[0.18em]",
                   "text-brand-gradient"
@@ -19,7 +50,10 @@ export default function HeroSection() {
               >
                 Changing The Business
               </p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl leading-tight font-bold max-w-3xl font-[var(--font-satoshi)] tracking-tight">
+              <h1
+                ref={headingRef}
+                className="text-4xl md:text-5xl lg:text-6xl leading-tight font-bold max-w-3xl font-[var(--font-satoshi)] tracking-tight"
+              >
                 <span className={cn("relative", "text-brand-gradient")}>
                   We Build the Systems
                 </span>
@@ -30,12 +64,18 @@ export default function HeroSection() {
               </h1>
             </div>
 
-            <p className="mt-1 text-sm md:text-base text-muted-foreground/90 leading-relaxed max-w-xl">
+            <p
+              ref={descriptionRef}
+              className="mt-1 text-sm md:text-base text-muted-foreground/90 leading-relaxed max-w-xl"
+            >
               Custom platforms, automation, and internal tools designed to
               support real operations — not just look good online.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <div
+              ref={ctaGroupRef}
+              className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+            >
               <CtaButton variant="primary" href="#strategy-call">
                 Book a Strategy Call
               </CtaButton>
@@ -75,7 +115,10 @@ export default function HeroSection() {
             </div>
           </div>
 
-          <div className="relative rounded-xl aspect-[4/3] overflow-hidden mx-auto md:mx-0 w-full max-w-md md:max-w-none">
+          <div
+            ref={heroMediaRef}
+            className="relative rounded-xl aspect-[4/3] overflow-hidden mx-auto md:mx-0 w-full max-w-md md:max-w-none"
+          >
             <AutoCarousel
               slides={[
                 <div className="relative h-full w-full" key="hero-slide-1">

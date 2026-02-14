@@ -1,7 +1,6 @@
-'use client'
+"use client"
 
 import { useEffect, useState } from "react"
-
 import { cn } from "@/lib/utils"
 import type { AutoCarouselProps } from "@/types/ui"
 
@@ -10,7 +9,6 @@ export function AutoCarousel({
   interval = 8000,
   className,
   controlsPlacement = "outside",
-  showProgress = true,
   pauseOnHover = true,
 }: AutoCarouselProps) {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -20,9 +18,7 @@ export function AutoCarousel({
   const totalSlides = slides.length
 
   useEffect(() => {
-    if (!totalSlides || isPaused) {
-      return
-    }
+    if (!totalSlides || isPaused) return
 
     const start = Date.now()
 
@@ -45,9 +41,7 @@ export function AutoCarousel({
     }
   }, [activeIndex, totalSlides, interval, isPaused])
 
-  if (!totalSlides) {
-    return null
-  }
+  if (!totalSlides) return null
 
   const handlePause = () => setIsPaused(true)
   const handleResume = () => setIsPaused(false)
@@ -57,6 +51,10 @@ export function AutoCarousel({
     setProgress(0)
   }
 
+  /* ---------------------------------- */
+  /* Premium Dots */
+  /* ---------------------------------- */
+
   const dots = (
     <div className="flex items-center gap-2">
       {Array.from({ length: totalSlides }).map((_, index) => {
@@ -65,37 +63,40 @@ export function AutoCarousel({
         return (
           <button
             key={index}
-            className={[
-              "h-2 w-2 rounded-full",
-              "transition-colors duration-300",
-              isActive ? "bg-foreground" : "bg-border/80",
-            ].join(" ")}
             type="button"
             aria-label={`Go to slide ${index + 1}`}
             onClick={() => handleDotClick(index)}
-          />
+            className="relative flex items-center justify-center"
+          >
+            {isActive ? (
+              <span className="relative h-2 w-8 overflow-hidden rounded-full bg-border/60">
+                <span
+                  className="absolute left-0 top-0 h-full bg-foreground transition-[width] duration-100 ease-linear"
+                  style={{ width: `${progress}%` }}
+                />
+              </span>
+            ) : (
+              <span className="h-2 w-2 rounded-full bg-border/70 transition-colors duration-300 hover:bg-border" />
+            )}
+          </button>
         )
       })}
     </div>
   )
 
-  const progressBar = showProgress ? (
-    <div className="h-0.5 w-24 md:w-32 rounded-full bg-border/60 overflow-hidden">
-      <div
-        className="h-full bg-foreground/80 transition-[width] duration-100 ease-linear"
-        style={{ width: `${progress}%` }}
-      />
-    </div>
-  ) : null
 
   const hoverHandlers = pauseOnHover
     ? {
-        onMouseEnter: handlePause,
-        onMouseLeave: handleResume,
-        onFocusCapture: handlePause,
-        onBlurCapture: handleResume,
-      }
+      onMouseEnter: handlePause,
+      onMouseLeave: handleResume,
+      onFocusCapture: handlePause,
+      onBlurCapture: handleResume,
+    }
     : {}
+
+  /* ---------------------------------- */
+  /* Inside Controls */
+  /* ---------------------------------- */
 
   if (controlsPlacement === "inside") {
     return (
@@ -104,25 +105,29 @@ export function AutoCarousel({
         {...hoverHandlers}
       >
         <div className="h-full w-full">{slides[activeIndex]}</div>
-        <div className="pointer-events-none absolute inset-x-0 bottom-4 flex justify-center">
-          <div className="pointer-events-auto flex flex-col items-center gap-3">
+
+        <div className="pointer-events-none absolute inset-x-0 bottom-6 flex justify-center">
+          <div className="pointer-events-auto flex flex-col items-center gap-4">
             {dots}
-            {progressBar}
           </div>
         </div>
       </div>
     )
   }
 
+  /* ---------------------------------- */
+  /* Outside Controls */
+  /* ---------------------------------- */
+
   return (
     <div
-      className={cn("flex flex-col gap-8", className)}
+      className={cn("flex flex-col gap-6", className)}
       {...hoverHandlers}
     >
       <div>{slides[activeIndex]}</div>
-      <div className="flex flex-col items-center gap-3">
+
+      <div className="flex flex-col items-center gap-4">
         {dots}
-        {progressBar}
       </div>
     </div>
   )

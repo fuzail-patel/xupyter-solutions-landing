@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
@@ -9,11 +9,20 @@ import {
 
 import { SectionHeader } from "@/components/custom/SectionHeader"
 import { CASE_STUDIES } from "@/data/caseStudies"
+import { useSectionReveal } from "@/hooks/useSectionReveal"
+import { animateFadeUp } from "@/lib/animations"
 
- export default function CaseStudies() {
-   const [activeIndex, setActiveIndex] = useState(0)
-   const [isVisible, setIsVisible] = useState(true)
-   const timeoutRef = useRef<number | null>(null)
+export default function CaseStudies() {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [isVisible, setIsVisible] = useState(true)
+  const timeoutRef = useRef<number | null>(null)
+
+  const { ref, style } = useSectionReveal((sectionEl) => {
+    const card = sectionEl.querySelector<HTMLElement>("[data-case-card]")
+    if (!card) return
+
+    animateFadeUp(card)
+  })
 
    useEffect(() => {
      return () => {
@@ -48,7 +57,12 @@ import { CASE_STUDIES } from "@/data/caseStudies"
   const activeCase = CASE_STUDIES[activeIndex]
 
   return (
-    <section id="work" className="py-10 md:py-14">
+    <section
+      id="work"
+      className="py-10 md:py-14"
+      ref={ref}
+      style={style}
+    >
       <div className="max-w-7xl mx-auto px-6">
         <SectionHeader
           size="md"
@@ -60,14 +74,15 @@ import { CASE_STUDIES } from "@/data/caseStudies"
         />
 
         <div>
-           <div
-             className={[
-               "relative rounded-2xl border border-border/70 bg-card shadow-[0_18px_40px_rgba(15,23,42,0.08)]",
-               "px-6 py-8 md:px-10 md:py-10",
-               "transition-opacity duration-300",
-               isVisible ? "opacity-100" : "opacity-0",
-             ].join(" ")}
-           >
+          <div
+            data-case-card
+            className={[
+              "relative rounded-2xl border border-border/70 bg-card shadow-[0_18px_40px_rgba(15,23,42,0.08)]",
+              "px-6 py-8 md:px-10 md:py-10",
+              "transition-opacity duration-300",
+              isVisible ? "opacity-100" : "opacity-0",
+            ].join(" ")}
+          >
              <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-8 md:gap-10 items-start">
                <div className="flex flex-col items-start gap-5">
                  <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-secondary/60 px-3 py-1 text-[0.7rem] font-medium tracking-[0.12em] text-muted-foreground/90">

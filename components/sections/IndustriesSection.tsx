@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 
 import { AsymmetricGrid } from "@/components/layout/AsymmetricGrid"
@@ -5,11 +7,24 @@ import { Card, CardContent } from "@/components/ui/card"
 import { SectionHeader } from "@/components/custom/SectionHeader"
 import { cn } from "@/lib/utils"
 import { INDUSTRIES } from "@/data/industries"
-
+import { useSectionReveal } from "@/hooks/useSectionReveal"
+import { animateStaggeredFadeUp } from "@/lib/animations"
 
 export default function IndustriesSection() {
+  const { ref, style } = useSectionReveal((sectionEl) => {
+    const cards = sectionEl.querySelectorAll<HTMLElement>(
+      "[data-industry-card]"
+    )
+    animateStaggeredFadeUp(cards)
+  })
+
   return (
-    <section id="industries" className="py-10 md:py-14">
+    <section
+      id="industries"
+      className="py-10 md:py-14"
+      ref={ref}
+      style={style}
+    >
       <div className="max-w-7xl mx-auto px-6">
         <SectionHeader
           align="center"
@@ -27,10 +42,11 @@ export default function IndustriesSection() {
             content: (
               <Link key={industry.name} href={industry.href} className="block h-full group">
                 <Card
+                  data-industry-card
                   className={cn(
                     "h-full rounded-xl border border-border/70 py-0",
                     "bg-card hover:bg-secondary/40",
-                    "transition-colors duration-200"
+                    "transition-colors duration-200 transform-gpu transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:shadow-md"
                   )}
                 >
                   <CardContent className="px-6 py-6 flex flex-col justify-between h-full">
@@ -42,7 +58,7 @@ export default function IndustriesSection() {
                           </span>
                         </div>
                         <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground/80 group-hover:text-foreground transition-colors">
-                          Learn More
+                          VIEW DETAIL
                         </span>
                       </div>
 

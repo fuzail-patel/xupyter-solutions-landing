@@ -1,14 +1,26 @@
-'use client'
+"use client"
 
 import { SectionHeader } from "@/components/custom/SectionHeader"
 import { AutoCarousel } from "@/components/custom/AutoCarousel"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { TESTIMONIALS } from "@/data/testimonials"
+import { useSectionReveal } from "@/hooks/useSectionReveal"
+import { animateFadeUp } from "@/lib/animations"
 
 const ITEMS_PER_SLIDE = 3
 const ROTATION_INTERVAL = 8000
 
 export default function Testimonials() {
+  const { ref, style } = useSectionReveal((sectionEl) => {
+    const cards = sectionEl.querySelectorAll<HTMLElement>(
+      "[data-testimonial-card]"
+    )
+
+    if (!cards.length) return
+
+    animateFadeUp(Array.from(cards) as HTMLElement[])
+  })
+
   const totalSlides = Math.ceil(TESTIMONIALS.length / ITEMS_PER_SLIDE)
 
   const slides = Array.from({ length: totalSlides }).map((_, slideIndex) => {
@@ -23,6 +35,7 @@ export default function Testimonials() {
         {visibleTestimonials.map((testimonial) => (
           <article
             key={testimonial.company + testimonial.name}
+            data-testimonial-card
             className="flex flex-col justify-between rounded-2xl border border-border/60 bg-muted/10 px-5 py-6 md:px-6 md:py-7"
           >
             <p className="text-sm md:text-base leading-relaxed text-muted-foreground/95">
@@ -53,7 +66,12 @@ export default function Testimonials() {
   })
 
   return (
-    <section id="testimonials" className="py-10 md:py-14">
+    <section
+      id="testimonials"
+      className="py-10 md:py-14"
+      ref={ref}
+      style={style}
+    >
       <div className="max-w-7xl mx-auto px-6">
         <SectionHeader
           align="center"
@@ -68,7 +86,6 @@ export default function Testimonials() {
             slides={slides}
             interval={ROTATION_INTERVAL}
             pauseOnHover
-            showProgress
           />
         </div>
       </div>

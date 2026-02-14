@@ -1,3 +1,5 @@
+"use client"
+
 import Link from "next/link"
 
 import { AsymmetricGrid } from "@/components/layout/AsymmetricGrid"
@@ -6,10 +8,24 @@ import { BodyText } from "@/components/custom/Typography"
 import { SectionHeader } from "@/components/custom/SectionHeader"
 import { SystemList } from "@/components/custom/SystemList"
 import { SERVICES } from "@/data/services"
+import { useSectionReveal } from "@/hooks/useSectionReveal"
+import { animateStaggeredFadeUp } from "@/lib/animations"
 
 export default function Services() {
+  const { ref, style } = useSectionReveal((sectionEl) => {
+    const cards = sectionEl.querySelectorAll<HTMLElement>(
+      "[data-service-card]"
+    )
+    animateStaggeredFadeUp(cards)
+  })
+
   return (
-    <section id="services" className="py-10 md:py-14">
+    <section
+      id="services"
+      className="py-10 md:py-14"
+      ref={ref}
+      style={style}
+    >
       <div className="max-w-7xl mx-auto px-6">
         <SectionHeader
           align="center"
@@ -26,7 +42,10 @@ export default function Services() {
               id: service.title,
               colSpan: service.colSpan,
               content: (
-                <Card className="h-full border-border/70 shadow-sm py-0">
+                <Card
+                  data-service-card
+                  className="h-full border-border/70 shadow-sm py-0 transform-gpu transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:shadow-md"
+                >
                   <CardContent className="h-full px-6 py-6">
                     <Link
                       href={service.href}

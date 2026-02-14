@@ -5,7 +5,6 @@ export type AutoCarouselProps = {
   interval?: number
   className?: string
   controlsPlacement?: "outside" | "inside"
-  showProgress?: boolean
   pauseOnHover?: boolean
 }
 
