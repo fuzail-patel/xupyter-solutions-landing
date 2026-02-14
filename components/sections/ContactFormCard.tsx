@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
@@ -15,12 +16,15 @@ import {
 } from "@/components/ui/form"
 import { CtaButton } from "@/components/custom/CtaButton"
 import { SectionHeader } from "@/components/custom/SectionHeader"
+import { SystemList } from "@/components/custom/SystemList"
 import {
   contactSchema,
   type ContactFormValues,
 } from "@/schemas/contact.schema"
 
 export function ContactFormCard() {
+  const [isSubmitted, setIsSubmitted] = useState(false)
+
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -31,10 +35,31 @@ export function ContactFormCard() {
     },
   })
 
+  useEffect(() => {
+    if (typeof window === "undefined") return
+
+    const submittedFlag = window.sessionStorage.getItem("contact_submitted")
+
+    if (submittedFlag === "true") {
+      setIsSubmitted(true)
+    }
+  }, [])
+
   const onSubmit = (values: ContactFormValues) => {
     console.log("Form submitted successfully: ", values)
     form.reset()
+
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem("contact_submitted", "true")
+    }
+
+    setIsSubmitted(true)
   }
+
+  const headerTitle = isSubmitted ? "Request Received" : "Start the Conversation"
+  const headerDescription = isSubmitted
+    ? "Next, our team will review your context, route it to the right lead, and follow up with a clear next step—typically within 1–2 business days, using the contact details you shared."
+    : "Tell us about your operations, challenges, and long-term goals. We’ll respond with clarity — not a generic pitch."
 
   return (
     <Card className="border-none shadow-none py-8">
@@ -44,15 +69,29 @@ export function ContactFormCard() {
           size="md"
           className="border-b border-border/35 pb-6"
           eyebrow="Contact"
-          title="Start the Conversation"
-          description="Tell us about your operations, challenges, and long-term goals. We’ll respond with clarity — not a generic pitch."
+          title={headerTitle}
+          description={headerDescription}
         />
 
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6"
-          >
+        {isSubmitted && (
+          <div className="space-y-5 text-sm md:text-base text-muted-foreground">
+            <SystemList
+              items={[
+                "We review your message and operational context.",
+                "We route it to the most relevant lead on our team.",
+                "We reply with concrete next steps, not a generic sales pitch.",
+              ]}
+            />
+
+          </div>
+        )}
+
+        {!isSubmitted && (
+          <Form {...form}>
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-6"
+            >
             {/* First + Last Name */}
             <div className="grid gap-4 md:grid-cols-2">
               {/* First Name */}
@@ -188,6 +227,7 @@ export function ContactFormCard() {
             </div>
           </form>
         </Form>
+        )}
       </CardContent>
     </Card>
   )

@@ -1,5 +1,6 @@
 import Image from "next/image"
 import {
+  ArrowUpRightIcon,
   BuildingOffice2Icon,
   EnvelopeIcon,
   PhoneArrowUpRightIcon,
@@ -27,13 +28,13 @@ function ContactLinkItem({ icon, label, value, href }: ContactLinkItemProps) {
           <span className="text-sm font-medium text-foreground">
             {label}
           </span>
-          <span className="text-sm text-muted-foreground">
+          <span className="text-sm text-muted-foreground max-w-[130px] truncate sm:max-w-none sm:whitespace-normal">
             {value}
           </span>
         </div>
       </div>
-      <div className="flex items-center text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground/80 group-hover:text-foreground transition-colors">
-        Open
+      <div className="flex items-center text-muted-foreground/80 group-hover:text-foreground transition-colors">
+        <ArrowUpRightIcon className="h-4 w-4" />
       </div>
     </a>
   )
