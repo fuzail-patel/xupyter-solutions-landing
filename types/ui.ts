@@ -31,6 +31,13 @@ export type SectionHeaderProps = {
   className?: string
 }
 
+export type PageSectionHeaderProps = {
+  eyebrow?: string
+  title: ReactNode
+  subtitle?: ReactNode
+  className?: string
+}
+
 export type SystemListProps = {
   items?: Array<string | ReactNode>
   size?: "sm" | "xs"
@@ -47,4 +54,3 @@ export type TextProps = {
   className?: string
   children: ReactNode
 }
-

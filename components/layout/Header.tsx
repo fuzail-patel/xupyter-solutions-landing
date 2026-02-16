@@ -10,11 +10,11 @@ import { CtaButton } from "@/components/custom/CtaButton"
 import { cn } from "@/lib/utils"
 
 const links = [
-  { label: "Home", href: "#home" },
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/#home" },
+  { label: "Services", href: "/#services" },
+  { label: "Work", href: "/#work" },
+  { label: "About", href: "/about" },
+  { label: "Contact", href: "/#contact" },
 ]
 
 export default function Header() {
@@ -36,8 +36,19 @@ export default function Header() {
       let currentSection = "home"
 
       for (const link of links) {
-        const id = link.href.replace("#", "")
-        const element = document.getElementById(id)
+        let sectionId: string | null = null
+
+        if (link.href.startsWith("#")) {
+          sectionId = link.href.slice(1)
+        } else if (link.href.startsWith("/#")) {
+          sectionId = link.href.slice(2)
+        }
+
+        if (!sectionId) {
+          continue
+        }
+
+        const element = document.getElementById(sectionId)
 
         if (!element) {
           continue
@@ -48,7 +59,7 @@ export default function Header() {
         const bottom = top + element.offsetHeight
 
         if (scrollPosition >= top && scrollPosition < bottom) {
-          currentSection = id
+          currentSection = sectionId
           break
         }
       }
@@ -99,9 +110,23 @@ export default function Header() {
             {/* Desktop Nav */}
             <nav className="hidden md:flex flex-1 items-center justify-center gap-8 text-sm">
               {links.map((item) => {
-                const sectionId = item.href.replace("#", "")
-                const isActive =
-                  pathname === "/" && activeSection === sectionId
+                const isHomePage = pathname === "/"
+                const isHashLink =
+                  item.href.startsWith("#") || item.href.startsWith("/#")
+
+                let sectionId: string | null = null
+
+                if (item.href.startsWith("#")) {
+                  sectionId = item.href.slice(1)
+                } else if (item.href.startsWith("/#")) {
+                  sectionId = item.href.slice(2)
+                }
+
+                const isSectionActive =
+                  isHomePage && sectionId && activeSection === sectionId
+                const isRouteActive =
+                  !isHashLink && pathname === item.href
+                const isActive = isSectionActive || isRouteActive
 
                 return (
                   <Link
@@ -185,9 +210,23 @@ export default function Header() {
 
             <nav className="mt-8 flex flex-col gap-6 text-sm">
               {links.map((item) => {
-                const sectionId = item.href.replace("#", "")
-                const isActive =
-                  pathname === "/" && activeSection === sectionId
+                const isHomePage = pathname === "/"
+                const isHashLink =
+                  item.href.startsWith("#") || item.href.startsWith("/#")
+
+                let sectionId: string | null = null
+
+                if (item.href.startsWith("#")) {
+                  sectionId = item.href.slice(1)
+                } else if (item.href.startsWith("/#")) {
+                  sectionId = item.href.slice(2)
+                }
+
+                const isSectionActive =
+                  isHomePage && sectionId && activeSection === sectionId
+                const isRouteActive =
+                  !isHashLink && pathname === item.href
+                const isActive = isSectionActive || isRouteActive
 
                 return (
                   <Link
