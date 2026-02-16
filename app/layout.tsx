@@ -43,10 +43,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const theme = process.env.NEXT_PUBLIC_CURRENT_THEME ?? 'dark';
+
   return (
-    <html lang="en">
+    <html lang="en" className={theme}>
       <body
-        className={`${satoshi.variable} ${plusJakartaSans.variable} ${plusJakartaSans.className} antialiased dark`}
+        className={`${satoshi.variable} ${plusJakartaSans.variable} ${plusJakartaSans.className} antialiased`}
       >
         {children}
         <Footer />

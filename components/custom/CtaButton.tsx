@@ -16,6 +16,7 @@ export function CtaButton({
   iconPlacement = "right",
   buttonType,
   disabled,
+  onClick,
 }: CtaButtonProps) {
   const classes = cn(
     "inline-flex items-center justify-center gap-2 group transition-all duration-200 font-bold",
@@ -65,6 +66,7 @@ export function CtaButton({
       type={buttonType ?? "button"}
       className={classes}
       disabled={disabled}
+      onClick={onClick}
     >
       {content}
     </button>

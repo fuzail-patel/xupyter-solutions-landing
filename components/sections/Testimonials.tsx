@@ -36,7 +36,7 @@ export default function Testimonials() {
           <article
             key={testimonial.company + testimonial.name}
             data-testimonial-card
-            className="flex flex-col justify-between rounded-2xl border border-border/60 bg-muted/10 px-5 py-6 md:px-6 md:py-7"
+            className="flex flex-col justify-between rounded-2xl border border-border/70 bg-card shadow-[0_18px_40px_rgba(15,23,42,0.08)] px-5 py-6 md:px-6 md:py-7"
           >
             <p className="text-sm md:text-base leading-relaxed text-muted-foreground/95">
               {testimonial.quote}

@@ -5,7 +5,8 @@ import type { PageSectionHeaderProps } from "@/types/ui"
 
 export function PageSectionHeader({
   eyebrow,
-  title,
+  titlePrimary,
+  titleSecondary,
   subtitle,
   className,
 }: PageSectionHeaderProps) {
@@ -28,7 +29,15 @@ export function PageSectionHeader({
               </div>
             )}
             <h1 className="font-[var(--font-satoshi)] text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold tracking-tight leading-tight text-foreground">
-              {title}
+              <span className={cn("relative", "text-brand-gradient")}>
+                {titlePrimary}
+              </span>
+              {titleSecondary && (
+                <>
+                  {" "}
+                  <span className="text-primary">{titleSecondary}</span>
+                </>
+              )}
             </h1>
             {subtitle && (
               <p className="mt-3 text-sm sm:text-base md:text-lg text-muted-foreground/90 leading-relaxed max-w-xl mx-auto">

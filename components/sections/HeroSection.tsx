@@ -5,6 +5,7 @@ import Image from "next/image"
 
 import { AutoCarousel } from "@/components/custom/AutoCarousel"
 import { CtaButton } from "@/components/custom/CtaButton"
+import StrategyCallBooking from "@/components/StrategyCallBooking"
 import { cn } from "@/lib/utils"
 import { animateHeroIntro } from "@/lib/animations"
 
@@ -76,9 +77,7 @@ export default function HeroSection() {
               ref={ctaGroupRef}
               className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
             >
-              <CtaButton variant="primary" href="#strategy-call">
-                Book a Strategy Call
-              </CtaButton>
+              <StrategyCallBooking variant="primary" />
 
               <CtaButton variant="secondary" href="#work">
                 View Case Studies

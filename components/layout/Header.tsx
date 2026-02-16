@@ -7,12 +7,14 @@ import Link from "next/link"
 import { FiMenu, FiX } from "react-icons/fi"
 
 import { CtaButton } from "@/components/custom/CtaButton"
+import StrategyCallBooking from "@/components/StrategyCallBooking"
 import { cn } from "@/lib/utils"
 
 const links = [
   { label: "Home", href: "/#home" },
   { label: "Services", href: "/#services" },
   { label: "Work", href: "/#work" },
+  { label: "Portfolio", href: "/portfolio" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/#contact" },
 ]
@@ -148,9 +150,7 @@ export default function Header() {
 
             {/* Desktop CTA */}
             <div className="hidden md:flex">
-              <CtaButton variant="header" className="h-11">
-                Book a Strategy Call
-              </CtaButton>
+              <StrategyCallBooking variant="header" className="h-11" />
             </div>
 
             {/* Mobile Menu Button */}
@@ -246,12 +246,10 @@ export default function Header() {
             </nav>
 
             <div className="mt-auto pt-8 hidden md:block">
-              <CtaButton
+              <StrategyCallBooking
                 variant="header"
                 className="w-full justify-center py-6"
-              >
-                Book a Strategy Call
-              </CtaButton>
+              />
             </div>
           </div>
         </div>

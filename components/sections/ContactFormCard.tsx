@@ -106,7 +106,7 @@ export function ContactFormCard() {
                           {...field}
                           id="firstName"
                           placeholder=" "
-                          className="peer h-12 md:h-14 text-base placeholder-transparent bg-transparent border-border/60 ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                          className="peer h-12 md:h-14 text-base placeholder-transparent bg-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                         />
                       </FormControl>
 
@@ -136,7 +136,7 @@ export function ContactFormCard() {
                           {...field}
                           id="lastName"
                           placeholder=" "
-                          className="peer h-12 md:h-14 text-base placeholder-transparent bg-transparent border-border/60 ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                          className="peer h-12 md:h-14 text-base placeholder-transparent bg-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                         />
                       </FormControl>
 
@@ -167,7 +167,7 @@ export function ContactFormCard() {
                         {...field}
                         id="contactDetail"
                         placeholder=" "
-                        className="peer h-12 md:h-14 text-base placeholder-transparent bg-transparent border-border/60 ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        className="peer h-12 md:h-14 text-base placeholder-transparent bg-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                       />
                     </FormControl>
 
@@ -197,7 +197,7 @@ export function ContactFormCard() {
                         {...field}
                         id="projectDescription"
                         placeholder=" "
-                        className="peer min-h-[140px] text-base resize-none placeholder-transparent bg-transparent border-border/60 ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        className="peer min-h-[140px] text-base resize-none placeholder-transparent bg-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                       />
                     </FormControl>
 

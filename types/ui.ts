@@ -19,6 +19,7 @@ export type CtaButtonProps = {
   iconPlacement?: "left" | "right"
   buttonType?: "button" | "submit" | "reset"
   disabled?: boolean
+  onClick?: () => void
 }
 
 export type SectionHeaderProps = {
@@ -33,7 +34,8 @@ export type SectionHeaderProps = {
 
 export type PageSectionHeaderProps = {
   eyebrow?: string
-  title: ReactNode
+  titlePrimary: ReactNode
+  titleSecondary?: ReactNode
   subtitle?: ReactNode
   className?: string
 }

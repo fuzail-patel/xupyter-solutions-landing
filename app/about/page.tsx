@@ -15,12 +15,8 @@ export default function AboutPage() {
       <Header />
       <PageSectionHeader
         eyebrow="About Xupyter"
-        title={
-          <>
-            <span className="text-brand-gradient">The Thinking Behind</span>{" "}
-            <span className="text-primary">How We Build</span>
-          </>
-        }
+        titlePrimary="The Thinking Behind"
+        titleSecondary="How We Build"
         subtitle="We design and build scalable business systems engineered for long-term operational clarity."
       />
 
@@ -57,7 +53,7 @@ export default function AboutPage() {
             </div>
             <div className="relative aspect-[4/3] w-full rounded-xl bg-card/40 overflow-hidden">
               <Image
-                src="/about-intro-placeholder.jpg"
+                src="/about-image.webp"
                 alt="Xupyter team working on systems and platforms"
                 fill
                 className="object-cover"
