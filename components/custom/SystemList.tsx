@@ -1,4 +1,4 @@
-import { CheckCircleIcon } from "@heroicons/react/24/outline"
+import { PlayIcon } from "@heroicons/react/24/outline"
 
 import { cn } from "@/lib/utils"
 import type { SystemListItemProps, SystemListProps } from "@/types/ui"
@@ -30,7 +30,7 @@ export function SystemList({
     <ul
       className={cn(
         sizeClasses[size],
-        "text-muted-foreground leading-relaxed",
+        "text-muted-foreground leading-relaxed font-bold",
         className
       )}
     >
@@ -41,9 +41,9 @@ export function SystemList({
 
 export function SystemListItem({ children, size = "sm" }: SystemListItemProps) {
   return (
-    <li className="flex items-start gap-3">
-      <span className="mt-1 inline-flex h-4 w-4 items-center justify-center rounded-full border border-border/70 bg-secondary">
-        <CheckCircleIcon className="h-3 w-3" />
+    <li className="flex items-start gap-2">
+      <span className="mt-1 inline-flex">
+        <PlayIcon className="h-3 w-3 text-foreground" />
       </span>
       <span className={itemTextClasses[size]}>{children}</span>
     </li>

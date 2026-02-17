@@ -96,6 +96,12 @@ export default function Footer() {
               >
                 Contact
               </Link>
+              <Link
+                href="/careers"
+                className="hover:text-foreground hover:underline underline-offset-4 transition-colors"
+              >
+                Careers
+              </Link>
             </nav>
           </div>
 

@@ -9,6 +9,7 @@ export function PageSectionHeader({
   titleSecondary,
   subtitle,
   className,
+  accent = true,
 }: PageSectionHeaderProps) {
   return (
     <section className={cn("w-full bg-background", className)}>
@@ -17,11 +18,11 @@ export function PageSectionHeader({
           <div className="max-w-4xl mx-auto text-center">
             {eyebrow && (
               <div className="mb-3 flex items-center justify-center gap-1">
-                <ArrowRightIcon className="h-3 w-3 text-brand" />
+                {accent && <ArrowRightIcon className="h-3 w-3 text-brand" />}
                 <p
                   className={cn(
                     "text-[0.7rem] font-semibold uppercase tracking-[0.18em]",
-                    "text-brand-gradient"
+                    accent ? "text-brand-gradient" : "text-muted-foreground/80"
                   )}
                 >
                   {eyebrow}
@@ -29,7 +30,12 @@ export function PageSectionHeader({
               </div>
             )}
             <h1 className="font-[var(--font-satoshi)] text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-bold tracking-tight leading-tight text-foreground">
-              <span className={cn("relative", "text-brand-gradient")}>
+              <span
+                className={cn(
+                  "relative",
+                  accent ? "text-brand-gradient" : "text-foreground"
+                )}
+              >
                 {titlePrimary}
               </span>
               {titleSecondary && (
@@ -40,7 +46,7 @@ export function PageSectionHeader({
               )}
             </h1>
             {subtitle && (
-              <p className="mt-3 text-sm sm:text-base md:text-lg text-muted-foreground/90 leading-relaxed max-w-xl mx-auto">
+              <p className="mt-3 text-base text-muted-foreground/80 font-semibold leading-relaxed max-w-xl mx-auto">
                 {subtitle}
               </p>
             )}

@@ -70,30 +70,43 @@ export default function AboutPage() {
             HOW WE OPERATE
           </p>
           <div className="mt-6 grid gap-6 sm:grid-cols-3">
-            <div className="space-y-2 text-sm sm:text-base text-muted-foreground/90 leading-relaxed">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground">
-                Focused delivery teams
-              </h3>
-              <p>
-                Small, cross-functional groups own systems from design through delivery.
-              </p>
-            </div>
-            <div className="space-y-2 text-sm sm:text-base text-muted-foreground/90 leading-relaxed">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground">
-                Clear scopes and outputs
-              </h3>
-              <p>
-                Work is organized into defined scopes with documented deliverables and owners.
-              </p>
-            </div>
-            <div className="space-y-2 text-sm sm:text-base text-muted-foreground/90 leading-relaxed">
-              <h3 className="text-sm sm:text-base font-semibold text-foreground">
-                Operational reliability
-              </h3>
-              <p>
-                Changes are designed to protect uptime, data quality, and key workflows.
-              </p>
-            </div>
+            {[
+              {
+                label: "Focused delivery teams",
+                description:
+                  "Small, cross-functional groups own systems from design through delivery.",
+                icon: ArrowPathIcon,
+              },
+              {
+                label: "Clear scopes and outputs",
+                description:
+                  "Work is organized into defined scopes with documented deliverables and owners.",
+                icon: ClipboardDocumentCheckIcon,
+              },
+              {
+                label: "Operational reliability",
+                description:
+                  "Changes are designed to protect uptime, data quality, and key workflows.",
+                icon: ShieldCheckIcon,
+              },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="rounded-2xl border border-border/60 bg-card/40 px-5 py-5 sm:px-6 sm:py-6 text-sm sm:text-base text-muted-foreground/90 leading-relaxed"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-full bg-secondary/40 border border-border/60 shrink-0">
+                    <item.icon className="h-5 w-5 text-foreground/90" />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-sm sm:text-base font-semibold text-foreground">
+                      {item.label}
+                    </h3>
+                    <p>{item.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

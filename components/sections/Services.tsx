@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { ArrowUpRightIcon } from "@heroicons/react/24/outline"
 
 import { AsymmetricGrid } from "@/components/layout/AsymmetricGrid"
 import { Card, CardContent } from "@/components/ui/card"
@@ -37,14 +38,14 @@ export default function Services() {
 
         <div className="mt-10 md:mt-12">
           <AsymmetricGrid
-            className="gap-3"
+            className="gap-2"
             items={SERVICES.map((service) => ({
               id: service.title,
               colSpan: service.colSpan,
               content: (
                 <Card
                   data-service-card
-                  className="h-full border-border/70 shadow-sm py-0 transform-gpu transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:shadow-md"
+                  className="h-full shadow-sm py-0 transform-gpu transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:shadow-md rounded-none border-none"
                 >
                   <CardContent className="h-full px-6 py-6">
                     <Link
@@ -57,8 +58,9 @@ export default function Services() {
                             {service.icon}
                           </span>
                         </div>
-                        <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground/80 group-hover:text-foreground transition-colors">
-                          View Detail
+                        <span className="text-foreground/40 hover:text-foreground">
+                          <ArrowUpRightIcon className="h-4 w-4" />
+                          <span className="sr-only">View detail</span>
                         </span>
                       </div>
 

@@ -74,49 +74,51 @@ export function JourneyTimeline({ steps }: JourneyTimelineProps) {
                     : "md:pl-10 md:text-left"
                 )}
               >
-                <div
-                  className={cn(
-                    "flex flex-col gap-3 transition-all duration-300",
-                    isActive || isPast
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-60 translate-y-2",
-                    isLeft && "md:items-end"
-                  )}
-                >
-                  <div className="flex flex-col gap-1">
-                    <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground/70">
-                      {step.id}
-                    </span>
-                    <h3 className="font-[var(--font-satoshi)] text-lg md:text-xl font-medium text-foreground">
-                      {step.title}
-                    </h3>
+                <div className="animate-process-float">
+                  <div
+                    className={cn(
+                      "flex flex-col gap-3 transition-all duration-300",
+                      isActive || isPast
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-60 translate-y-2",
+                      isLeft && "md:items-end"
+                    )}
+                  >
+                    <div className="flex flex-col gap-1">
+                      <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground/70">
+                        {step.id}
+                      </span>
+                      <h3 className="font-[var(--font-satoshi)] text-lg md:text-xl font-medium text-foreground">
+                        {step.title}
+                      </h3>
+                    </div>
+
+                    <p className="text-sm md:text-base text-muted-foreground/90 leading-relaxed">
+                      {step.description}
+                    </p>
+
+                    {step.details && (
+                      <ul
+                        className={cn(
+                          "mt-2 space-y-1.5 text-sm text-muted-foreground leading-relaxed",
+                          isLeft && "md:text-right"
+                        )}
+                      >
+                        {step.details.map((detail) => (
+                          <li
+                            key={detail}
+                            className={cn(
+                              "flex gap-2",
+                              isLeft && "md:flex-row-reverse"
+                            )}
+                          >
+                            <span className="mt-1 h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
+                            <span>{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
-
-                  <p className="text-sm md:text-base text-muted-foreground/90 leading-relaxed">
-                    {step.description}
-                  </p>
-
-                  {step.details && (
-                    <ul
-                      className={cn(
-                        "mt-2 space-y-1.5 text-sm text-muted-foreground leading-relaxed",
-                        isLeft && "md:text-right"
-                      )}
-                    >
-                      {step.details.map((detail) => (
-                        <li
-                          key={detail}
-                          className={cn(
-                            "flex gap-2",
-                            isLeft && "md:flex-row-reverse"
-                          )}
-                        >
-                          <span className="mt-1 h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
-                          <span>{detail}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
                 </div>
               </div>
             </div>

@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { ArrowUpRightIcon } from "@heroicons/react/24/outline"
 
 import { AsymmetricGrid } from "@/components/layout/AsymmetricGrid"
 import { Card, CardContent } from "@/components/ui/card"
@@ -35,7 +36,7 @@ export default function IndustriesSection() {
         />
 
         <AsymmetricGrid
-          className="gap-3"
+          className="gap-2"
           items={INDUSTRIES.map((industry) => ({
             id: industry.name,
             colSpan: industry.colSpan,
@@ -44,7 +45,7 @@ export default function IndustriesSection() {
                 <Card
                   data-industry-card
                   className={cn(
-                    "h-full rounded-xl border border-border/70 py-0",
+                    "h-full rounded-none border-none py-0",
                     "bg-card hover:bg-secondary/40",
                     "transition-colors duration-200 transform-gpu transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:shadow-md"
                   )}
@@ -52,13 +53,14 @@ export default function IndustriesSection() {
                   <CardContent className="px-6 py-6 flex flex-col justify-between h-full">
                     <div>
                       <div className="flex items-center justify-between">
-                        <div className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-secondary">
+                        <div className="inline-flex h-10 w-10 items-center justify-center bg-secondary">
                           <span className="text-foreground">
                             {industry.icon}
                           </span>
                         </div>
-                        <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground/80 group-hover:text-foreground transition-colors">
-                          VIEW DETAIL
+                        <span className="text-foreground/40 hover:text-foreground">
+                          <ArrowUpRightIcon className="h-4 w-4" />
+                          <span className="sr-only">View detail</span>
                         </span>
                       </div>
 

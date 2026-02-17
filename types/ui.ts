@@ -38,6 +38,7 @@ export type PageSectionHeaderProps = {
   titleSecondary?: ReactNode
   subtitle?: ReactNode
   className?: string
+  accent?: boolean
 }
 
 export type SystemListProps = {

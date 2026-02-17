@@ -179,4 +179,22 @@
   .text-brand {
     color: var(--brand-color);
   }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translate(-10px, -10px);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  .animate-process-float {
+    animation: float 6s ease-in-out infinite;
+  }
 }

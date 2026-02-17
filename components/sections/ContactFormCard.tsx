@@ -67,7 +67,7 @@ export function ContactFormCard() {
         <SectionHeader
           align="left"
           size="md"
-          className="border-b border-border/35 pb-6"
+          className="border-b border-border pb-6"
           eyebrow="Contact"
           title={headerTitle}
           description={headerDescription}
@@ -100,19 +100,19 @@ export function ContactFormCard() {
                 name="firstName"
                 render={({ field }) => (
                   <FormItem className="">
-                    <div className="relative rounded-lg bg-card">
+                    <div className="relative rounded-lg bg-background">
                       <FormControl>
                         <Input
                           {...field}
                           id="firstName"
                           placeholder=" "
-                          className="peer h-12 md:h-14 text-base placeholder-transparent bg-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                          className="peer h-12 md:h-14 text-base placeholder-transparent  border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                         />
                       </FormControl>
 
                       <label
                         htmlFor="firstName"
-                        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-card px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
+                        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-background px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
                         peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
                         peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
                       >
@@ -130,19 +130,19 @@ export function ContactFormCard() {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem className="">
-                    <div className="relative rounded-lg bg-card">
+                    <div className="relative rounded-lg bg-background">
                       <FormControl>
                         <Input
                           {...field}
                           id="lastName"
                           placeholder=" "
-                          className="peer h-12 md:h-14 text-base placeholder-transparent bg-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                          className="peer h-12 md:h-14 text-base placeholder-transparent  border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                         />
                       </FormControl>
 
                       <label
                         htmlFor="lastName"
-                        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-card px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
+                        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-background rounded px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
                         peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
                         peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
                       >
@@ -161,19 +161,19 @@ export function ContactFormCard() {
               name="emailOrPhone"
               render={({ field }) => (
                 <FormItem className="">
-                  <div className="relative rounded-lg bg-card">
+                  <div className="relative rounded-lg bg-background">
                     <FormControl>
                       <Input
                         {...field}
                         id="contactDetail"
                         placeholder=" "
-                        className="peer h-12 md:h-14 text-base placeholder-transparent bg-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        className="peer h-12 md:h-14 text-base placeholder-transparent  border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                       />
                     </FormControl>
 
                     <label
                       htmlFor="contactDetail"
-                      className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-card px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
+                      className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-background px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
                       peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
                       peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
                     >
@@ -191,19 +191,19 @@ export function ContactFormCard() {
               name="message"
               render={({ field }) => (
                 <FormItem className="">
-                  <div className="relative rounded-lg bg-card">
+                  <div className="relative rounded-lg bg-background">
                     <FormControl>
                       <Textarea
                         {...field}
                         id="projectDescription"
                         placeholder=" "
-                        className="peer min-h-[140px] text-base resize-none placeholder-transparent bg-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        className="peer min-h-[140px] text-base resize-none placeholder-transparent  border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                       />
                     </FormControl>
 
                     <label
                       htmlFor="projectDescription"
-                      className="pointer-events-none absolute left-3 top-4 -translate-y-1/2 bg-card px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
+                      className="pointer-events-none absolute left-3 top-4 -translate-y-1/2 bg-background px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
                       peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
                       peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
                     >

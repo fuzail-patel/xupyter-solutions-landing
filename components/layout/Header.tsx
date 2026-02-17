@@ -181,7 +181,7 @@ export default function Header() {
         <button
           type="button"
           aria-label="Close navigation"
-          className="absolute inset-0 bg-black/40"
+          className="absolute inset-0 bg-background/40 backdrop-blur-md"
           onClick={() => setOpen(false)}
         />
 

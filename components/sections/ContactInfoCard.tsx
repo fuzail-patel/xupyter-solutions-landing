@@ -18,7 +18,7 @@ function ContactLinkItem({ icon, label, value, href }: ContactLinkItemProps) {
       href={href}
       target={isExternal ? "_xupyter_solutions" : undefined}
       rel={isExternal ? "noreferrer" : undefined}
-      className="group flex items-center justify-between rounded-xl border border-border/60 bg-card px-5 py-4 transition-colors hover:bg-secondary/50"
+      className="group flex items-center justify-between rounded-xl bg-secondary/70 px-5 py-4 transition-colors hover:bg-secondary"
     >
       <div className="flex items-center gap-4">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary shrink-0">
@@ -48,7 +48,7 @@ export function ContactInfoCard() {
           <Image
             src="/contact-image.jpg"
             alt="Contact"
-            className="h-full w-full object-cover opacity-80"
+            className="h-full w-full object-cover opacity-70"
             height={300}
             width={300}
           />

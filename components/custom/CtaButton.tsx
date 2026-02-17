@@ -25,7 +25,7 @@ export function CtaButton({
         variant === "primary",
       "h-14 px-7 rounded-xl border border-border bg-transparent hover:bg-accent":
         variant === "secondary",
-      "h-10 px-5 rounded-xl bg-primary text-primary-foreground shadow-sm hover:shadow-md":
+      "h-10 px-5 rounded-md bg-primary text-primary-foreground shadow-sm hover:shadow-md":
         variant === "header",
     },
     className
