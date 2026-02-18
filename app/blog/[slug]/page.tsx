@@ -1,10 +1,10 @@
 import Image from "next/image"
+import Link from "next/link"
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import BlogCard from "@/components/blog/BlogCard"
-import { SectionHeader } from "@/components/custom/SectionHeader"
+
 import Header from "@/components/layout/Header"
-import StrategyCallBooking from "@/components/StrategyCallBooking"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import type { BlogPost } from "@/types/blog"
 import { blogPosts } from "@/data/blog"
 
@@ -45,11 +45,6 @@ export default function BlogArticlePage({
     (item) => item.slug === params.slug
   ) as BlogPost | undefined
 
-  // if (!post) {
-  //   notFound()
-  // }
-
-  // temporarily setting static post for page view
   if (!post) {
     post = blogPosts[0]
   }
@@ -58,33 +53,43 @@ export default function BlogArticlePage({
     .filter((item) => item.slug !== post.slug)
     .slice(0, 3)
 
+  const currentIndex = blogPosts.findIndex(
+    (item) => item.slug === post.slug
+  )
+  const previousPost =
+    currentIndex > 0 ? blogPosts[currentIndex - 1] : undefined
+  const nextPost =
+    currentIndex >= 0 && currentIndex < blogPosts.length - 1
+      ? blogPosts[currentIndex + 1]
+      : undefined
+
+  const tocItems = getArticleToc(post.slug)
+
   return (
     <main className="flex flex-col">
       <Header />
 
       <article className="bg-background">
-        <header className="border-b border-border/60">
-          <div className="max-w-5xl mx-auto px-6">
-            <div className="pt-12 sm:pt-16 md:pt-20 pb-8 sm:pb-10 md:pb-12">
-              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
-                {post.category}
-              </p>
-              <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-[var(--font-satoshi)] tracking-tight leading-tight text-foreground">
-                {post.title}
-              </h1>
-              <p className="mt-4 text-sm sm:text-base text-muted-foreground/90 max-w-xl">
-                {post.excerpt}
-              </p>
-              <div className="mt-5 flex flex-wrap items-center gap-3 text-xs sm:text-sm text-muted-foreground/80">
-                <span>By Xupyter Systems</span>
-                <span className="h-1 w-1 rounded-full bg-muted-foreground/60" />
-                <span>{post.publishedAt}</span>
-                <span className="h-1 w-1 rounded-full bg-muted-foreground/60" />
-                <span>{post.readTime}</span>
-              </div>
+        <header className="bg-background">
+          <div className="max-w-3xl mx-auto px-6 pt-10 pb-6 sm:pt-12 sm:pb-8 md:pt-14 md:pb-9">
+            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
+              {post.category}
+            </p>
+            <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold font-[var(--font-satoshi)] tracking-tight leading-tight text-foreground">
+              {post.title}
+            </h1>
+            <p className="mt-4 text-sm sm:text-base text-muted-foreground/90">
+              {post.excerpt}
+            </p>
+            <div className="mt-5 flex flex-wrap items-center gap-3 text-xs sm:text-sm text-muted-foreground/80">
+              <span>By Xupyter Systems</span>
+              <span className="h-1 w-1 rounded-full bg-muted-foreground/60" />
+              <span>{post.publishedAt}</span>
+              <span className="h-1 w-1 rounded-full bg-muted-foreground/60" />
+              <span>{post.readTime}</span>
             </div>
           </div>
-          <div className="max-w-6xl mx-auto px-6 pb-10 sm:pb-12 md:pb-14">
+          <div className="max-w-3xl mx-auto px-6 pb-8 sm:pb-10 md:pb-12">
             <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-muted/60">
               <Image
                 src={post.image}
@@ -98,48 +103,129 @@ export default function BlogArticlePage({
           </div>
         </header>
 
-        <section className="py-10 sm:py-12 md:py-16">
-          <div className="max-w-3xl mx-auto px-6">
-            {renderArticleBody(post.slug)}
+        <section className="py-10 sm:py-12 md:py-14">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,1.1fr)]">
+              <div className="max-w-3xl">
+                {renderArticleBody(post.slug)}
+              </div>
+
+              {tocItems.length > 0 && (
+                <aside className="hidden lg:block">
+                  <div className="sticky top-28 space-y-3 text-sm">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
+                      On this page
+                    </p>
+                    <nav className="space-y-2 text-xs text-muted-foreground/90">
+                      {tocItems.map((item) => (
+                        <a
+                          key={item.id}
+                          href={`#${item.id}`}
+                          className={
+                            item.level === 2
+                              ? "block font-medium text-foreground hover:text-primary"
+                              : "block pl-4 text-muted-foreground hover:text-primary"
+                          }
+                        >
+                          {item.label}
+                        </a>
+                      ))}
+                    </nav>
+                  </div>
+                </aside>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {relatedPosts.length > 0 && (
+          <section className="bg-muted/30">
+            <div className="max-w-6xl mx-auto px-6 py-10 sm:py-12 md:py-14">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <h2 className="text-sm font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
+                    Related articles
+                  </h2>
+                  <p className="mt-1 text-sm text-muted-foreground/90">
+                    Continue exploring systems, architecture, and
+                    automation topics.
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
+                {relatedPosts.map((related) => (
+                  <Link
+                    key={related.slug}
+                    href={`/blog/${related.slug}`}
+                    className="group flex items-start gap-3 rounded-lg border border-border/60 bg-background px-3 py-3 transition-colors hover:border-primary/50"
+                  >
+                    <div className="relative h-14 w-20 overflow-hidden rounded-md bg-muted/60">
+                      <Image
+                        src={related.image}
+                        alt={related.title}
+                        fill
+                        className="object-cover transition-transform duration-150 group-hover:scale-[1.03]"
+                        sizes="80px"
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col gap-1">
+                      <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
+                        {related.category}
+                      </p>
+                      <p className="text-sm font-medium text-foreground group-hover:text-primary">
+                        {related.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground/80">
+                        {related.publishedAt}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        <section className="bg-background">
+          <div className="max-w-3xl mx-auto px-6 py-8 sm:py-10 md:py-12">
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex-1">
+                {previousPost && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
+                      Previous article
+                    </p>
+                    <Link
+                      href={`/blog/${previousPost.slug}`}
+                      className="text-sm font-medium text-foreground hover:text-primary"
+                    >
+                      {previousPost.title}
+                    </Link>
+                  </div>
+                )}
+              </div>
+              <div className="flex-1 text-left sm:text-right">
+                {nextPost && (
+                  <div className="space-y-1">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
+                      Next article
+                    </p>
+                    <Link
+                      href={`/blog/${nextPost.slug}`}
+                      className="inline-flex items-center text-sm font-medium text-foreground hover:text-primary"
+                    >
+                      {nextPost.title}
+                      <span aria-hidden="true" className="ml-1">
+                        →
+                      </span>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </section>
       </article>
-
-      <section className="border-t border-border/60 bg-muted/40">
-        <div className="max-w-4xl mx-auto px-6 py-10 sm:py-12 md:py-14">
-          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="text-sm sm:text-base font-semibold text-foreground">
-                Planning a scalable system?
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground/90">
-                Book a strategy call and we&apos;ll map the architecture with you.
-              </p>
-            </div>
-            <div className="mt-3 sm:mt-0">
-              <StrategyCallBooking variant="primary" />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {relatedPosts.length > 0 && (
-        <section className="py-12 sm:py-16 md:py-20">
-          <div className="max-w-7xl mx-auto px-6">
-            <SectionHeader
-              title="Related articles"
-              description="Continue exploring systems, architecture, and automation topics."
-              align="left"
-              size="md"
-            />
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-              {relatedPosts.map((related) => (
-                <BlogCard key={related.slug} post={related} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
     </main>
   )
 }
@@ -156,7 +242,10 @@ function renderArticleBody(slug: string) {
             place to live.
           </p>
 
-          <h2 className="mt-8 text-xl sm:text-2xl font-semibold font-[var(--font-satoshi)] text-foreground">
+          <h2
+            id="start-with-responsibilities"
+            className="mt-8 text-xl sm:text-2xl font-semibold font-[var(--font-satoshi)] text-foreground"
+          >
             Start with responsibilities, not microservices
           </h2>
           <p className="mt-3 text-sm sm:text-base text-muted-foreground/90 leading-relaxed">
@@ -166,7 +255,10 @@ function renderArticleBody(slug: string) {
             services usually creates more complexity than it removes.
           </p>
 
-          <h3 className="mt-6 text-base sm:text-lg font-semibold text-foreground">
+          <h3
+            id="a-simple-framing"
+            className="mt-6 text-base sm:text-lg font-semibold text-foreground"
+          >
             A simple framing
           </h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm sm:text-base text-muted-foreground/90 leading-relaxed">
@@ -179,7 +271,10 @@ function renderArticleBody(slug: string) {
             A scalable architecture is one where a single change has a predictable blast radius.
           </blockquote>
 
-          <h2 className="mt-8 text-xl sm:text-2xl font-semibold font-[var(--font-satoshi)] text-foreground">
+          <h2
+            id="make-data-flows-explicit"
+            className="mt-8 text-xl sm:text-2xl font-semibold font-[var(--font-satoshi)] text-foreground"
+          >
             Make data flows explicit
           </h2>
           <p className="mt-3 text-sm sm:text-base text-muted-foreground/90 leading-relaxed">
@@ -206,7 +301,10 @@ function renderArticleBody(slug: string) {
             under load.
           </p>
 
-          <h2 className="mt-8 text-xl sm:text-2xl font-semibold font-[var(--font-satoshi)] text-foreground">
+          <h2
+            id="design-for-operational-visibility"
+            className="mt-8 text-xl sm:text-2xl font-semibold font-[var(--font-satoshi)] text-foreground"
+          >
             Design for operational visibility
           </h2>
           <p className="mt-3 text-sm sm:text-base text-muted-foreground/90 leading-relaxed">
@@ -231,7 +329,10 @@ function renderArticleBody(slug: string) {
             boundaries, data flows, and failure handling, rather than on specific tools.
           </p>
 
-          <h2 className="mt-8 text-xl sm:text-2xl font-semibold font-[var(--font-satoshi)] text-foreground">
+          <h2
+            id="establish-clear-system-boundaries"
+            className="mt-8 text-xl sm:text-2xl font-semibold font-[var(--font-satoshi)] text-foreground"
+          >
             Establish clear system boundaries
           </h2>
           <p className="mt-3 text-sm sm:text-base text-muted-foreground/90 leading-relaxed">
@@ -240,7 +341,10 @@ function renderArticleBody(slug: string) {
             wrong part of the system and preserves long-term clarity.
           </p>
 
-          <h3 className="mt-6 text-base sm:text-lg font-semibold text-foreground">
+          <h3
+            id="questions-to-ask"
+            className="mt-6 text-base sm:text-lg font-semibold text-foreground"
+          >
             Questions to ask
           </h3>
           <ul className="mt-3 list-disc space-y-2 pl-5 text-sm sm:text-base text-muted-foreground/90 leading-relaxed">
@@ -254,7 +358,10 @@ function renderArticleBody(slug: string) {
             discuss.
           </blockquote>
 
-          <h2 className="mt-8 text-xl sm:text-2xl font-semibold font-[var(--font-satoshi)] text-foreground">
+          <h2
+            id="treat-automation-as-part-of-the-system"
+            className="mt-8 text-xl sm:text-2xl font-semibold font-[var(--font-satoshi)] text-foreground"
+          >
             Treat automation as part of the system
           </h2>
           <p className="mt-3 text-sm sm:text-base text-muted-foreground/90 leading-relaxed">
@@ -285,3 +392,54 @@ function renderArticleBody(slug: string) {
   }
 }
 
+type TocItem = {
+  id: string
+  label: string
+  level: 2 | 3
+}
+
+function getArticleToc(slug: string): TocItem[] {
+  switch (slug) {
+    case "designing-scalable-saas-architecture":
+      return [
+        {
+          id: "start-with-responsibilities",
+          label: "Start with responsibilities, not microservices",
+          level: 2,
+        },
+        {
+          id: "a-simple-framing",
+          label: "A simple framing",
+          level: 3,
+        },
+        {
+          id: "make-data-flows-explicit",
+          label: "Make data flows explicit",
+          level: 2,
+        },
+        {
+          id: "design-for-operational-visibility",
+          label: "Design for operational visibility",
+          level: 2,
+        },
+      ]
+    default:
+      return [
+        {
+          id: "establish-clear-system-boundaries",
+          label: "Establish clear system boundaries",
+          level: 2,
+        },
+        {
+          id: "questions-to-ask",
+          label: "Questions to ask",
+          level: 3,
+        },
+        {
+          id: "treat-automation-as-part-of-the-system",
+          label: "Treat automation as part of the system",
+          level: 2,
+        },
+      ]
+  }
+}
