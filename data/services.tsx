@@ -3,7 +3,7 @@ import {
   GlobeAltIcon,
   Squares2X2Icon,
   SquaresPlusIcon,
-} from "@heroicons/react/24/outline"
+} from "@heroicons/react/24/solid"
 
 import type { Service } from "@/types/content"
 

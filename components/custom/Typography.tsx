@@ -19,7 +19,7 @@ export function BodyText({ className, children }: TextProps) {
   return (
     <p
       className={cn(
-        "text-sm md:text-base text-muted-foreground leading-relaxed",
+        "text-sm md:text-base text-muted-foreground leading-snug",
         className
       )}
     >

@@ -8,6 +8,7 @@ import { CtaButton } from "@/components/custom/CtaButton"
 import StrategyCallBooking from "@/components/StrategyCallBooking"
 import { cn } from "@/lib/utils"
 import { animateHeroIntro } from "@/lib/animations"
+import EyeBrow from "../custom/EyeBrow"
 
 export default function HeroSection() {
   const eyebrowRef = useRef<HTMLParagraphElement | null>(null)
@@ -42,24 +43,18 @@ export default function HeroSection() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="flex flex-col gap-7 text-center lg:text-left items-center lg:items-start">
             <div className="space-y-2">
-              <p
-                ref={eyebrowRef}
-                className={cn(
-                  "text-[0.7rem] font-semibold uppercase tracking-[0.18em]",
-                  "text-brand-gradient"
-                )}
-              >
-                Changing The Business
-              </p>
+              <div ref={eyebrowRef}>
+                <EyeBrow text="Changing The Business" className="text-primary" showDot={false} />
+              </div>
               <h1
                 ref={headingRef}
-                className="text-4xl md:text-5xl lg:text-6xl leading-tight font-bold max-w-3xl font-[var(--font-satoshi)] tracking-tight"
+                className="text-4xl md:text-5xl lg:text-6xl leading-tight font-bold max-w-3xl tracking-tight"
               >
-                <span className={cn("relative", "text-brand-gradient")}>
+                <span className={cn("relative", "text-primary font-display")}>
                   We Build the Systems
                 </span>
                 {", "}
-                <span className="text-primary block md:inline">
+                <span className="block md:inline font-display">
                   Your Business Runs On
                 </span>
               </h1>
@@ -86,7 +81,7 @@ export default function HeroSection() {
 
             <div className="mt-12 grid grid-cols-3 gap-8 text-center md:text-left">
               <div>
-                <p className="font-bold text-3xl md:text-4xl font-[var(--font-satoshi)]">
+                <p className="font-bold text-3xl md:text-4xl font-display">
                   100+
                 </p>
                 <p className="text-sm text-muted-foreground tracking-[0.08em] mt-1">
@@ -95,7 +90,7 @@ export default function HeroSection() {
               </div>
 
               <div>
-                <p className="font-bold text-3xl md:text-4xl font-[var(--font-satoshi)]">
+                <p className="font-bold text-3xl md:text-4xl font-display">
                   10+
                 </p>
                 <p className="text-sm text-muted-foreground tracking-[0.08em] mt-1">
@@ -104,7 +99,7 @@ export default function HeroSection() {
               </div>
 
               <div>
-                <p className="font-bold text-3xl md:text-4xl font-[var(--font-satoshi)]">
+                <p className="font-bold text-3xl md:text-4xl font-display">
                   7+
                 </p>
                 <p className="text-sm text-muted-foreground tracking-[0.08em] mt-1">

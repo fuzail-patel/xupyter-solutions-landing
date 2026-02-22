@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ArrowRightIcon } from "@heroicons/react/24/outline"
+import { ArrowRightIcon } from "@heroicons/react/24/solid"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -18,6 +18,8 @@ import {
 } from "@/components/ui/form"
 import { applicationSchema, type ApplicationFormValues } from "@/schemas/application.schema"
 import type { Job } from "@/types/careers"
+import { CtaButton } from "../custom/CtaButton"
+import { FloatingField } from "@/components/custom/FloatingField"
 
 type ApplyModalMode = "specific" | "general"
 
@@ -71,14 +73,11 @@ export function ApplyModal({ mode, job, jobs, triggerLabel }: ApplyModalProps) {
 
   return (
     <>
-      <Button variant="default" onClick={handleOpen}>
-        <span>{triggerLabel}</span>
-        <ArrowRightIcon className="h-3.5 w-3.5" />
-      </Button>
+      <CtaButton variant="primary" className="font-semibold" onClick={handleOpen}>{triggerLabel}</CtaButton>
 
       {open && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/40 backdrop-blur-md text-left">
-          <div className="w-full max-w-xl rounded-xl bg-background p-6 shadow-lg">
+          <div className="w-full max-w-xl rounded-xl bg-background p-6 border">
             <div className="mb-4 flex items-center justify-between">
               <div>
                 <h2 className="text-lg font-semibold text-foreground">
@@ -101,25 +100,18 @@ export function ApplyModal({ mode, job, jobs, triggerLabel }: ApplyModalProps) {
                     name="fullName"
                     render={({ field }) => (
                       <FormItem>
-                        <div className="relative rounded-lg bg-background">
+                        <FloatingField id="fullName" label="Full Name">
                           <FormControl>
                             <Input
                               {...field}
                               id="fullName"
                               placeholder=" "
-                              className="peer h-12 md:h-14 text-base placeholder-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                              variant="minimal"
+                              className="peer text-[0.95rem] text-foreground/90"
                             />
                           </FormControl>
-                          <label
-                            htmlFor="fullName"
-                            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-background px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
-                            peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
-                            peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
-                          >
-                            Full Name
-                          </label>
-                        </div>
-                        <FormMessage className="text-xs text-left" />
+                        </FloatingField>
+                        <FormMessage className="text-xs" />
                       </FormItem>
                     )}
                   />
@@ -129,26 +121,19 @@ export function ApplyModal({ mode, job, jobs, triggerLabel }: ApplyModalProps) {
                     name="email"
                     render={({ field }) => (
                       <FormItem>
-                        <div className="relative rounded-lg bg-background">
+                        <FloatingField id="email" label="Email">
                           <FormControl>
                             <Input
                               {...field}
                               id="email"
                               type="email"
                               placeholder=" "
-                              className="peer h-12 md:h-14 text-base placeholder-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                              variant="minimal"
+                              className="peer text-[0.95rem] text-foreground/90"
                             />
                           </FormControl>
-                          <label
-                            htmlFor="email"
-                            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-background px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
-                            peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
-                            peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
-                          >
-                            Email
-                          </label>
-                        </div>
-                        <FormMessage className="text-xs text-left" />
+                        </FloatingField>
+                        <FormMessage className="text-xs" />
                       </FormItem>
                     )}
                   />
@@ -158,18 +143,18 @@ export function ApplyModal({ mode, job, jobs, triggerLabel }: ApplyModalProps) {
                     name="resume"
                     render={({ field }) => (
                       <FormItem className="md:col-span-2">
-                        <FormLabel>Resume</FormLabel>
+                        <FormLabel className="text-sm font-medium text-foreground/80">Resume</FormLabel>
                         <FormControl>
                           <Input
                             type="file"
-                            className="h-12 md:h-14 pt-4 border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                            className="h-12 md:h-14 rounded-md border-border/60 bg-background/80 px-4 text-foreground focus:border-primary focus:ring-0 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
                             onChange={(event) => {
                               const file = event.target.files?.[0]
                               field.onChange(file)
                             }}
                           />
                         </FormControl>
-                        <FormMessage className="text-xs text-left" />
+                        <FormMessage className="text-xs" />
                       </FormItem>
                     )}
                   />
@@ -179,25 +164,18 @@ export function ApplyModal({ mode, job, jobs, triggerLabel }: ApplyModalProps) {
                     name="phone"
                     render={({ field }) => (
                       <FormItem>
-                        <div className="relative rounded-lg bg-background">
+                        <FloatingField id="phone" label="Phone (optional)">
                           <FormControl>
                             <Input
                               {...field}
                               id="phone"
                               placeholder=" "
-                              className="peer h-12 md:h-14 text-base placeholder-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                              variant="minimal"
+                              className="peer text-[0.95rem] text-foreground/90"
                             />
                           </FormControl>
-                          <label
-                            htmlFor="phone"
-                            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-background px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
-                            peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
-                            peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
-                          >
-                            Phone (optional)
-                          </label>
-                        </div>
-                        <FormMessage className="text-xs text-left" />
+                        </FloatingField>
+                        <FormMessage className="text-xs" />
                       </FormItem>
                     )}
                   />
@@ -207,26 +185,19 @@ export function ApplyModal({ mode, job, jobs, triggerLabel }: ApplyModalProps) {
                     name="position"
                 render={({ field }) => (
                   <FormItem>
-                    <div className="relative rounded-lg bg-background">
+                    <FloatingField id="position" label={isSpecific ? "Position" : "Position (optional)"}>
                       <FormControl>
                         <Input
                           {...field}
                           id="position"
                           disabled={isSpecific}
                           placeholder=" "
-                          className="peer h-12 md:h-14 text-base placeholder-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                          variant="minimal"
+                          className="peer text-[0.95rem] text-foreground/90"
                         />
                       </FormControl>
-                      <label
-                        htmlFor="position"
-                        className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 bg-background px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
-                        peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
-                        peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
-                      >
-                        {isSpecific ? "Position" : "Position (optional)"}
-                      </label>
-                    </div>
-                    <FormMessage className="text-xs text-left" />
+                    </FloatingField>
+                    <FormMessage className="text-xs" />
                   </FormItem>
                 )}
                   />
@@ -237,30 +208,23 @@ export function ApplyModal({ mode, job, jobs, triggerLabel }: ApplyModalProps) {
                   name="coverNote"
                   render={({ field }) => (
                     <FormItem>
-                      <div className="relative rounded-lg bg-background">
+                      <FloatingField id="whyApplying" label="Why are you applying?">
                         <FormControl>
                           <Textarea
                             {...field}
                             id="whyApplying"
                             rows={4}
                             placeholder=" "
-                            className="peer min-h-[140px] text-base resize-none placeholder-transparent border-border ring-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                            variant="minimal"
+                            className="peer text-[0.95rem] text-foreground/90 pt-2 resize-none min-h-[140px]"
                           />
                         </FormControl>
-                        <label
-                          htmlFor="whyApplying"
-                          className="pointer-events-none absolute left-3 top-4 -translate-y-1/2 bg-background px-2 text-[0.7rem] uppercase tracking-[0.16em] text-muted-foreground/70 transition-all duration-200
-                          peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[0.65rem] peer-focus:text-foreground
-                          peer-[&:not(:placeholder-shown)]:top-0 peer-[&:not(:placeholder-shown)]:-translate-y-1/2 peer-[&:not(:placeholder-shown)]:text-[0.65rem]"
-                        >
-                          Why are you applying?
-                        </label>
-                      </div>
-                      <p className="mt-1 text-xs text-muted-foreground/80 text-left">
+                      </FloatingField>
+                      <p className="mt-1 text-xs text-muted-foreground/80">
                         Include relevant experience, portfolio links, LinkedIn, or anything that
                         helps us understand your fit.
                       </p>
-                      <FormMessage className="text-xs text-left" />
+                      <FormMessage className="text-xs" />
                     </FormItem>
                   )}
                 />
@@ -273,7 +237,7 @@ export function ApplyModal({ mode, job, jobs, triggerLabel }: ApplyModalProps) {
                   >
                     Cancel
                   </Button>
-                  <Button type="submit">Apply Now</Button>
+                  <CtaButton variant="primary" className="ms-auto" onClick={form.handleSubmit(onSubmit)}>Submit</CtaButton>
                 </div>
               </form>
             </Form>

@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowUpRightIcon } from "@heroicons/react/24/outline"
 
 import { AsymmetricGrid } from "@/components/layout/AsymmetricGrid"
 import { Card, CardContent } from "@/components/ui/card"
@@ -10,6 +9,7 @@ import { cn } from "@/lib/utils"
 import { INDUSTRIES } from "@/data/industries"
 import { useSectionReveal } from "@/hooks/useSectionReveal"
 import { animateStaggeredFadeUp } from "@/lib/animations"
+import { BodyText } from "../custom/Typography"
 
 export default function IndustriesSection() {
   const { ref, style } = useSectionReveal((sectionEl) => {
@@ -45,33 +45,20 @@ export default function IndustriesSection() {
                 <Card
                   data-industry-card
                   className={cn(
-                    "h-full rounded-none border-none py-0",
-                    "bg-card hover:bg-secondary/40",
-                    "transition-colors duration-200 transform-gpu transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:shadow-md"
+                    "h-full rounded-xl border-none py-0 cursor-pointer",
+                    "hover:bg-linear-to-br hover:from-card hover:to-secondary/10",
+                    "transition-all duration-250 ease-out hover:scale-[1.02] hover:shadow-sm",
+                    "border-b-2 border-transparent hover:border-primary/20"
                   )}
                 >
-                  <CardContent className="px-6 py-6 flex flex-col justify-between h-full">
-                    <div>
-                      <div className="flex items-center justify-between">
-                        <div className="inline-flex h-10 w-10 items-center justify-center bg-secondary">
-                          <span className="text-foreground">
-                            {industry.icon}
-                          </span>
-                        </div>
-                        <span className="text-foreground/40 hover:text-foreground">
-                          <ArrowUpRightIcon className="h-4 w-4" />
-                          <span className="sr-only">View detail</span>
-                        </span>
-                      </div>
+                  <CardContent className="px-6 py-6 flex flex-col justify-center h-full space-y-2">
+                    <h3 className="text-xl md:text-2xl font-semibold text-foreground/90">
+                      {industry.name}
+                    </h3>
 
-                      <h3 className="mt-6 text-xl md:text-2xl font-semibold font-[var(--font-satoshi)]">
-                        {industry.name}
-                      </h3>
-
-                      <p className="mt-3 text-sm text-muted-foreground">
-                        {industry.description}
-                      </p>
-                    </div>
+                    <BodyText className="font-semibold">
+                      {industry.description}
+                    </BodyText>
                   </CardContent>
                 </Card>
               </Link>

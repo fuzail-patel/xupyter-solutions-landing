@@ -4,82 +4,83 @@ import {
   BuildingOffice2Icon,
   EnvelopeIcon,
   PhoneArrowUpRightIcon,
-} from "@heroicons/react/24/outline"
+} from "@heroicons/react/24/solid"
 import { RiWhatsappLine } from "react-icons/ri"
 
 import { Card, CardContent } from "@/components/ui/card"
-import type { ContactLinkItemProps } from "@/types/content"
 
-function ContactLinkItem({ icon, label, value, href }: ContactLinkItemProps) {
-  const isExternal = href.startsWith("http")
+const contactItems = [
+  {
+    label: "Email",
+    value: "contact@xupyter.in",
+    href: "mailto:contact@xupyter.in",
+    icon: <EnvelopeIcon className="h-5 w-5 text-muted-foreground" />,
+  },
+  {
+    label: "Phone",
+    value: "+91 94287-14605",
+    href: "tel:+919428714605",
+    icon: <PhoneArrowUpRightIcon className="h-5 w-5 text-muted-foreground" />,
+  },
+  {
+    label: "WhatsApp",
+    value: "wa.me/919428714605",
+    href: "https://wa.me/919428714605",
+    icon: <RiWhatsappLine className="h-5 w-5 text-muted-foreground" />,
+    external: true,
+  },
+  {
+    label: "Address",
+    value:
+      "NARMADA COMMERCIAL COMPLEX, M G ROAD, Panch Batti Cir, Bharuch, Gujarat 392001",
+    href: "https://www.google.com/maps",
+    icon: <BuildingOffice2Icon className="h-5 w-5 text-muted-foreground" />,
+    external: true,
+  },
+]
 
-  return (
-    <a
-      href={href}
-      target={isExternal ? "_xupyter_solutions" : undefined}
-      rel={isExternal ? "noreferrer" : undefined}
-      className="group flex items-center justify-between rounded-xl bg-secondary/70 px-5 py-4 transition-colors hover:bg-secondary"
-    >
-      <div className="flex items-center gap-4">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary shrink-0">
-          {icon}
-        </div>
-        <div className="flex flex-col">
-          <span className="text-sm font-medium text-foreground">
-            {label}
-          </span>
-          <span className="text-sm text-muted-foreground max-w-[130px] truncate sm:max-w-none sm:whitespace-normal">
-            {value}
-          </span>
-        </div>
-      </div>
-      <div className="flex items-center text-muted-foreground/80 group-hover:text-foreground transition-colors">
-        <ArrowUpRightIcon className="h-4 w-4" />
-      </div>
-    </a>
-  )
-}
-
-export function ContactInfoCard() {
+export function  ContactInfoCard() {
   return (
     <div className="grid grid-cols-1 grid-rows-2 gap-6 h-full">
-      <Card className="border-none shadow-none row-span-1 p-0 overflow-hidden hidden lg:block">
+      
+      {/* Image Card */}
+      <Card className="border-none shadow-none p-0 overflow-hidden hidden lg:block">
         <CardContent className="p-0 h-full">
           <Image
             src="/contact-image.jpg"
             alt="Contact"
-            className="h-full w-full object-cover opacity-70"
             height={300}
             width={300}
+            className="h-full w-full object-cover"
           />
         </CardContent>
       </Card>
-      <Card className="border-none shadow-none h-max">
-        <CardContent className="space-y-4">
-          <ContactLinkItem
-            icon={<EnvelopeIcon className="h-5 w-5 text-foreground" />}
-            label="Email"
-            value="contact@xupyter.in"
-            href="mailto:hello@xupyter.com"
-          />
-          <ContactLinkItem
-            icon={<PhoneArrowUpRightIcon className="h-5 w-5 text-foreground" />}
-            label="Phone"
-            value="+91 94287-14605"
-            href="tel:+919428714605"
-          />
-          <ContactLinkItem
-            icon={<RiWhatsappLine className="h-5 w-5 text-foreground" />}
-            label="Whatsapp"
-            value="https://wa.me/+919428714605"
-            href="https://wa.me/+919428714605"
-          />
-          <ContactLinkItem
-            icon={<BuildingOffice2Icon className="h-5 w-5 text-foreground" />}
-            label="Address"
-            value="NARMADA COMMERCIAL COMPLEX, M G ROAD, Panch Batti Cir, Bharuch, Gujarat 392001"
-            href="https://www.google.com/maps/place/Xupyter+Solutions/@21.7030446,72.9899944,17z/data=!3m1!4b1!4m6!3m5!1s0x8e6a0e0c28bf5127:0xc19b9ba1bdd1c691!8m2!3d21.7030447!4d72.9948653!16s%2Fg%2F11xl3_rhr8?entry=ttu&g_ep=EgoyMDI2MDIxMS4wIKXMDSoASAFQAw%3D%3D"
-          />
+
+      {/* Contact Links */}
+      <Card className="border-none shadow-none p-0 overflow-hidden">
+        <CardContent className="p-0 divide-y divide-accent">
+          {contactItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noreferrer" : undefined}
+              className="group flex items-center justify-between py-5 px-6 hover:bg-secondary transition-colors"
+            >
+              <div className="flex items-start gap-4 pe-2">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary shrink-0">
+                  {item.icon}
+                </div>
+                <div>
+                  <p className="text-sm font-medium">{item.label}</p>
+                  <p className="text-sm text-muted-foreground font-semibold break-all">
+                    {item.value}
+                  </p>
+                </div>
+              </div>
+              <ArrowUpRightIcon className="h-4 w-4 text-muted-foreground/60 group-hover:text-muted-foreground transition-colors shrink-0" />
+            </a>
+          ))}
         </CardContent>
       </Card>
     </div>

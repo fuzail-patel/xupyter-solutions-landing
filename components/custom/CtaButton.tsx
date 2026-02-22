@@ -16,17 +16,15 @@ export function CtaButton({
   iconPlacement = "right",
   buttonType,
   disabled,
-  onClick,
+  onClick, 
 }: CtaButtonProps) {
   const classes = cn(
     "inline-flex items-center justify-center gap-2 group transition-all duration-200 font-bold",
     {
-      "h-14 px-8 rounded-xl bg-primary text-primary-foreground shadow-sm hover:shadow-md hover:-translate-y-0.5":
+      "h-14 px-8 rounded-xl bg-primary text-white shadow-sm hover:shadow-md hover:-translate-y-0.5":
         variant === "primary",
       "h-14 px-7 rounded-xl border border-border bg-transparent hover:bg-accent":
-        variant === "secondary",
-      "h-10 px-5 rounded-md bg-primary text-primary-foreground shadow-sm hover:shadow-md":
-        variant === "header",
+        variant === "secondary"
     },
     className
   )

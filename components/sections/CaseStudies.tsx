@@ -8,6 +8,8 @@ import {
 } from "@heroicons/react/24/outline"
 
 import { SectionHeader } from "@/components/custom/SectionHeader"
+import { BodyText } from "@/components/custom/Typography"
+import { CtaButton } from "@/components/custom/CtaButton"
 import { CASE_STUDIES } from "@/data/caseStudies"
 import { useSectionReveal } from "@/hooks/useSectionReveal"
 import { animateFadeUp } from "@/lib/animations"
@@ -75,9 +77,8 @@ export default function CaseStudies() {
 
         <div>
           <div
-            data-case-card
             className={[
-              "relative rounded-2xl border border-border/70 bg-card shadow-[0_18px_40px_rgba(15,23,42,0.08)]",
+              "relative rounded-2xl bg-card",
               "px-6 py-8 md:px-10 md:py-10",
               "transition-opacity duration-300",
               isVisible ? "opacity-100" : "opacity-0",
@@ -85,45 +86,30 @@ export default function CaseStudies() {
           >
              <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-8 md:gap-10 items-start">
                <div className="flex flex-col items-start gap-5">
-                 <span className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-secondary/60 px-3 py-1 text-[0.7rem] font-medium tracking-[0.12em] text-muted-foreground/90">
+                 <span className="inline-flex items-center gap-2 rounded-full bg-secondary/60 px-3 py-1 text-[0.7rem] font-medium tracking-[0.12em] text-muted-foreground/90">
                    <span className="text-muted-foreground/95">
                      {activeCase.icon}
                    </span>
                    <span>{activeCase.industry}</span>
                  </span>
-                 <h3 className="text-2xl md:text-3xl font-semibold font-[var(--font-satoshi)]">
+                 <h3 className="text-2xl md:text-3xl font-semibold">
                    {activeCase.headline}
                  </h3>
 
                  <div className="space-y-6">
-                   <div className="space-y-3">
-                     <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
-                       The Challenge
-                     </p>
-                     <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                       {activeCase.challenge}
-                     </p>
-                   </div>
-                   <div className="space-y-3">
-                     <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
-                       The System Built
-                     </p>
-                     <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                       {activeCase.systemBuilt}
-                     </p>
-                   </div>
+                   <BodyText className="text-muted-foreground leading-relaxed">
+                     {activeCase.challenge} {activeCase.systemBuilt}
+                   </BodyText>
                  </div>
 
-                 <div className="pt-2">
-                   <Link
+                 <div className="pt-4 ms-auto">
+                   <CtaButton
+                     variant="primary"
                      href={`/case-studies/${activeCase.slug}`}
-                     className="inline-flex items-center text-sm md:text-base text-muted-foreground hover:text-foreground transition-colors group"
+                     className="text-sm"
                    >
-                     <span>Read Full Case Study</span>
-                     <span className="ml-1 transition-transform duration-200 group-hover:translate-x-0.5">
-                       →
-                     </span>
-                   </Link>
+                     Read Full Case Study
+                   </CtaButton>
                  </div>
                </div>
 

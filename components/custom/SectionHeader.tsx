@@ -1,7 +1,7 @@
-import { ArrowRightIcon } from "@heroicons/react/24/outline"
-
 import { cn } from "@/lib/utils"
 import type { SectionHeaderProps } from "@/types/ui"
+import { LanguageIcon } from "@heroicons/react/24/outline"
+import EyeBrow from "./EyeBrow"
 
 export function SectionHeader({
   eyebrow,
@@ -9,7 +9,7 @@ export function SectionHeader({
   description,
   align = "left",
   size = "md",
-  accent = false,
+  accent = true,
   className,
 }: SectionHeaderProps) {
   const alignment =
@@ -33,22 +33,12 @@ export function SectionHeader({
       )}
     >
       {eyebrow && (
-        <div className="flex items-center gap-1">
-          <ArrowRightIcon className="h-3 w-3 text-brand" />
-          <p
-            className={cn(
-              "text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-emerald-600",
-              "text-brand-gradient"
-            )}
-          >
-            {eyebrow}
-          </p>
-        </div>
+        <EyeBrow text={eyebrow}/>
       )}
-      <div className="w-full max-w-3xl space-y-2">
+      <div className="w-full max-w-3xl space-y-2 mt-1">
         <h2
           className={cn(
-            "font-[var(--font-satoshi)] font-semibold tracking-tight leading-tight",
+            "font-semibold tracking-tight leading-tight",
             titleSize
           )}
         >
@@ -58,7 +48,7 @@ export function SectionHeader({
         {description && (
           <p
             className={cn(
-              "text-sm md:text-base font-bold text-muted-foreground/90",
+              "text-sm md:text-base font-semibold text-muted-foreground/80",
               "leading-relaxed",
               "max-w-2xl",
               align === "center" ? "mx-auto" : ""
@@ -71,7 +61,7 @@ export function SectionHeader({
       {accent && (
         <div
           className={cn(
-            "mt-4 h-px w-16 bg-border/80",
+            "mt-4 h-px w-16 bg-border",
             align === "center" ? "mx-auto" : ""
           )}
         />

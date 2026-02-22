@@ -150,7 +150,7 @@ export default function Header() {
 
             {/* Desktop CTA */}
             <div className="hidden md:flex">
-              <StrategyCallBooking variant="header" className="h-11" />
+              <StrategyCallBooking variant="secondary" className="h-11 text-sm py-6 border-accent" />
             </div>
 
             {/* Mobile Menu Button */}

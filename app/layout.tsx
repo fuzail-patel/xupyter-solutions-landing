@@ -1,35 +1,24 @@
 import type { Metadata } from "next"
-import localFont from "next/font/local"
-import { Plus_Jakarta_Sans } from "next/font/google"
+import { Sora, DM_Sans, Plus_Jakarta_Sans } from "next/font/google"
 import Footer from "@/components/layout/Footer"
 import "./globals.css"
 
-const satoshi = localFont({
-  src: [
-    {
-      path: "../public/fonts/Satoshi-Regular.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/Satoshi-Medium.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../public/fonts/Satoshi-Bold.woff2",
-      weight: "700",
-      style: "normal",
-    },
-  ],
-  variable: "--font-satoshi",
+/**
+ * Display font — Sora
+ * Used for all headings (h1–h6) via --font-sora CSS variable
+ */
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-sora",
   display: "swap",
 })
 
+
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  variable: "--font-plus-jakarta",
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-plus-jakarta-sans",
   display: "swap",
 })
 
@@ -43,13 +32,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const theme = process.env.NEXT_PUBLIC_CURRENT_THEME ?? 'dark';
+  const theme = process.env.NEXT_PUBLIC_CURRENT_THEME ?? "dark"
 
   return (
     <html lang="en" className={theme}>
-      <body
-        className={`${satoshi.variable} ${plusJakartaSans.variable} ${plusJakartaSans.className} antialiased`}
-      >
+      <body className={`${sora.className} ${plusJakartaSans.variable} antialiased`}>
         {children}
         <Footer />
       </body>

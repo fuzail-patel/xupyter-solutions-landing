@@ -1,6 +1,6 @@
 "use client"
 
-import { JourneyTimeline } from "@/components/sections/JourneyTimeline"
+import ProcessGrid from "@/components/sections/ProcessGrid"
 import { SectionHeader } from "@/components/custom/SectionHeader"
 import { PROCESS_STEPS } from "@/data/process"
 import { useSectionReveal } from "@/hooks/useSectionReveal"
@@ -24,7 +24,7 @@ export default function Process() {
           description="A structured, repeatable process designed for long-term performance — not one-off delivery."
         />
 
-        <JourneyTimeline steps={PROCESS_STEPS} />
+        <ProcessGrid steps={PROCESS_STEPS} />
       </div>
     </section>
   )

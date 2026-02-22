@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 
 import { cn } from "@/lib/utils"
 import type { JourneyTimelineProps } from "@/types/journey"
+import { ArrowUturnRightIcon } from "@heroicons/react/24/outline"
 
 export function JourneyTimeline({ steps }: JourneyTimelineProps) {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -84,8 +85,8 @@ export function JourneyTimeline({ steps }: JourneyTimelineProps) {
                       isLeft && "md:items-end"
                     )}
                   >
-                    <div className="flex flex-col gap-1">
-                      <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground/70">
+                    <div className="inline-flex w-fit flex-col gap-1">
+                      <span className="text-xl font-semibold uppercase tracking-[0.18em] text-muted-foreground/70">
                         {step.id}
                       </span>
                       <h3 className="font-[var(--font-satoshi)] text-lg md:text-xl font-medium text-foreground">
@@ -93,7 +94,7 @@ export function JourneyTimeline({ steps }: JourneyTimelineProps) {
                       </h3>
                     </div>
 
-                    <p className="text-sm md:text-base text-muted-foreground/90 leading-relaxed">
+                    <p className="text-sm md:text-base text-muted-foreground/90 leading-relaxed font-semibold flex items-center gap-2">
                       {step.description}
                     </p>
 

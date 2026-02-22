@@ -16,6 +16,8 @@ export type Testimonial = {
   company: string
   quote: string
   initials: string
+  industry?: string
+  timeAgo?: string
 }
 
 export type EngagementModel = {
@@ -42,5 +44,5 @@ export type Industry = {
   description: string
   icon: ReactElement
   href: string
-  colSpan: GridColSpan
+  colSpan: GridColSpan,
 }

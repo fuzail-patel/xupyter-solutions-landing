@@ -6,6 +6,8 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { TESTIMONIALS } from "@/data/testimonials"
 import { useSectionReveal } from "@/hooks/useSectionReveal"
 import { animateFadeUp } from "@/lib/animations"
+import { Badge } from "../ui/badge"
+
 
 const ITEMS_PER_SLIDE = 3
 const ROTATION_INTERVAL = 8000
@@ -36,13 +38,18 @@ export default function Testimonials() {
           <article
             key={testimonial.company + testimonial.name}
             data-testimonial-card
-            className="flex flex-col justify-between rounded-2xl border border-border/70 bg-card shadow-[0_18px_40px_rgba(15,23,42,0.08)] px-5 py-6 md:px-6 md:py-7"
+            className="flex flex-col rounded-2xl bg-card shadow-[0_18px_40px_rgba(15,23,42,0.08)] px-5 py-6 md:px-6 md:py-7"
           >
-            <p className="text-sm md:text-base leading-relaxed text-muted-foreground/95">
+            {testimonial.industry && (
+              <Badge variant="secondary" className="font-semibold mb-1">
+                {testimonial.industry}
+              </Badge>
+            )}
+            <p className="text-sm md:text-base leading-relaxed text-foreground/50 font-semibold mt-2">
               {testimonial.quote}
             </p>
             <div className="mt-6 flex gap-3">
-              <Avatar>
+              <Avatar size="lg">
                 <AvatarFallback className="text-xs font-medium text-muted-foreground">
                   {testimonial.initials}
                 </AvatarFallback>
@@ -53,9 +60,6 @@ export default function Testimonials() {
                 </p>
                 <p className="text-xs text-muted-foreground/90">
                   {testimonial.role}
-                </p>
-                <p className="text-xs font-medium text-muted-foreground/80">
-                  {testimonial.company}
                 </p>
               </div>
             </div>

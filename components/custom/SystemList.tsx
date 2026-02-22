@@ -1,4 +1,4 @@
-import { PlayIcon } from "@heroicons/react/24/outline"
+import { ArrowRightCircleIcon, ArrowRightIcon, ArrowUpOnSquareIcon, ArrowUturnRightIcon, ForwardIcon, PlayIcon, StopCircleIcon, TagIcon, VariableIcon } from "@heroicons/react/24/outline"
 
 import { cn } from "@/lib/utils"
 import type { SystemListItemProps, SystemListProps } from "@/types/ui"
@@ -43,7 +43,7 @@ export function SystemListItem({ children, size = "sm" }: SystemListItemProps) {
   return (
     <li className="flex items-start gap-2">
       <span className="mt-1 inline-flex">
-        <PlayIcon className="h-3 w-3 text-foreground" />
+        <ArrowRightIcon className="h-3 w-3 text-foreground" />
       </span>
       <span className={itemTextClasses[size]}>{children}</span>
     </li>

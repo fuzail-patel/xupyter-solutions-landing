@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import type { GridColSpan } from "./layout"
 
 export type JourneyStep = {
   id: string
@@ -6,6 +7,7 @@ export type JourneyStep = {
   description: string
   icon?: ReactNode
   details?: string[]
+  colSpan?: GridColSpan
 }
 
 export type JourneyTimelineProps = {

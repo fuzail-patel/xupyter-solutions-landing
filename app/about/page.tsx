@@ -8,6 +8,7 @@ import {
 import Header from "@/components/layout/Header"
 import { PageSectionHeader } from "@/components/custom/PageSectionHeader"
 import { CtaButton } from "@/components/custom/CtaButton"
+import ConversionLayer from "@/components/layout/ConversionLayer"
 
 export default function AboutPage() {
   return (
@@ -20,7 +21,7 @@ export default function AboutPage() {
         subtitle="We design and build scalable business systems engineered for long-term operational clarity."
       />
 
-      <section className="py-12 sm:py-16 md:py-20 border-b border-border/60">
+      <section className="py-10 sm:py-12 md:py-14">
         <div className="max-w-6xl mx-auto px-6">
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
             ABOUT XUPYTER
@@ -162,21 +163,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="py-12 sm:py-16 md:py-20">
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <p className="text-sm sm:text-base text-foreground font-medium">
-            Building something that needs to operate properly?
-          </p>
-          <p className="mt-2 text-sm sm:text-base text-muted-foreground/90 leading-relaxed">
-            Let&apos;s structure it correctly.
-          </p>
-          <div className="mt-6">
-            <CtaButton variant="primary" href="#strategy-call">
-              Discuss Your Project
-            </CtaButton>
-          </div>
-        </div>
-      </section>
+      {/* Conversion Layer */}
+      <ConversionLayer />
     </main>
   )
 }

@@ -5,7 +5,7 @@ import {
   ShoppingBagIcon,
   TruckIcon,
   WrenchScrewdriverIcon,
-} from "@heroicons/react/24/outline"
+} from "@heroicons/react/24/solid"
 
 import type { Industry } from "@/types/content"
 
@@ -13,38 +13,38 @@ export const INDUSTRIES: Industry[] = [
   {
     name: "Logistics & Supply Chain",
     description:
-      "Integrated tracking systems and operational control dashboards.",
+      "Fleet tracking dashboards, dispatch automation, warehouse sync systems.",
     icon: <TruckIcon className="size-6" />,
     href: "/blog/logistics-and-supply-chain",
-    colSpan: 7,
+    colSpan: 8,
   },
   {
     name: "Manufacturing",
-    description: "Internal ERP tools and production workflow automation.",
+    description: "Production line monitoring, quality control systems, inventory automation.",
     icon: <WrenchScrewdriverIcon className="size-6" />,
     href: "/blog/manufacturing",
-    colSpan: 5,
+    colSpan: 4,
   },
   {
     name: "Healthcare",
     description:
-      "Secure systems built around regulated processes and data workflows.",
+      "Patient data management, compliance tracking, clinical workflow systems.",
     icon: <HeartIcon className="size-6" />,
     href: "/blog/healthcare",
     colSpan: 4,
   },
   {
-    name: "Growing Product Companies",
+    name: "Enterprise Operations",
     description:
-      "Scalable platforms designed to support rapid expansion.",
+      "ERP integrations, internal tooling, operational workflow automation.",
     icon: <BuildingOffice2Icon className="size-6" />,
-    href: "/blog/growing-product-companies",
+    href: "/blog/enterprise-operations",
     colSpan: 4,
   },
   {
     name: "Fashion & Apparel",
     description:
-      "Digital design tools, supply chain management, and e-commerce solutions.",
+      "Inventory management systems, supplier coordination, seasonal planning tools.",
     icon: <ShoppingBagIcon className="size-6" />,
     href: "/blog/fashion-and-apparel",
     colSpan: 4,
@@ -52,18 +52,18 @@ export const INDUSTRIES: Industry[] = [
   {
     name: "Retail & E-commerce",
     description:
-      "Custom platforms connecting sales, inventory, and operations.",
+      "Order fulfillment systems, inventory synchronization, multi-channel sales platforms.",
     icon: <ShoppingBagIcon className="size-6" />,
     href: "/blog/retail-and-e-commerce",
-    colSpan: 5,
+    colSpan: 4,
   },
   {
     name: "Fintech",
     description:
-      "Infrastructure for payments, compliance workflows, and financial operations.",
+      "Payment processing infrastructure, regulatory compliance systems, financial data pipelines.",
     icon: <CurrencyDollarIcon className="size-6" />,
     href: "/blog/fintech",
-    colSpan: 7,
+    colSpan: 8,
   },
 ]
 

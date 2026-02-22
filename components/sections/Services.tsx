@@ -11,6 +11,7 @@ import { SystemList } from "@/components/custom/SystemList"
 import { SERVICES } from "@/data/services"
 import { useSectionReveal } from "@/hooks/useSectionReveal"
 import { animateStaggeredFadeUp } from "@/lib/animations"
+import { Badge } from "../ui/badge"
 
 export default function Services() {
   const { ref, style } = useSectionReveal((sectionEl) => {
@@ -52,29 +53,23 @@ export default function Services() {
                       href={service.href}
                       className="group flex h-full flex-col"
                     >
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-secondary">
-                          <span className="text-foreground">
-                            {service.icon}
-                          </span>
-                        </div>
-                        <span className="text-foreground/40 hover:text-foreground">
-                          <ArrowUpRightIcon className="h-4 w-4" />
-                          <span className="sr-only">View detail</span>
-                        </span>
-                      </div>
-
-                      <h3 className="text-xl md:text-2xl font-[var(--font-satoshi)] font-semibold">
+                      <h3 className="text-xl md:text-2xl font-semibold text-foreground/90">
                         {service.title}
                       </h3>
 
-                      <BodyText className="mt-4 max-w-md">
+                      <BodyText className="mt-2 max-w-md">
                         {service.description}
                       </BodyText>
 
-                      <div className="mt-6">
-                        <SystemList items={service.bullets} />
+                      <div className="mt-6 grid md:grid-cols-2 gap-2 justify-items-start me-auto">
+                        {service.bullets.map(service => (
+                          <Badge variant={'secondary'} className="font-bold flex items-center gap-1.5">
+                            <div className="p-0.75 mt-0.5 bg-primary rounded-full animate-pulse"></div>
+                            {service}
+                          </Badge>
+                        ))}
                       </div>
+
                     </Link>
                   </CardContent>
                 </Card>
