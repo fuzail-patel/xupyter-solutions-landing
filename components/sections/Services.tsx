@@ -1,17 +1,15 @@
 "use client"
 
 import Link from "next/link"
-import { ArrowUpRightIcon } from "@heroicons/react/24/outline"
 
-import { AsymmetricGrid } from "@/components/layout/AsymmetricGrid"
+import AsymmetricGrid from "@/components/layout/AsymmetricGrid"
 import { Card, CardContent } from "@/components/ui/card"
-import { BodyText } from "@/components/custom/Typography"
-import { SectionHeader } from "@/components/custom/SectionHeader"
-import { SystemList } from "@/components/custom/SystemList"
-import { SERVICES } from "@/data/services"
-import { useSectionReveal } from "@/hooks/useSectionReveal"
+import { BodyText } from "@/components/shared/Typography"
+import SectionHeader from "@/components/shared/SectionHeader"
+import { SERVICES } from "@/lib/constants/services"
+import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
 import { animateStaggeredFadeUp } from "@/lib/animations"
-import { Badge } from "../ui/badge"
+import { Badge } from "@/components/ui/badge"
 
 export default function Services() {
   const { ref, style } = useSectionReveal((sectionEl) => {
@@ -40,12 +38,13 @@ export default function Services() {
         <div className="mt-10 md:mt-12">
           <AsymmetricGrid
             className="gap-2"
-            items={SERVICES.map((service) => ({
+            items={SERVICES.map((service, index) => ({
               id: service.title,
               colSpan: service.colSpan,
               content: (
                 <Card
                   data-service-card
+                  key={`${service.title}-${index}`}
                   className="h-full shadow-sm py-0 transform-gpu transition-transform duration-150 ease-out hover:-translate-y-0.5 hover:shadow-md rounded-none border-none"
                 >
                   <CardContent className="h-full px-6 py-6">
@@ -62,10 +61,14 @@ export default function Services() {
                       </BodyText>
 
                       <div className="mt-6 grid md:grid-cols-2 gap-2 justify-items-start me-auto">
-                        {service.bullets.map(service => (
-                          <Badge variant={'secondary'} className="font-bold flex items-center gap-1.5">
+                        {service.bullets.map((bullet, i) => (
+                          <Badge
+                            key={`${service.title}-bullet-${i}`}
+                            variant={'secondary'}
+                            className="font-bold flex items-center gap-1.5"
+                          >
                             <div className="p-0.75 mt-0.5 bg-primary rounded-full animate-pulse"></div>
-                            {service}
+                            {bullet}
                           </Badge>
                         ))}
                       </div>

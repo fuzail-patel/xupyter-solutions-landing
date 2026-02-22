@@ -1,15 +1,16 @@
 "use client"
 
 import Link from "next/link"
+import { cloneElement } from "react"
 
-import { AsymmetricGrid } from "@/components/layout/AsymmetricGrid"
+import AsymmetricGrid from "@/components/layout/AsymmetricGrid"
 import { Card, CardContent } from "@/components/ui/card"
-import { SectionHeader } from "@/components/custom/SectionHeader"
+import SectionHeader from "@/components/shared/SectionHeader"
 import { cn } from "@/lib/utils"
-import { INDUSTRIES } from "@/data/industries"
-import { useSectionReveal } from "@/hooks/useSectionReveal"
+import { INDUSTRIES } from "@/lib/constants/industries"
+import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
 import { animateStaggeredFadeUp } from "@/lib/animations"
-import { BodyText } from "../custom/Typography"
+import { BodyText } from "@/components/shared/Typography"
 
 export default function IndustriesSection() {
   const { ref, style } = useSectionReveal((sectionEl) => {
@@ -51,12 +52,19 @@ export default function IndustriesSection() {
                     "border-b-2 border-transparent hover:border-primary/20"
                   )}
                 >
-                  <CardContent className="px-6 py-6 flex flex-col justify-center h-full space-y-2">
-                    <h3 className="text-xl md:text-2xl font-semibold text-foreground/90">
+                  <CardContent className="px-6 py-6 flex flex-col justify-center h-full">
+                    <div className="text-secondary-foreground/50 p-2.5 md:p-3 bg-primary/10 inline-flex w-fit rounded-xl">
+                      {industry.icon
+                        ? cloneElement(industry.icon, {
+                            className: "w-5 h-5 md:w-6 md:h-6",
+                          })
+                        : null}
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-semibold text-foreground/90 mt-3">
                       {industry.name}
                     </h3>
 
-                    <BodyText className="font-semibold">
+                    <BodyText className="font-semibold mt-4">
                       {industry.description}
                     </BodyText>
                   </CardContent>

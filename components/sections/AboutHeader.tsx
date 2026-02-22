@@ -20,7 +20,7 @@ export default function AboutHeader() {
             </div>
 
             <div className="space-y-3">
-              <h1 className="font-[var(--font-satoshi)] text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-tight text-foreground max-w-3xl">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight leading-tight text-foreground max-w-3xl">
                 The Thinking Behind How We Build
               </h1>
 

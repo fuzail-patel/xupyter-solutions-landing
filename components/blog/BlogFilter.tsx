@@ -1,25 +1,9 @@
-import type { BlogPost } from "@/types/blog"
 import { Button } from "@/components/ui/button"
-
-const DEFAULT_CATEGORIES = [
-  "All",
-  "System Architecture",
-  "Internal Tools",
-  "Automation Infrastructure",
-] as const
-
-type Category = (typeof DEFAULT_CATEGORIES)[number]
-
-type BlogFilterProps = {
-  categories?: Category[]
-  selectedCategory: Category
-  onCategoryChange: (category: Category) => void
-  resultCount: number
-  searchQuery?: string
-}
+import type { BlogFilterProps } from "@/lib/types/blog"
+import { BLOG_CATEGORIES } from "@/lib/constants/blog"
 
 export function BlogFilter({
-  categories = DEFAULT_CATEGORIES,
+  categories = [...BLOG_CATEGORIES],
   selectedCategory,
   onCategoryChange,
   resultCount,
@@ -59,6 +43,3 @@ export function BlogFilter({
     </div>
   )
 }
-
-export type { Category }
-

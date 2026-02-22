@@ -3,12 +3,12 @@
 import { useEffect, useRef } from "react"
 import Image from "next/image"
 
-import { AutoCarousel } from "@/components/custom/AutoCarousel"
-import { CtaButton } from "@/components/custom/CtaButton"
-import StrategyCallBooking from "@/components/StrategyCallBooking"
+import AutoCarousel from "@/components/shared/AutoCarousel"
+import { CtaButton } from "@/components/shared/CtaButton"
+import ScheduleCallButton from "@/components/shared/ScheduleCallButton"
 import { cn } from "@/lib/utils"
 import { animateHeroIntro } from "@/lib/animations"
-import EyeBrow from "../custom/EyeBrow"
+import Eyebrow from "@/components/shared/EyeBrow"
 
 export default function HeroSection() {
   const eyebrowRef = useRef<HTMLParagraphElement | null>(null)
@@ -44,7 +44,7 @@ export default function HeroSection() {
           <div className="flex flex-col gap-7 text-center lg:text-left items-center lg:items-start">
             <div className="space-y-2">
               <div ref={eyebrowRef}>
-                <EyeBrow text="Changing The Business" className="text-primary" showDot={false} />
+                <Eyebrow text="~ Changing The Business" className="text-foreground/70" showDot={false} />
               </div>
               <h1
                 ref={headingRef}
@@ -62,17 +62,16 @@ export default function HeroSection() {
 
             <p
               ref={descriptionRef}
-              className="mt-1 text-sm md:text-base text-muted-foreground/90 leading-relaxed max-w-xl"
+              className="mt-1 text-sm md:text-base text-muted-foreground/90 leading-relaxed max-w-xl font-semibold"
             >
-              Custom platforms, automation, and internal tools designed to
-              support real operations — not just look good online.
+              We designs and builds custom SaaS platforms, ERP systems, CRMs, and internal business tools — engineered for scale from day one, not patched together as you grow.
             </p>
 
             <div
               ref={ctaGroupRef}
-              className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
+              className="flex flex-col md:flex-wrap sm:flex-row gap-4 justify-center md:justify-start"
             >
-              <StrategyCallBooking variant="primary" />
+              <ScheduleCallButton variant="primary" />
 
               <CtaButton variant="secondary" href="#work">
                 View Case Studies
@@ -84,7 +83,7 @@ export default function HeroSection() {
                 <p className="font-bold text-3xl md:text-4xl font-display">
                   100+
                 </p>
-                <p className="text-sm text-muted-foreground tracking-[0.08em] mt-1">
+                <p className="text-sm text-muted-foreground tracking-wider mt-1">
                   Projects
                 </p>
               </div>
@@ -93,7 +92,7 @@ export default function HeroSection() {
                 <p className="font-bold text-3xl md:text-4xl font-display">
                   10+
                 </p>
-                <p className="text-sm text-muted-foreground tracking-[0.08em] mt-1">
+                <p className="text-sm text-muted-foreground tracking-wider mt-1">
                   Industries
                 </p>
               </div>
@@ -102,7 +101,7 @@ export default function HeroSection() {
                 <p className="font-bold text-3xl md:text-4xl font-display">
                   7+
                 </p>
-                <p className="text-sm text-muted-foreground tracking-[0.08em] mt-1">
+                <p className="text-sm text-muted-foreground tracking-wider mt-1">
                   Years Experience
                 </p>
               </div>
@@ -111,7 +110,7 @@ export default function HeroSection() {
 
           <div
             ref={heroMediaRef}
-            className="relative rounded-xl aspect-[4/3] overflow-hidden mx-auto md:mx-0 w-full max-w-md md:max-w-none"
+            className="relative rounded-xl aspect-4/3 overflow-hidden mx-auto md:mx-0 w-full max-w-md md:max-w-none"
           >
             <AutoCarousel
               slides={[

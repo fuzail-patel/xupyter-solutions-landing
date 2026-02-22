@@ -8,9 +8,9 @@ const textareaVariants = cva(
     variants: {
       variant: {
         default:
-          "min-h-[80px] rounded-md border border-input bg-background px-3 py-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
+          "min-h-20 rounded-md border border-input bg-background px-3 py-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
         minimal:
-          "min-h-[140px] bg-transparent border-0 px-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 resize-none",
+          "min-h-36 bg-transparent border-0 px-0 focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 resize-none",
       },
     },
     defaultVariants: {

@@ -1,11 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-
-import type { BlogPost } from "@/types/blog"
-
-type BlogCardProps = {
-  post: BlogPost
-}
+import type { BlogCardProps } from "@/lib/types/blog"
 
 export default function BlogCard({ post }: BlogCardProps) {
   return (
@@ -25,7 +20,7 @@ export default function BlogCard({ post }: BlogCardProps) {
             />
           </div>
           <div className="flex flex-1 flex-col p-5 md:p-6">
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/80">
               {post.category}
             </span>
             <h3 className="mt-3 text-base md:text-lg font-semibold font-[var(--font-satoshi)] text-foreground transition-colors duration-150 group-hover:text-primary">
@@ -34,7 +29,7 @@ export default function BlogCard({ post }: BlogCardProps) {
             <p className="mt-2 text-xs sm:text-sm text-muted-foreground line-clamp-2">
               {post.excerpt}
             </p>
-            <div className="mt-4 flex items-center gap-2 text-[0.78rem] text-muted-foreground/80">
+            <div className="mt-4 flex items-center gap-2 text-xs text-muted-foreground/80">
               <span>{post.publishedAt}</span>
               <span className="h-1 w-1 rounded-full bg-muted-foreground/60" />
               <span>{post.readTime}</span>
@@ -45,4 +40,3 @@ export default function BlogCard({ post }: BlogCardProps) {
     </article>
   )
 }
-

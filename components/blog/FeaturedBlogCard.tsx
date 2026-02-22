@@ -1,11 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-
-import type { BlogPost } from "@/types/blog"
-
-type FeaturedBlogCardProps = {
-  post: BlogPost
-}
+import type { FeaturedBlogCardProps } from "@/lib/types/blog"
 
 export function FeaturedBlogCard({ post }: FeaturedBlogCardProps) {
   return (
@@ -14,7 +9,7 @@ export function FeaturedBlogCard({ post }: FeaturedBlogCardProps) {
         href={`/blog/${post.slug}`}
         className="flex flex-col gap-6 lg:flex-row"
       >
-        <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted/60 lg:w-[60%]">
+        <div className="relative aspect-[16/9] w-full overflow-hidden bg-muted/60 lg:w-3/5">
           <Image
             src={post.image}
             alt={post.title}
@@ -25,13 +20,13 @@ export function FeaturedBlogCard({ post }: FeaturedBlogCardProps) {
           />
         </div>
 
-        <div className="flex w-full flex-1 flex-col justify-center gap-3 px-6 pb-6 pt-4 lg:w-[40%] lg:px-6 lg:py-6">
+        <div className="flex w-full flex-1 flex-col justify-center gap-3 px-6 pb-6 pt-4 lg:w-2/5 lg:px-6 lg:py-6">
           <div className="flex items-center gap-3 text-xs font-medium text-muted-foreground/80">
-            <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/5 px-2 py-0.5 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-primary">
+            <span className="inline-flex items-center rounded-full border border-primary/30 bg-primary/5 px-2 py-0.5 text-xs font-semibold uppercase tracking-widest text-primary">
               Featured
             </span>
             <span className="h-1 w-1 rounded-full bg-muted-foreground/60" />
-            <span className="text-[0.7rem] font-semibold uppercase tracking-[0.18em]">
+            <span className="text-xs font-semibold uppercase tracking-widest">
               {post.category}
             </span>
           </div>
@@ -58,4 +53,3 @@ export function FeaturedBlogCard({ post }: FeaturedBlogCardProps) {
     </article>
   )
 }
-

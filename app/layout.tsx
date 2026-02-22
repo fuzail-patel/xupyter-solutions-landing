@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Sora, DM_Sans, Plus_Jakarta_Sans } from "next/font/google"
+import { Sora, Plus_Jakarta_Sans } from "next/font/google"
 import Footer from "@/components/layout/Footer"
 import "./globals.css"
 

@@ -1,17 +1,17 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import Link from "next/link"
+import Image from "next/image"
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
 } from "@heroicons/react/24/outline"
 
-import { SectionHeader } from "@/components/custom/SectionHeader"
-import { BodyText } from "@/components/custom/Typography"
-import { CtaButton } from "@/components/custom/CtaButton"
-import { CASE_STUDIES } from "@/data/caseStudies"
-import { useSectionReveal } from "@/hooks/useSectionReveal"
+import SectionHeader from "@/components/shared/SectionHeader"
+import { BodyText } from "@/components/shared/Typography"
+import { CtaButton } from "@/components/shared/CtaButton"
+import { CASE_STUDIES } from "@/lib/constants/caseStudies"
+import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
 import { animateFadeUp } from "@/lib/animations"
 
 export default function CaseStudies() {
@@ -86,7 +86,7 @@ export default function CaseStudies() {
           >
              <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-8 md:gap-10 items-start">
                <div className="flex flex-col items-start gap-5">
-                 <span className="inline-flex items-center gap-2 rounded-full bg-secondary/60 px-3 py-1 text-[0.7rem] font-medium tracking-[0.12em] text-muted-foreground/90">
+                 <span className="inline-flex items-center gap-2 rounded-full bg-secondary/60 px-3 py-1 text-xs font-medium tracking-widest text-muted-foreground/90">
                    <span className="text-muted-foreground/95">
                      {activeCase.icon}
                    </span>
@@ -108,43 +108,34 @@ export default function CaseStudies() {
                      href={`/case-studies/${activeCase.slug}`}
                      className="text-sm"
                    >
-                     Read Full Case Study
+                     Read Full<div className="hidden md:inline">Case Study</div>
                    </CtaButton>
                  </div>
                </div>
 
               <div className="flex flex-col gap-5">
-                <div className="rounded-xl bg-secondary/60 px-5 py-4 md:px-6 md:py-5">
-                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
-                    System View
-                  </p>
-                  <div className="mt-3 rounded-lg bg-background/80 px-4 py-3">
-                    <div className="flex items-center gap-2">
-                      <span className="h-2 w-2 rounded-full bg-emerald-400/80" />
-                      <span className="h-2 w-2 rounded-full bg-amber-400/80" />
-                      <span className="h-2 w-2 rounded-full bg-rose-400/80" />
-                    </div>
-                    <div className="mt-4 space-y-2">
-                      <div className="h-2.5 w-5/6 rounded-full bg-muted/70" />
-                      <div className="h-2.5 w-2/3 rounded-full bg-muted/60" />
-                    </div>
-                    <div className="mt-4 grid grid-cols-3 gap-2">
-                      <div className="h-14 rounded-md bg-muted" />
-                      <div className="h-14 rounded-md bg-muted" />
-                      <div className="h-14 rounded-md bg-muted" />
-                    </div>
+                <div className="rounded-xl bg-secondary/60">
+                  <div className="relative rounded-lg bg-background/80 overflow-hidden aspect-[16/9]">
+                    <Image
+                      src={activeCase.image ?? "/window.svg"}
+                      alt={`${activeCase.headline} system view`}
+                      fill
+                      className="object-cover"
+                      sizes="(min-width: 1024px) 520px, (min-width: 768px) 50vw, 100vw"
+                      priority={activeIndex === 0}
+                    />
                   </div>
-                  <div className="mt-4 border-t border-border/60 pt-4">
-                    <p className="text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-muted-foreground/80">
+                  <div className="mt-4 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/80">
                       Impact in Operations
                     </p>
                     <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
                       {activeCase.metrics.map((metric) => (
                         <div key={metric.label} className="flex flex-col">
-                          <span className="text-sm md:text-base font-semibold font-[var(--font-satoshi)]">
+                          <span className="text-sm md:text-base font-semibold">
                             {metric.value}
                           </span>
-                          <span className="text-[0.7rem] md:text-xs text-muted-foreground">
+                          <span className="text-xs md:text-xs text-muted-foreground">
                             {metric.label}
                           </span>
                         </div>

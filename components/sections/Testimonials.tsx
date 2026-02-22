@@ -1,12 +1,12 @@
 "use client"
 
-import { SectionHeader } from "@/components/custom/SectionHeader"
-import { AutoCarousel } from "@/components/custom/AutoCarousel"
+import SectionHeader from "@/components/shared/SectionHeader"
+import AutoCarousel from "@/components/shared/AutoCarousel"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { TESTIMONIALS } from "@/data/testimonials"
-import { useSectionReveal } from "@/hooks/useSectionReveal"
+import { TESTIMONIALS } from "@/lib/constants/testimonials"
+import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
 import { animateFadeUp } from "@/lib/animations"
-import { Badge } from "../ui/badge"
+import { Badge } from "@/components/ui/badge"
 
 
 const ITEMS_PER_SLIDE = 3
@@ -38,7 +38,7 @@ export default function Testimonials() {
           <article
             key={testimonial.company + testimonial.name}
             data-testimonial-card
-            className="flex flex-col rounded-2xl bg-card shadow-[0_18px_40px_rgba(15,23,42,0.08)] px-5 py-6 md:px-6 md:py-7"
+            className="flex flex-col rounded-2xl bg-card shadow-xl px-5 py-6 md:px-6 md:py-7"
           >
             {testimonial.industry && (
               <Badge variant="secondary" className="font-semibold mb-1">
