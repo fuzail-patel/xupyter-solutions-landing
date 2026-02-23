@@ -1,5 +1,3 @@
-import Image from "next/image"
-
 import Header from "@/components/layout/Header"
 import { PageSectionHeader } from "@/components/shared"
 import { PortfolioCard } from "@/components/portfolio"
@@ -35,7 +33,7 @@ export default function PortfolioPage() {
               <div className="relative overflow-hidden bg-muted/60">
                 <div className="relative aspect-16/10 md:aspect-auto md:h-full">
                   <SmartImage
-                    src={featuredProject.image}
+                    src={featuredProject.image ?? '/fallback-image.png'}
                     alt={featuredProject.name}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"

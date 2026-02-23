@@ -44,7 +44,7 @@ export default function HeroSection() {
           <div className="flex flex-col gap-7 text-center lg:text-left items-center lg:items-start">
             <div className="space-y-2">
               <div ref={eyebrowRef}>
-                <Eyebrow text="~ Changing The Business" className="text-foreground/70" showDot={false} />
+                <Eyebrow text="Changing The Business" className="text-foreground/70" showDot={false} />
               </div>
               <h1
                 ref={headingRef}

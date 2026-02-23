@@ -22,12 +22,15 @@ import {
   contactSchema,
   type ContactFormValues,
 } from "@/lib/schemas/contact.schema"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import ContactSuccess from "./ContactSuccess"
 
 export function ContactFormCard() {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(() => {
     if (typeof window === "undefined") return false
     return window.sessionStorage.getItem("contact_submitted") === "true"
   })
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -39,21 +42,40 @@ export function ContactFormCard() {
     },
   })
 
-  
+  const onSubmit = async (values: ContactFormValues) => {
+    setErrorMessage(null)
 
-  const onSubmit = () => {
-    form.reset()
-    window.sessionStorage.setItem("contact_submitted", "true")
-    setIsSubmitted(true)
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      })
+
+      if (!response.ok) {
+        if (response.status === 400) {
+          setErrorMessage("Please check the form fields and try again.")
+        } else {
+          setErrorMessage("Something went wrong. Please try again.")
+        }
+        return
+      }
+
+      form.reset()
+
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem("contact_submitted", "true")
+      }
+
+      setIsSubmitted(true)
+    } catch {
+      setErrorMessage("Network error. Please try again.")
+    }
   }
 
-  const headerTitle = isSubmitted
-    ? "Request Received"
-    : "Start the Conversation"
-
-  const headerDescription = isSubmitted
-    ? "Next, our team will review your context, route it to the right lead, and follow up with clear next steps—typically within 1–2 business days."
-    : "Tell us about your operations, challenges, and long-term goals. We’ll respond with clarity — not a generic pitch."
+  const isSubmitting = form.formState.isSubmitting
 
   return (
     <Card className="border-none shadow-none bg-transparent p-0">
@@ -64,22 +86,9 @@ export function ContactFormCard() {
           className="border-b border-border pb-6"
           eyebrow="Contact"
           accent={false}
-          title={headerTitle}
-          description={headerDescription}
+          title={"Start the Conversation"}
+          description={"Tell us about your operations, challenges, and long-term goals. We’ll respond with clarity — not a generic pitch."}
         />
-
-        {/* Submitted State */}
-        {isSubmitted && (
-          <div className="space-y-5 text-sm md:text-base text-muted-foreground">
-            <SystemList
-              items={[
-                "We review your message and operational context.",
-                "We route it to the most relevant lead on our team.",
-                "We reply with concrete next steps.",
-              ]}
-            />
-          </div>
-        )}
 
         {/* Form State */}
         {!isSubmitted && (
@@ -88,6 +97,12 @@ export function ContactFormCard() {
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-5 md:space-y-6"
             >
+              {errorMessage && (
+                <Alert variant="destructive">
+                  <AlertTitle>Something went wrong</AlertTitle>
+                  <AlertDescription>{errorMessage}</AlertDescription>
+                </Alert>
+              )}
               {/* First + Last Name */}
               <div className="grid gap-5 md:gap-6 md:grid-cols-2">
                 <FormField
@@ -188,14 +203,24 @@ export function ContactFormCard() {
                 <CtaButton
                   variant="primary"
                   buttonType="submit"
-                  disabled={form.formState.isSubmitting}
+                  disabled={isSubmitting}
+                  icon={null}
                 >
-                  Continue
+                  {isSubmitting ? (
+                    <span className="inline-flex items-center gap-2">
+                      <span className="h-4 w-4 rounded-full border-2 border-current border-t-transparent animate-spin" />
+                      Sending…
+                    </span>
+                  ) : (
+                    "Continue"
+                  )}
                 </CtaButton>
               </div>
             </form>
           </Form>
         )}
+
+        {isSubmitted && <ContactSuccess />}
       </CardContent>
     </Card>
   )

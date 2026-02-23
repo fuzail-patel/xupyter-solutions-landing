@@ -13,7 +13,7 @@ interface SmartImageProps extends ImageProps {
 export function SmartImage({
     src,
     alt,
-    fallbackSrc = "/window.svg",
+    fallbackSrc = "/fallback-image.png",
     containerClassName,
     className,
     ...props
@@ -41,6 +41,7 @@ export function SmartImage({
                 className={cn(
                     "transition-opacity duration-300",
                     isLoading ? "opacity-0" : "opacity-100",
+                    hasError ?? 'object-fit',
                     className
                 )}
                 onLoadingComplete={() => setIsLoading(false)}

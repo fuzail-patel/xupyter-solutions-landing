@@ -115,9 +115,9 @@ export default function CaseStudies() {
 
               <div className="flex flex-col gap-5">
                 <div className="rounded-xl bg-secondary/60">
-                  <div className="relative rounded-lg bg-background/80 overflow-hidden aspect-[16/9]">
+                  <div className="relative rounded-lg bg-background/80 overflow-hidden aspect-16/9">
                     <SmartImage
-                      src={activeCase.image ?? "/window.svg"}
+                      src={activeCase.image ?? '/fallback-image.png'}
                       alt={`${activeCase.headline} system view`}
                       fill
                       className="object-cover"
