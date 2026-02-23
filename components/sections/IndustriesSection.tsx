@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { cloneElement } from "react"
 
 import AsymmetricGrid from "@/components/layout/AsymmetricGrid"
 import { Card, CardContent } from "@/components/ui/card"
@@ -54,11 +53,7 @@ export default function IndustriesSection() {
                 >
                   <CardContent className="px-6 py-6 flex flex-col justify-center h-full">
                     <div className="text-secondary-foreground/50 p-2.5 md:p-3 bg-primary/10 inline-flex w-fit rounded-xl">
-                      {industry.icon
-                        ? cloneElement(industry.icon, {
-                            className: "w-5 h-5 md:w-6 md:h-6",
-                          })
-                        : null}
+                      {industry.icon ?? null}
                     </div>
                     <h3 className="text-xl md:text-2xl font-semibold text-foreground/90 mt-3">
                       {industry.name}

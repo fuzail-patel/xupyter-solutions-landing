@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import Image from "next/image"
+import { SmartImage } from "@/components/shared/SmartImage"
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -116,7 +116,7 @@ export default function CaseStudies() {
               <div className="flex flex-col gap-5">
                 <div className="rounded-xl bg-secondary/60">
                   <div className="relative rounded-lg bg-background/80 overflow-hidden aspect-[16/9]">
-                    <Image
+                    <SmartImage
                       src={activeCase.image ?? "/window.svg"}
                       alt={`${activeCase.headline} system view`}
                       fill

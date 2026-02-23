@@ -6,6 +6,7 @@ import { PortfolioCard } from "@/components/portfolio"
 import { CtaButton } from "@/components/shared"
 import { CallToAction } from "@/components/sections"
 import { portfolioProjects } from "@/lib/constants/portfolio"
+import { SmartImage } from "@/components/shared/SmartImage"
 
 export default function PortfolioPage() {
   const featuredProject =
@@ -32,15 +33,15 @@ export default function PortfolioPage() {
           <div className="group overflow-hidden rounded-2xl border border-border/70 bg-card shadow-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl">
             <div className="grid gap-8 md:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] items-stretch">
               <div className="relative overflow-hidden bg-muted/60">
-                <div className="relative aspect-[16/10] md:aspect-auto md:h-full">
-                  <Image
+                <div className="relative aspect-16/10 md:aspect-auto md:h-full">
+                  <SmartImage
                     src={featuredProject.image}
                     alt={featuredProject.name}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     sizes="(min-width: 1024px) 640px, (min-width: 768px) 60vw, 100vw"
                   />
-                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 </div>
               </div>
 

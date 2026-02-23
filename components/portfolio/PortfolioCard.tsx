@@ -1,4 +1,4 @@
-import Image from "next/image"
+import { SmartImage } from "@/components/shared/SmartImage"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
 import type { PortfolioCardProps } from "@/lib/types/portfolio"
@@ -13,7 +13,7 @@ export default function PortfolioCard({ project }: PortfolioCardProps) {
     <Card className="group relative flex h-full flex-col gap-0 overflow-hidden border-border/70 bg-card p-0 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:shadow-2xl hover:border-primary/50">
       <Link href={caseStudyHref} className="relative block">
         <div className="relative aspect-16/10 bg-muted/60">
-          <Image
+          <SmartImage
             src={project.image}
             alt={project.name}
             fill

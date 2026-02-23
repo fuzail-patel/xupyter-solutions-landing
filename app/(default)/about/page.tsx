@@ -1,4 +1,4 @@
-import Image from "next/image"
+import { SmartImage } from "@/components/shared/SmartImage"
 import Header from "@/components/layout/Header"
 import { BodyText, PageSectionHeader } from "@/components/shared"
 import { CallToAction } from "@/components/sections"
@@ -41,7 +41,7 @@ export default function AboutPage() {
               </p>
             </div>
             <div className="relative aspect-4/3 w-full rounded-xl bg-card/40 overflow-hidden">
-              <Image
+              <SmartImage
                 src="/about-image.webp"
                 alt="Xupyter team working on systems and platforms"
                 fill

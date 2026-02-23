@@ -13,16 +13,23 @@ interface SmartImageProps extends ImageProps {
 export function SmartImage({
     src,
     alt,
-    fallbackSrc = "/images/fallback.png",
+    fallbackSrc = "/window.svg",
     containerClassName,
     className,
     ...props
 }: SmartImageProps) {
     const [isLoading, setIsLoading] = useState(true)
     const [hasError, setHasError] = useState(false)
+    const isFill = Boolean((props as ImageProps).fill)
 
     return (
-        <div className={cn("relative overflow-hidden", containerClassName)}>
+        <div
+            className={cn(
+                "relative overflow-hidden",
+                isFill ? "absolute inset-0" : "",
+                containerClassName
+            )}
+        >
             {isLoading && (
                 <Skeleton className="absolute inset-0 z-10" />
             )}
@@ -36,7 +43,7 @@ export function SmartImage({
                     isLoading ? "opacity-0" : "opacity-100",
                     className
                 )}
-                onLoad={() => setIsLoading(false)}
+                onLoadingComplete={() => setIsLoading(false)}
                 onError={() => {
                     setHasError(true)
                     setIsLoading(false)

@@ -1,6 +1,6 @@
 "use client"
 
-import Image from "next/image"
+import { SmartImage } from "@/components/shared/SmartImage"
 import {
   ArrowUpRightIcon
 } from "@heroicons/react/24/solid"
@@ -26,7 +26,7 @@ export default function Contact() {
           <div className="grid grid-cols-1 ;g:grid-rows-2 gap-6 h-full">
             <Card className="border-none shadow-none p-0 overflow-hidden hidden lg:block">
               <CardContent className="p-0 h-full">
-                <Image
+                <SmartImage
                   src="/contact-image.jpg"
                   alt="Contact"
                   height={300}
