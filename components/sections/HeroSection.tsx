@@ -38,7 +38,7 @@ export default function HeroSection() {
   }, [])
 
   return (
-    <section id="home" className="py-10 md:py-14">
+    <section id="home" className="py-10 md:pb-16 md:pt-18">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="flex flex-col gap-7 text-center lg:text-left items-center lg:items-start">
@@ -48,7 +48,7 @@ export default function HeroSection() {
               </div>
               <h1
                 ref={headingRef}
-                className="text-4xl md:text-5xl lg:text-6xl leading-tight font-bold max-w-3xl tracking-tight"
+                className="text-4xl sm:text-5xl lg:text-6xl leading-tight font-bold max-w-3xl tracking-tight"
               >
                 <span className={cn("relative", "text-primary font-display")}>
                   We Build the Systems

@@ -56,7 +56,7 @@ export default function Services() {
                         {service.title}
                       </h3>
 
-                      <BodyText className="mt-2 max-w-md">
+                      <BodyText className="mt-2 max-w-md font-semibold">
                         {service.description}
                       </BodyText>
 

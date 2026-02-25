@@ -5,6 +5,7 @@ import { SmartImage } from "@/components/shared/SmartImage"
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
+  ArrowUpRightIcon,
 } from "@heroicons/react/24/outline"
 
 import SectionHeader from "@/components/shared/SectionHeader"
@@ -13,6 +14,8 @@ import { CtaButton } from "@/components/shared/CtaButton"
 import { CASE_STUDIES } from "@/lib/constants/caseStudies"
 import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
 import { animateFadeUp } from "@/lib/animations"
+import { Badge } from "../ui"
+import Link from "next/link"
 
 export default function CaseStudies() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -26,35 +29,35 @@ export default function CaseStudies() {
     animateFadeUp(card)
   })
 
-   useEffect(() => {
-     return () => {
-       if (timeoutRef.current !== null) {
-         window.clearTimeout(timeoutRef.current)
-       }
-     }
-   }, [])
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current !== null) {
+        window.clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   const handleNavigate = (direction: "next" | "prev") => {
-     if (timeoutRef.current !== null) {
-       window.clearTimeout(timeoutRef.current)
-     }
+    if (timeoutRef.current !== null) {
+      window.clearTimeout(timeoutRef.current)
+    }
 
-     setIsVisible(false)
+    setIsVisible(false)
 
-     timeoutRef.current = window.setTimeout(() => {
-       setActiveIndex((current) => {
-         const lastIndex = CASE_STUDIES.length - 1
+    timeoutRef.current = window.setTimeout(() => {
+      setActiveIndex((current) => {
+        const lastIndex = CASE_STUDIES.length - 1
 
-         if (direction === "next") {
-           return current === lastIndex ? 0 : current + 1
-         }
+        if (direction === "next") {
+          return current === lastIndex ? 0 : current + 1
+        }
 
-         return current === 0 ? lastIndex : current - 1
-       })
+        return current === 0 ? lastIndex : current - 1
+      })
 
-       setIsVisible(true)
-     }, 150)
-   }
+      setIsVisible(true)
+    }, 150)
+  }
 
   const activeCase = CASE_STUDIES[activeIndex]
 
@@ -79,42 +82,13 @@ export default function CaseStudies() {
           <div
             className={[
               "relative rounded-2xl bg-card",
-              "px-6 py-8 md:px-10 md:py-10",
               "transition-opacity duration-300",
               isVisible ? "opacity-100" : "opacity-0",
             ].join(" ")}
           >
-             <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-8 md:gap-10 items-start">
-               <div className="flex flex-col items-start gap-5">
-                 <span className="inline-flex items-center gap-2 rounded-full bg-secondary/60 px-3 py-1 text-xs font-medium tracking-widest text-muted-foreground/90">
-                   <span className="text-muted-foreground/95">
-                     {activeCase.icon}
-                   </span>
-                   <span>{activeCase.industry}</span>
-                 </span>
-                 <h3 className="text-2xl md:text-3xl font-semibold">
-                   {activeCase.headline}
-                 </h3>
-
-                 <div className="space-y-6">
-                   <BodyText className="text-muted-foreground leading-relaxed">
-                     {activeCase.challenge} {activeCase.systemBuilt}
-                   </BodyText>
-                 </div>
-
-                 <div className="pt-4 ms-auto">
-                   <CtaButton
-                     variant="primary"
-                     href={`/case-studies/${activeCase.slug}`}
-                     className="text-sm"
-                   >
-                     Read Full<div className="hidden md:inline">Case Study</div>
-                   </CtaButton>
-                 </div>
-               </div>
-
+            <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] items-start overflow-hidden">
               <div className="flex flex-col gap-5">
-                <div className="rounded-xl bg-secondary/60">
+                <div className="bg-secondary/60 p-1">
                   <div className="relative rounded-lg bg-background/80 overflow-hidden aspect-16/9">
                     <SmartImage
                       src={activeCase.image ?? '/fallback-image.png'}
@@ -125,7 +99,7 @@ export default function CaseStudies() {
                       priority={activeIndex === 0}
                     />
                   </div>
-                  <div className="mt-4 p-4">
+                  <div className="p-5">
                     <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/80">
                       Impact in Operations
                     </p>
@@ -144,30 +118,60 @@ export default function CaseStudies() {
                   </div>
                 </div>
               </div>
-             </div>
 
-             <div className="mt-6 flex items-center justify-end gap-3 text-sm text-muted-foreground">
-               <button
-                 type="button"
-                 onClick={() => handleNavigate("prev")}
-                 className="inline-flex items-center gap-1 hover:text-foreground transition-colors group"
-               >
-                 <ArrowLeftIcon className="size-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
-                 <span>Previous</span>
-               </button>
-               <span className="h-4 w-px bg-border/70" />
-               <button
-                 type="button"
-                 onClick={() => handleNavigate("next")}
-                 className="inline-flex items-center gap-1 hover:text-foreground transition-colors group"
-               >
-                 <span>Next</span>
-                 <ArrowRightIcon className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-               </button>
-             </div>
-           </div>
-         </div>
-       </div>
-     </section>
-   )
- }
+              <div className="flex flex-col items-start gap-5 p-6 md:p-10">
+                <div className="flex items-center justify-between w-full">
+                  <Badge variant={'outline'}>
+                    <span className="text-muted-foreground/95">
+                      {activeCase.icon}
+                    </span>
+                    <span>{activeCase.industry}</span>
+                  </Badge>
+
+                  <div className="ms-auto">
+                    <Link
+                      href={`/case-studies/${activeCase.slug}`}
+                    >
+                      <ArrowUpRightIcon className="h-4 w-4 text-muted-foreground hover:text-accent-foreground" />
+                    </Link>
+                  </div>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-semibold">
+                  {activeCase.headline}
+                </h3>
+
+                <div className="space-y-6">
+                  <BodyText className="text-muted-foreground leading-relaxed">
+                    {activeCase.challenge} {activeCase.systemBuilt}
+                  </BodyText>
+                </div>
+
+                <div className="mt-15 ms-auto flex items-center justify-end gap-3 text-sm text-muted-foreground">
+                  <button
+                    type="button"
+                    onClick={() => handleNavigate("prev")}
+                    className="inline-flex items-center gap-1 hover:text-foreground transition-colors group"
+                  >
+                    <ArrowLeftIcon className="size-4 transition-transform duration-200 group-hover:-translate-x-0.5" />
+                    <span>Previous</span>
+                  </button>
+                  <span className="h-4 w-px bg-border/70" />
+                  <button
+                    type="button"
+                    onClick={() => handleNavigate("next")}
+                    className="inline-flex items-center gap-1 hover:text-foreground transition-colors group"
+                  >
+                    <span>Next</span>
+                    <ArrowRightIcon className="size-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
