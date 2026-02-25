@@ -17,13 +17,12 @@ import {
 } from "@/components/ui/form"
 import { CtaButton } from "@/components/shared/CtaButton"
 import SectionHeader from "@/components/shared/SectionHeader"
-import { SystemList } from "@/components/shared/SystemList"
 import {
   contactSchema,
   type ContactFormValues,
 } from "@/lib/schemas/contact.schema"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import ContactSuccess from "./ContactSuccess"
+import ContactError from "./ContactError"
 
 export function ContactFormCard() {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(() => {
@@ -98,10 +97,7 @@ export function ContactFormCard() {
               className="space-y-5 md:space-y-6"
             >
               {errorMessage && (
-                <Alert variant="destructive">
-                  <AlertTitle>Something went wrong</AlertTitle>
-                  <AlertDescription>{errorMessage}</AlertDescription>
-                </Alert>
+                <ContactError message={errorMessage} />
               )}
               {/* First + Last Name */}
               <div className="grid gap-5 md:gap-6 md:grid-cols-2">

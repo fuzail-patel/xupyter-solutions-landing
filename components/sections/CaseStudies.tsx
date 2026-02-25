@@ -10,7 +10,6 @@ import {
 
 import SectionHeader from "@/components/shared/SectionHeader"
 import { BodyText } from "@/components/shared/Typography"
-import { CtaButton } from "@/components/shared/CtaButton"
 import { CASE_STUDIES } from "@/lib/constants/caseStudies"
 import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
 import { animateFadeUp } from "@/lib/animations"
