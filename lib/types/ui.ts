@@ -22,23 +22,16 @@ export type CtaButtonProps = {
   onClick?: () => void
 }
 
-export type SectionHeaderProps = {
-  eyebrow?: string
-  title: ReactNode
-  description?: ReactNode
-  align?: "left" | "center"
-  size?: "md" | "lg"
-  accent?: boolean
-  className?: string
-}
-
-export type PageSectionHeaderProps = {
+export interface SectionHeaderProps {
   eyebrow?: string
   titlePrimary: ReactNode
   titleSecondary?: ReactNode
-  subtitle?: ReactNode
-  className?: string
+  description?: ReactNode
+  align?: "left" | "center"
+  size?: "md" | "lg" | "xl"
   accent?: boolean
+  className?: string
+  as?: "h1" | "h2"
 }
 
 export type SystemListProps = {
@@ -67,7 +60,6 @@ export type FloatingFieldProps = {
 export interface EyebrowProps {
   text: string
   className?: string
-  showDot?: boolean
 }
 
 export type ScheduleCallButtonProps = {

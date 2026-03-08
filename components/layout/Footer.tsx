@@ -4,7 +4,7 @@ import { FOOTER_COMPANY_LINKS, FOOTER_RESOURCES_LINKS, FOOTER_SERVICES_LINKS } f
 
 export default function Footer() {
   return (
-    <footer className="bg-secondary/50">
+    <footer>
       <div className="max-w-7xl mx-auto px-6 py-12 md:py-16">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4 items-center">
           <div className="space-y-4">

@@ -5,7 +5,6 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FloatingField } from "@/components/shared/FloatingField"
 
-import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import {
@@ -16,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { CtaButton } from "@/components/shared/CtaButton"
-import SectionHeader from "@/components/shared/SectionHeader"
+import { ArrowRightIcon } from "@heroicons/react/24/solid"
 import {
   contactSchema,
   type ContactFormValues,
@@ -77,46 +76,35 @@ export function ContactFormCard() {
   const isSubmitting = form.formState.isSubmitting
 
   return (
-    <Card className="border-none shadow-none bg-transparent p-0">
-      <CardContent className="p-0">
-        <SectionHeader
-          align="left"
-          size="md"
-          className="border-b border-border pb-6"
-          eyebrow="Contact"
-          accent={false}
-          title={"Start the Conversation"}
-          description={"Tell us about your operations, challenges, and long-term goals. We’ll respond with clarity — not a generic pitch."}
-        />
-
-        {/* Form State */}
-        {!isSubmitted && (
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="space-y-5 md:space-y-6"
-            >
-              {errorMessage && (
-                <ContactError message={errorMessage} />
-              )}
-              {/* First + Last Name */}
-              <div className="grid gap-5 md:gap-6 md:grid-cols-2">
+    <div className="p-0 flex items-center">
+      {/* Form State */}
+      {!isSubmitted && (
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-5 md:space-y-6 w-full"
+          >
+            {errorMessage && (
+              <ContactError message={errorMessage} />
+            )}
+            {/* First + Last Name */}
+            <div className="grid gap-5 md:gap-6">
                 <FormField
                   control={form.control}
                   name="firstName"
                   render={({ field }) => (
                     <FormItem>
-                      <FloatingField id="firstName" label="First Name">
-                        <FormControl>
+                      <FormControl>
+                        <FloatingField id="firstName" label="Enter your name">
                           <Input
                             {...field}
                             id="firstName"
                             placeholder=" "
                             variant="minimal"
-                            className="peer text-sm text-foreground/90"
+                            className="peer text-base md:text-xl font-bold text-foreground/90"
                           />
-                        </FormControl>
-                      </FloatingField>
+                        </FloatingField>
+                      </FormControl>
                       <FormMessage className="text-xs" />
                     </FormItem>
                   )}
@@ -127,17 +115,17 @@ export function ContactFormCard() {
                   name="lastName"
                   render={({ field }) => (
                     <FormItem>
-                      <FloatingField id="lastName" label="Last Name">
-                        <FormControl>
+                      <FormControl>
+                        <FloatingField id="lastName" label="Enter your last name">
                           <Input
                             {...field}
                             id="lastName"
                             placeholder=" "
                             variant="minimal"
-                            className="peer text-sm text-foreground/90"
+                            className="peer text-base md:text-xl font-bold text-foreground/90"
                           />
-                        </FormControl>
-                      </FloatingField>
+                        </FloatingField>
+                      </FormControl>
                       <FormMessage className="text-xs" />
                     </FormItem>
                   )}
@@ -150,20 +138,17 @@ export function ContactFormCard() {
                 name="emailOrPhone"
                 render={({ field }) => (
                   <FormItem>
-                    <FloatingField
-                      id="contactDetail"
-                      label="Email or Phone"
-                    >
-                      <FormControl>
+                    <FormControl>
+                      <FloatingField id="contactDetail" label="Enter your email address">
                         <Input
                           {...field}
                           id="contactDetail"
                           placeholder=" "
                           variant="minimal"
-                          className="peer text-sm text-foreground/90"
+                          className="peer text-base md:text-xl font-bold text-foreground/90"
                         />
-                      </FormControl>
-                    </FloatingField>
+                      </FloatingField>
+                    </FormControl>
                     <FormMessage className="text-xs" />
                   </FormItem>
                 )}
@@ -175,40 +160,37 @@ export function ContactFormCard() {
                 name="message"
                 render={({ field }) => (
                   <FormItem>
-                    <FloatingField
-                      id="projectDescription"
-                      label="Project Context"
-                    >
-                      <FormControl>
+                    <FormControl>
+                      <FloatingField id="projectDescription" label="Go ahead, we are listening...">
                         <Textarea
                           {...field}
                           id="projectDescription"
                           placeholder=" "
                           variant="minimal"
-                          className="peer text-sm text-foreground/90 pt-2"
+                          className="peer text-base md:text-xl font-bold text-foreground/90 pt-6 min-h-[120px]"
                         />
-                      </FormControl>
-                    </FloatingField>
+                      </FloatingField>
+                    </FormControl>
                     <FormMessage className="text-xs" />
                   </FormItem>
                 )}
               />
 
               {/* Submit */}
-              <div className="pt-5 flex justify-end">
+              <div className="pt-5 flex items-center justify-start">
                 <CtaButton
                   variant="primary"
                   buttonType="submit"
                   disabled={isSubmitting}
-                  icon={null}
+                  className="w-full md:w-auto min-w-[200px] text-lg py-6"
                 >
                   {isSubmitting ? (
                     <span className="inline-flex items-center gap-2">
-                      <span className="h-4 w-4 rounded-full border-2 border-current border-t-transparent animate-spin" />
+                      <span className="h-5 w-5 rounded-full border-2 border-current border-t-transparent animate-spin" />
                       Sending…
                     </span>
                   ) : (
-                    "Continue"
+                    "Submit"
                   )}
                 </CtaButton>
               </div>
@@ -217,7 +199,6 @@ export function ContactFormCard() {
         )}
 
         {isSubmitted && <ContactSuccess />}
-      </CardContent>
-    </Card>
-  )
-}
+      </div>
+    )
+  }

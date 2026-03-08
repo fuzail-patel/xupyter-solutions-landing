@@ -2,34 +2,36 @@ import type { FloatingFieldProps } from "@/lib/types/ui"
 
 export function FloatingField({ id, label, children }: FloatingFieldProps) {
   return (
-    <div
-      className="
-        relative rounded-lg
-        bg-input
-        px-4 pt-3 pb-2
-        transition-colors
-      "
-    >
+    <div className="relative w-full">
       {children}
 
       <label
         htmlFor={id}
         className="
           pointer-events-none
-          absolute left-4
-          top-3
-          text-xs
-          uppercase tracking-wide
-          text-muted-foreground
-          transition-all duration-150
-
-          peer-placeholder-shown:top-1/2
-          peer-placeholder-shown:-translate-y-1/2
-          peer-placeholder-shown:text-sm
-
-          peer-focus:top-2
-          peer-focus:translate-y-0
+          absolute left-0
+          top-4
+          text-base
+          font-semibold
+          text-muted-foreground/60
+          transition-all duration-200
+          
+          peer-placeholder-shown:top-4
+          peer-placeholder-shown:text-base
+          
+          peer-focus:-top-3
           peer-focus:text-xs
+          peer-focus:uppercase
+          peer-focus:tracking-wider
+          peer-focus:text-primary
+          peer-focus:font-bold
+          
+          /* Keep label floated if placeholder is NOT shown (i.e., there is text) */
+          peer-[:not(:placeholder-shown)]:-top-3
+          peer-[:not(:placeholder-shown)]:text-xs
+          peer-[:not(:placeholder-shown)]:uppercase
+          peer-[:not(:placeholder-shown)]:tracking-wider
+          peer-[:not(:placeholder-shown)]:font-bold
         "
       >
         {label}

@@ -1,28 +1,23 @@
 import { animate, stagger } from "animejs"
 
-type FadeOptions = {
+export type FadeOptions = {
   delay?: number
   duration?: number
+  translateY?: [number, number]
+  translateX?: [number, number]
+  scale?: [number, number]
+  easing?: string
 }
 
-type HeroIntroTargets = {
-  eyebrow: HTMLElement
-  heading: HTMLElement
-  description: HTMLElement
-  ctaGroup: HTMLElement
-  media: HTMLElement
-}
-
-const DURATION_FAST = 600
-const DURATION_BASE = 700
-const DURATION_SLOW = 800
+const DURATION_BASE = 600
 const EASING_OUT = "easeOutQuad"
+const STAGGER_BASE = 100
 
 function isBrowser() {
   return typeof window !== "undefined"
 }
 
-function prefersReducedMotion() {
+export function prefersReducedMotion() {
   if (!isBrowser() || typeof window.matchMedia !== "function") {
     return false
   }
@@ -30,117 +25,75 @@ function prefersReducedMotion() {
   return window.matchMedia("(prefers-reduced-motion: reduce)").matches
 }
 
-function toArray(target: HTMLElement | HTMLElement[]) {
+function toArray(
+  target: HTMLElement | HTMLElement[] | NodeListOf<HTMLElement>
+) {
+  if (target instanceof NodeList) return Array.from(target)
   return Array.isArray(target) ? target : [target]
 }
 
-export function animateFadeUp(
-  target: HTMLElement | HTMLElement[],
+export function animateFade(
+  target: HTMLElement | HTMLElement[] | NodeListOf<HTMLElement>,
   options?: FadeOptions
 ) {
-  const elements = toArray(target)
-
-  if (!isBrowser() || prefersReducedMotion()) {
-    elements.forEach((el) => {
-      el.style.opacity = "1"
-      el.style.transform = "translateY(0)"
-    })
-    return
-  }
-
-  animate(elements, {
-    opacity: [0, 1],
-    translateY: [10, 0],
-    duration: options?.duration ?? DURATION_BASE,
-    delay: options?.delay ?? 0,
-    easing: EASING_OUT,
-  })
-}
-
-export function animateFadeOnly(
-  target: HTMLElement | HTMLElement[],
-  options?: FadeOptions
-) {
-  const elements = toArray(target)
-
-  if (!isBrowser() || prefersReducedMotion()) {
-    elements.forEach((el) => {
-      el.style.opacity = "1"
-    })
-    return
-  }
-
-  animate(elements, {
-    opacity: [0, 1],
-    duration: options?.duration ?? DURATION_BASE,
-    delay: options?.delay ?? 0,
-    easing: EASING_OUT,
-  })
-}
-
-export function animateSectionReveal(target: HTMLElement) {
-  animateFadeUp(target, {
-    duration: DURATION_BASE,
-  })
-}
-
-export function animateHeroIntro(targets: HeroIntroTargets) {
-  const sequenceDelay = 60
-
-  animateFadeUp(targets.eyebrow, {
-    duration: DURATION_FAST,
-  })
-
-  animateFadeUp(targets.heading, {
-    duration: DURATION_SLOW,
-    delay: sequenceDelay,
-  })
-
-  animateFadeUp(targets.description, {
-    duration: DURATION_BASE,
-    delay: sequenceDelay * 2,
-  })
-
-  animateFadeUp(targets.ctaGroup, {
-    duration: DURATION_BASE,
-    delay: sequenceDelay * 3,
-  })
-
-  animateFadeOnly(targets.media, {
-    duration: DURATION_SLOW,
-    delay: sequenceDelay * 3,
-  })
-}
-
-export function animateStaggeredFadeUp(
-  targets: HTMLElement[] | NodeListOf<HTMLElement>,
-  options?: {
-    step?: number
-    baseDelay?: number
-    duration?: number
-  }
-) {
-  const elements = Array.from(targets ?? []).filter(Boolean) as HTMLElement[]
-
+  const elements = toArray(target).filter(Boolean)
   if (!elements.length) return
 
   if (!isBrowser() || prefersReducedMotion()) {
     elements.forEach((el) => {
       el.style.opacity = "1"
-      el.style.transform = "translateY(0)"
+      el.style.transform = "none"
     })
     return
   }
 
-  const step = options?.step ?? 80
-  const baseDelay = options?.baseDelay ?? 0
-  const duration = options?.duration ?? DURATION_BASE
-
-  animate(elements, {
+  const config: any = {
     opacity: [0, 1],
-    translateY: [8, 0],
-    duration,
-    delay: stagger(step, { start: baseDelay }),
-    easing: EASING_OUT,
+    duration: options?.duration ?? DURATION_BASE,
+    delay: options?.delay ?? 0,
+    easing: options?.easing ?? EASING_OUT,
+  }
+
+  if (options?.translateY) config.translateY = options.translateY
+  if (options?.translateX) config.translateX = options.translateX
+  if (options?.scale) config.scale = options.scale
+
+  animate(elements, config)
+}
+
+export function animateStaggered(
+  target: HTMLElement[] | NodeListOf<HTMLElement>,
+  options?: FadeOptions & { staggerDelay?: number }
+) {
+  const elements = toArray(target).filter(Boolean)
+  if (!elements.length) return
+
+  if (!isBrowser() || prefersReducedMotion()) {
+    elements.forEach((el) => {
+      el.style.opacity = "1"
+      el.style.transform = "none"
+    })
+    return
+  }
+
+  const staggerDelay = options?.staggerDelay ?? STAGGER_BASE
+
+  const config: any = {
+    opacity: [0, 1],
+    duration: options?.duration ?? DURATION_BASE,
+    delay: stagger(staggerDelay, { start: options?.delay ?? 0 }),
+    easing: options?.easing ?? EASING_OUT,
+  }
+
+  if (options?.translateY) config.translateY = options.translateY
+  if (options?.translateX) config.translateX = options.translateX
+  if (options?.scale) config.scale = options.scale
+
+  animate(elements, config)
+}
+
+export function animateSectionReveal(target: HTMLElement) {
+  animateFade(target, {
+    translateY: [12, 0],
   })
 }

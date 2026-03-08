@@ -6,7 +6,7 @@ import {
 } from "@heroicons/react/24/solid"
 
 import Header from "@/components/layout/Header"
-import PageSectionHeader from "@/components/shared/PageSectionHeader"
+import { PageHeader } from "@/components/shared"
 import { JobListingsSection } from "@/components/careers/job/JobListingsSection"
 import { ApplyModal } from "@/components/careers/ApplyModal"
 import AsymmetricGrid from "@/components/layout/AsymmetricGrid"
@@ -26,12 +26,11 @@ export default function CareersPage() {
     <main className="flex flex-col">
       <Header />
 
-      <PageSectionHeader
+      <PageHeader
         eyebrow="Careers"
         titlePrimary="Build Systems"
         titleSecondary="That Power Real Businesses"
-        subtitle="We hire engineers and operators who care about long-term, structured systems work across internal platforms and operations tooling."
-        accent={true}
+        description="We hire engineers and operators who care about long-term, structured systems work across internal platforms and operations tooling."
       />
 
       <section className="py-10 sm:py-12 md:py-16 border-b border-border/60">
@@ -45,34 +44,55 @@ export default function CareersPage() {
             </p>
           </div>
 
-          <div className="mt-8">
-            <AsymmetricGrid
-              className="gap-3 sm:gap-4 items-start"
-              items={careersBenefits.map((benefit) => ({
-                id: benefit.id,
-                colSpan: 3,
-                content: (
-                  <div className="h-full rounded-none bg-card px-4 py-3 sm:px-5 sm:py-4 space-y-3">
-                    <div className="mt-1 flex h-10 w-10 items-center justify-center rounded-xl bg-muted shrink-0">
-                      {(() => {
-                        const Icon = benefitIconMap[benefit.icon]
-                        return (
-                          <Icon className="h-5 w-5 text-muted-foreground" />
-                        )
-                      })()}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-10 mt-14">
+            {careersBenefits.map((benefit, index) => {
+              const Icon = benefitIconMap[benefit.icon]
+
+              return (
+                <div
+                  key={benefit.id}
+                  className="relative transition-all hover:translate-x-1 group"
+                >
+                  <div className="flex flex-col gap-4">
+                    <div className="relative w-8 h-8 flex items-center justify-center">
+                      {/* top-left corner */}
+                      <span className="
+                        absolute -left-2 -top-2
+                        w-3 h-3
+                        border-l-[2px] border-t-[2px] border-muted-foreground/50
+                        transition-all duration-300 ease-out
+                        group-hover:w-1/2 group-hover:h-1/2 group-hover:border-primary
+                      " />
+
+                      {/* bottom-right corner */}
+                      <span className="
+                        absolute -right-2 -bottom-2
+                        w-3 h-3
+                        border-r-[2px] border-b-[2px] border-muted-foreground/50
+                        transition-all duration-300 ease-out
+                        group-hover:w-1/2 group-hover:h-1/2 group-hover:border-primary
+                      " />
+
+                      {Icon && (
+                        <Icon
+                          className="w-5 h-5 text-foreground/70 group-hover:text-primary transition-colors"
+                        />
+                      )}
                     </div>
-                    <div className="space-y-3">
-                      <p className="text-base md:text-lg font-semibold text-foreground leading-snug">
+
+                    <div className="space-y-2 mt-5">
+                      <h3 className="text-base font-bold text-foreground uppercase tracking-tight">
                         {benefit.title}
-                      </p>
-                      <p className="text-sm font-semibold text-muted-foreground/90">
+                      </h3>
+
+                      <p className="text-sm text-muted-foreground leading-relaxed font-medium">
                         {benefit.description}
                       </p>
                     </div>
                   </div>
-                ),
-              }))}
-            />
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>

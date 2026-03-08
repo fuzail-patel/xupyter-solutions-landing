@@ -10,7 +10,7 @@ type ContactSuccessProps = {
 
 export default function ContactSuccess({ onReset }: ContactSuccessProps) {
     return (
-        <div className="flex w-full items-center justify-center py-8 px-6 bg-card rounded-xl">
+        <div className="flex w-full h-full min-h-[400px] items-center justify-center p-6 bg-transparent">
             <div className="mx-auto max-w-xl text-center">
                 <CheckCircleIcon className="mx-auto mb-6 h-16 w-16 text-primary" />
 

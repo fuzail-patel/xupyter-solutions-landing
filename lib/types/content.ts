@@ -3,6 +3,7 @@ import type { GridColSpan } from "@/lib/types/layout"
 
 export type Service = {
   title: string
+  tag?: string
   description: string
   bullets: string[]
   icon: ReactElement
@@ -11,13 +12,15 @@ export type Service = {
 }
 
 export type Testimonial = {
+  id: string
+  type: "video" | "text"
+  colSpan: number
   name: string
-  role: string
-  company: string
-  quote: string
-  initials: string
-  industry?: string
-  timeAgo?: string
+  location?: string
+  role?: string
+  content?: string
+  videoThumbnail?: string
+  rating?: number
 }
 
 export type ContactLinkItemProps = {
@@ -32,5 +35,6 @@ export type Industry = {
   description: string
   icon: ReactElement
   href: string
-  colSpan: GridColSpan,
+  colSpan: GridColSpan
+  subLinks?: string[]
 }

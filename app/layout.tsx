@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import { Sora, Plus_Jakarta_Sans } from "next/font/google"
+import { Sora, Open_Sans } from "next/font/google"
 import Footer from "@/components/layout/Footer"
 import "./globals.css"
 
@@ -15,9 +15,9 @@ const sora = Sora({
 })
 
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const plusJakartaSans = Open_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500", "600", "700", "800"],
   variable: "--font-plus-jakarta-sans",
   display: "swap",
 })
@@ -37,7 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={theme}>
       <body className={`${sora.className} ${plusJakartaSans.variable} antialiased`}>
-        {children}
+        <div className="pt-15">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>

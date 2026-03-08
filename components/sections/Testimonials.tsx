@@ -1,98 +1,238 @@
 "use client"
 
+import { useRef } from "react"
+import Image from "next/image"
+import { Card, CardContent } from "@/components/ui/card"
 import SectionHeader from "@/components/shared/SectionHeader"
-import AutoCarousel from "@/components/shared/AutoCarousel"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { TESTIMONIALS } from "@/lib/constants/testimonials"
+import AsymmetricGrid from "@/components/layout/AsymmetricGrid"
+import { PlayCircleIcon, StarIcon } from "@heroicons/react/24/solid"
+import { Testimonial } from "@/lib/types/content"
+import Section from "@/components/layout/Section"
 import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
-import { animateFadeUp } from "@/lib/animations"
-import { Badge } from "@/components/ui/badge"
+import { animateFade, animateStaggered } from "@/lib/animations"
 
+const STATS = [
+  { value: "100+", label: "Projects Delivered" },
+  { value: "30+", label: "Startup Clients" },
+  { value: "4.9/5", label: "Average Rating" },
+  { value: "7+", label: "Industries" },
+]
 
-const ITEMS_PER_SLIDE = 3
-const ROTATION_INTERVAL = 8000
+const TESTIMONIALS = [
+  {
+    id: "1",
+    type: "text",
+    colSpan: 6,
+    name: "[Client Name]",
+    role: "[Founder / CTO]",
+    rating: 5,
+    content:
+      "Xupyter didn't just build our platform — they helped us think through the product. Within 10 weeks we had a live MVP that our investors actually loved. Their full-cycle approach saved us from at least 6 months of mistakes.",
+  },
+  {
+    id: "2",
+    type: "text",
+    colSpan: 6,
+    name: "[Client Name]",
+    role: "[Product Lead]",
+    rating: 5,
+    content:
+      "The team at Xupyter moves fast without breaking things. We've gone through 3 major feature releases in 4 months and our uptime has stayed rock solid.",
+  },
+  {
+    id: "3",
+    type: "text",
+    colSpan: 12,
+    name: "[Client Name]",
+    role: "[CEO]",
+    rating: 5,
+    content:
+      "Working with Xupyter felt like having a CTO on call. They flagged architecture issues before they became problems and always had a plan ready.",
+  },
+]
 
-export default function Testimonials() {
-  const { ref, style } = useSectionReveal((sectionEl) => {
-    const cards = sectionEl.querySelectorAll<HTMLElement>(
-      "[data-testimonial-card]"
-    )
+export default function TestimonialsSection() {
+  const headerRef = useRef<HTMLDivElement | null>(null)
+  const kpiRef = useRef<HTMLDivElement | null>(null)
 
-    if (!cards.length) return
+  const { ref, style } = useSectionReveal({
+    threshold: 0.2,
+    autoAnimate: false,
+    onReveal: (sectionEl) => {
+      // KPI strip numbers: fade-in + translateY(8px → 0), stagger 100ms
+      if (kpiRef.current) {
+        animateStaggered(kpiRef.current.children as any, {
+          translateY: [8, 0],
+          staggerDelay: 100,
+        })
+      }
 
-    animateFadeUp(Array.from(cards) as HTMLElement[])
-  })
+      // Section heading: fade-in + translateY(12px → 0)
+      if (headerRef.current) {
+        animateFade(headerRef.current, {
+          translateY: [12, 0],
+        })
+      }
 
-  const totalSlides = Math.ceil(TESTIMONIALS.length / ITEMS_PER_SLIDE)
-
-  const slides = Array.from({ length: totalSlides }).map((_, slideIndex) => {
-    const startIndex = slideIndex * ITEMS_PER_SLIDE
-    const visibleTestimonials = TESTIMONIALS.slice(
-      startIndex,
-      startIndex + ITEMS_PER_SLIDE
-    )
-
-    return (
-      <div className="grid gap-6 md:grid-cols-3" key={slideIndex}>
-        {visibleTestimonials.map((testimonial) => (
-          <article
-            key={testimonial.company + testimonial.name}
-            data-testimonial-card
-            className="flex flex-col rounded-2xl bg-card shadow-xl px-5 py-6 md:px-6 md:py-7"
-          >
-            {testimonial.industry && (
-              <Badge variant="secondary" className="font-semibold mb-1">
-                {testimonial.industry}
-              </Badge>
-            )}
-            <p className="text-sm md:text-base leading-relaxed text-foreground/50 font-semibold mt-2">
-              {testimonial.quote}
-            </p>
-            <div className="mt-6 flex gap-3">
-              <Avatar size="lg">
-                <AvatarFallback className="text-xs font-medium text-muted-foreground">
-                  {testimonial.initials}
-                </AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col gap-1">
-                <p className="text-sm font-semibold text-foreground">
-                  {testimonial.name}
-                </p>
-                <p className="text-xs text-muted-foreground/90">
-                  {testimonial.role}
-                </p>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-    )
+      // Testimonial cards: fade-in + translateY(16px → 0), stagger 120ms
+      const cards = sectionEl.querySelectorAll<HTMLElement>("[data-testimonial-card]")
+      animateStaggered(cards, {
+        translateY: [16, 0],
+        staggerDelay: 120,
+      })
+    },
   })
 
   return (
-    <section
-      id="testimonials"
-      className="py-10 md:py-14"
-      ref={ref}
-      style={style}
-    >
-      <div className="max-w-7xl mx-auto px-6">
-        <SectionHeader
-          align="center"
-          size="md"
-          eyebrow="Testimonials"
-          title="Proof from teams whose systems we now run"
-          description="Selected operators and leaders whose day-to-day now depends on the platforms we shipped together."
-        />
+    <Section ref={ref} style={style} className="relative">
+      <div className="bg-card p-6 rounded-xl">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-x-10 gap-y-5">
+          <div ref={headerRef} className="max-w-lg">
+            <SectionHeader
+              eyebrow="Testimonials"
+              titlePrimary="What Our"
+              titleSecondary="Clients Say"
+              accent={false}
+              description="Don't take our word for it — here's what the startups we've built for have to say."
+            />
+          </div>
 
-        <div className="mt-8">
-          <AutoCarousel
-            slides={slides}
-            interval={ROTATION_INTERVAL}
-            pauseOnHover
+          {/* KPI Strip */}
+          <div ref={kpiRef} className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {STATS.map((stat) => (
+              <div key={stat.label} className="text-left">
+                <h3 className="text-2xl md:text-3xl font-bold">{stat.value}</h3>
+                <div className="text-xs text-muted-foreground mt-1">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Grid */}
+        <div className="border-t border-foreground/10 pt-10">
+          <AsymmetricGrid
+            className="gap-4"
+            items={TESTIMONIALS.map((item) => ({
+              id: item.id,
+              colSpan: item.colSpan,
+              content:
+                item.type === "video" ? (
+                  <div data-testimonial-card>
+                    <VideoCard {...item} />
+                  </div>
+                ) : (
+                  <div data-testimonial-card>
+                    <TextCard {...item} />
+                  </div>
+                ),
+            }))}
           />
         </div>
       </div>
-    </section>
+    </Section>
+  )
+}
+
+/* ------------------------------
+   Video Card
+--------------------------------*/
+
+function VideoCard({
+  name,
+  location,
+  videoThumbnail,
+}: Testimonial) {
+  return (
+    <Card className="relative overflow-hidden rounded-2xl border border-white/5 bg-background/60 backdrop-blur-lg group cursor-pointer p-0">
+      <div className="relative h-72 md:h-80">
+        <Image
+          src={videoThumbnail || '/fallback-video-thumbnail.jpg'}
+          alt={name}
+          fill
+          className="object-cover"
+        />
+
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition" />
+
+        {/* Play Button */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-14 h-14 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-105 transition">
+            <PlayCircleIcon className="w-6 h-6 text-white" />
+          </div>
+        </div>
+
+        {/* Name */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+          <div className="text-sm font-semibold text-white">
+            {name}
+          </div>
+          {location && (
+            <div className="text-xs text-white/70">
+              {location}
+            </div>
+          )}
+        </div>
+      </div>
+    </Card>
+  )
+}
+
+/* ------------------------------
+   Text Card
+--------------------------------*/
+
+function TextCard({
+  name,
+  role,
+  content,
+  rating = 5,
+}: {
+  name: string
+  role?: string
+  content: string
+  rating?: number
+}) {
+  return (
+    <Card className="h-full rounded-2xl border border-white/5 bg-background/60 backdrop-blur-lg p-0">
+      <CardContent className="p-6 flex flex-col justify-between h-full">
+
+        <div>
+          <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+            {content}
+          </p>
+
+        </div>
+
+        <div className="mt-8  pt-4 flex items-center gap-6 justify-between">
+          <div>
+            <div className="text-sm font-semibold text-foreground">
+              {name}
+            </div>
+            {role && (
+              <div className="text-xs text-muted-foreground">
+                {role}
+              </div>
+            )}
+          </div>
+
+          {/* Rating */}
+          <div className="flex items-center gap-1">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <StarIcon
+                key={i}
+                className={`w-4 h-4 ${i < rating
+                  ? "text-foreground"
+                  : "text-muted-foreground/30"
+                  }`}
+              />
+            ))}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   )
 }

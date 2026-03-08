@@ -63,7 +63,7 @@ export const PROCESS_STEPS: JourneyStep[] = [
       "Performance testing",
       "Production readiness review"
     ],
-    colSpan: 4
+    colSpan: 5
   },
   {
     id: "05",
@@ -77,6 +77,6 @@ export const PROCESS_STEPS: JourneyStep[] = [
       "Feedback loop integration",
       "Continuous refinement"
     ],
-    colSpan: 8
+    colSpan: 7
   },
 ]

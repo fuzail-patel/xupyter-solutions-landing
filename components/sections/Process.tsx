@@ -7,23 +7,19 @@ import SectionHeader from "@/components/shared/SectionHeader"
 import { PROCESS_STEPS } from "@/lib/constants/process"
 import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
 import { BodyText } from "@/components/shared/Typography"
+import Section from "@/components/layout/Section"
 
 export default function Process() {
   const { ref, style } = useSectionReveal()
 
   return (
-    <section
-      id="about"
-      className="py-10 md:py-14"
-      ref={ref}
-      style={style}
-    >
-      <div className="max-w-7xl mx-auto px-6">
+    <Section id="about" ref={ref} style={style}>
         <SectionHeader
           align="center"
           size="md"
           eyebrow="Delivery Process"
-          title="How We Build Systems"
+          titlePrimary="How We"
+          titleSecondary="Build Systems"
           description="A structured, repeatable process designed for long-term performance — not one-off delivery."
         />
 
@@ -37,7 +33,7 @@ export default function Process() {
                 key={step.id}
                 className={cn(
                   "relative border-none py-6",
-                  "transition-all duration-200 ease-out hover:shadow-sm hover:from-card/90 hover:to-secondary/10"
+                  "transition-all duration-200 ease-out hover:shadow-sm hover:from-card/90 hover:to-secondary/10 h-full"
                 )}
               >
                 <CardContent className="px-6">
@@ -59,7 +55,6 @@ export default function Process() {
             ),
           }))}
         />
-      </div>
-    </section>
+    </Section>
   )
 }

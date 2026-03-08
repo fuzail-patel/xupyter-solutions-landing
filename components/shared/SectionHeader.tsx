@@ -4,12 +4,14 @@ import EyeBrow from "./EyeBrow"
 
 export default function SectionHeader({
   eyebrow,
-  title,
+  titlePrimary,
+  titleSecondary,
   description,
   align = "left",
   size = "md",
   accent = true,
   className,
+  as: Tag = "h2",
 }: SectionHeaderProps) {
   const alignment =
     align === "center"
@@ -17,7 +19,9 @@ export default function SectionHeader({
       : "items-start text-left"
 
   const titleSize =
-    size === "lg"
+    size === "xl"
+      ? "text-4xl sm:text-5xl md:text-6xl lg:text-6xl"
+      : size === "lg"
       ? "text-3xl md:text-4xl lg:text-5xl"
       : "text-2xl md:text-3xl"
 
@@ -31,21 +35,25 @@ export default function SectionHeader({
         className
       )}
     >
-      {eyebrow && (
-        <EyeBrow text={eyebrow} />
-      )}
-      <div className="w-full max-w-3xl space-y-2 mt-1">
-        <h2
+      {eyebrow && <EyeBrow text={eyebrow} />}
+
+      <div className={cn("w-full space-y-2 mt-1", align === "center" ? "max-w-4xl" : "max-w-3xl")}>
+        <Tag
           className={cn(
-            "font-semibold tracking-tight leading-tight",
+            "font-display tracking-tight leading-tight",
             titleSize
           )}
         >
-          {title}
-        </h2>
+          {titlePrimary}{" "}
+          {titleSecondary && (
+            <span className="text-gradient-primary font-bold">
+              {titleSecondary}
+            </span>
+          )}
+        </Tag>
 
         {description && (
-          <p
+          <div
             className={cn(
               "text-sm md:text-base font-semibold text-muted-foreground/80",
               "leading-relaxed",
@@ -54,9 +62,10 @@ export default function SectionHeader({
             )}
           >
             {description}
-          </p>
+          </div>
         )}
       </div>
+
       {accent && (
         <div
           className={cn(

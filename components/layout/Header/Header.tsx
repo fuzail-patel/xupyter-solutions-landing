@@ -77,17 +77,19 @@ export default function Header() {
   }, [open])
 
   return (
-    <header className="sticky top-0 z-40 w-full">
+    <header className="fixed top-0 left-0 right-0 z-50 w-full">
       <div
         className={cn(
-          "transition-all duration-300",
+          "transition-all duration-500",
           scrolled
-            ? "bg-background/80 backdrop-blur-md border-b"
+            /* glassmorphism — frosted dark glass on scroll */
+            ? "bg-[#0c0c13]/70 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_4px_24px_rgba(1,31,91,0.25)]"
+            /* transparent — visually part of hero gradient at top */
             : "bg-transparent"
         )}
       >
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex h-20 items-center gap-6">
+          <div className="flex h-25 items-center gap-6">
             <Link href="/" className="flex items-center">
               <Image
                 src="/logo.jpg"
@@ -110,9 +112,9 @@ export default function Header() {
                 type="button"
                 aria-label="Toggle navigation"
                 onClick={() => setOpen((value) => !value)}
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full hover:bg-accent hover:text-accent-foreground transition-colors"
+                className="group inline-flex h-11 w-11 items-center justify-center rounded-full bg-foreground text-background hover:scale-105 active:scale-95 transition-all shadow-md"
               >
-                <FiMenu className="size-5" />
+                <FiMenu className="size-5 transition-transform group-hover:rotate-12" />
               </button>
             </div>
           </div>

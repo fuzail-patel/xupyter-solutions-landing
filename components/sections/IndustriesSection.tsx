@@ -1,74 +1,94 @@
 "use client"
 
 import Link from "next/link"
+import { useRef } from "react"
 
 import AsymmetricGrid from "@/components/layout/AsymmetricGrid"
 import { Card, CardContent } from "@/components/ui/card"
 import SectionHeader from "@/components/shared/SectionHeader"
-import { cn } from "@/lib/utils"
 import { INDUSTRIES } from "@/lib/constants/industries"
 import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
-import { animateStaggeredFadeUp } from "@/lib/animations"
-import { BodyText } from "@/components/shared/Typography"
+import { animateFade, animateStaggered } from "@/lib/animations"
+import Section from "@/components/layout/Section"
 
 export default function IndustriesSection() {
-  const { ref, style } = useSectionReveal((sectionEl) => {
-    const cards = sectionEl.querySelectorAll<HTMLElement>(
-      "[data-industry-card]"
-    )
-    animateStaggeredFadeUp(cards)
+  const headerRef = useRef<HTMLDivElement | null>(null)
+  const { ref, style } = useSectionReveal({
+    threshold: 0.2,
+    autoAnimate: false,
+    onReveal: (sectionEl) => {
+      // Section heading + subtitle: fade-in + translateY(12px → 0)
+      if (headerRef.current) {
+        animateFade(headerRef.current, {
+          translateY: [12, 0],
+        })
+      }
+
+      // Industry cards: fade-in + translateY(16px → 0), stagger 100ms per card
+      const cards = sectionEl.querySelectorAll<HTMLElement>(
+        "[data-industry-card]"
+      )
+      animateStaggered(cards, {
+        translateY: [16, 0],
+        staggerDelay: 100,
+      })
+    },
   })
 
   return (
-    <section
-      id="industries"
-      className="py-10 md:py-14"
-      ref={ref}
-      style={style}
-    >
-      <div className="max-w-7xl mx-auto px-6">
+    <Section id="industries" ref={ref} style={style}>
+      <div ref={headerRef}>
         <SectionHeader
-          align="center"
-          size="md"
+          align="left"
           eyebrow="Industries"
-          title="Built for Complex, Real-World Industries"
-          description="We design structured platforms and automation systems tailored to industry-specific operations and workflows."
-        />
-
-        <AsymmetricGrid
-          className="gap-2"
-          items={INDUSTRIES.map((industry) => ({
-            id: industry.name,
-            colSpan: industry.colSpan,
-            content: (
-              <Link key={industry.name} href={industry.href} className="block h-full group">
-                <Card
-                  data-industry-card
-                  className={cn(
-                    "h-full rounded-xl border-none py-0 cursor-pointer",
-                    "hover:bg-linear-to-br hover:from-card hover:to-secondary/10",
-                    "transition-all duration-250 ease-out hover:scale-[1.02] hover:shadow-sm",
-                    "border-b-2 border-transparent hover:border-primary/20"
-                  )}
-                >
-                  <CardContent className="px-6 py-6 flex flex-col justify-center h-full">
-                    <div className="text-secondary-foreground/50 p-2.5 md:p-3 bg-primary/10 inline-flex w-fit">
-                      {industry.icon ?? null}
-                    </div>
-                    <h3 className="text-xl md:text-2xl font-semibold text-foreground/90 mt-3">
-                      {industry.name}
-                    </h3>
-
-                    <BodyText className="font-semibold mt-4">
-                      {industry.description}
-                    </BodyText>
-                  </CardContent>
-                </Card>
-              </Link>
-            ),
-          }))}
+          titlePrimary="Industries"
+          titleSecondary="We Power"
+          description="We've shipped production systems across 7 high-growth verticals. Here's how we think about each one."
         />
       </div>
-    </section>
+
+      <AsymmetricGrid
+        className="gap-4 md:gap-6"
+        items={INDUSTRIES.map((industry) => ({
+          id: industry.name,
+          colSpan: industry.colSpan,
+          content: (
+            <Link
+              key={industry.name}
+              href={industry.href}
+              className="block group"
+            >
+              <Card
+                data-industry-card
+                className="h-full rounded-2xl p-0 gap-0 
+                 border-0 backdrop-blur-sm 
+                 transition-all duration-300 
+                 hover:text-primary
+                 hover:border-primary/20 hover:bg-card/60"
+              >
+                {/* Top Icon Band */}
+                <div className="h-32 flex items-center justify-center 
+                      bg-white/3 rounded-t-2xl">
+                  <div className="group-hover:opacity-100 transition text-current">
+                    {industry.icon}
+                  </div>
+                </div>
+
+                {/* Content */}
+                <CardContent className="px-6 py-6 flex flex-col h-full">
+                  <h3 className="text-lg md:text-xl font-semibold text-foreground">
+                    {industry.name}
+                  </h3>
+
+                  <p className="text-sm text-muted-foreground mt-3 leading-relaxed">
+                    {industry.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </Link>
+          )
+        }))}
+      />
+    </Section>
   )
 }

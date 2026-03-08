@@ -5,7 +5,7 @@ import type { DesktopNavProps } from "@/lib/types/nav"
 
 export function DesktopNav({ pathname, activeSection }: DesktopNavProps) {
   return (
-    <nav className="hidden lg:flex flex-1 items-center justify-center gap-8 text-sm">
+    <nav className="hidden lg:flex flex-1 items-center justify-center gap-10 text-sm font-medium tracking-tight">
       {NAV_LINKS.map((item) => {
         const isHomePage = pathname === "/"
         const isHashLink =
@@ -30,14 +30,24 @@ export function DesktopNav({ pathname, activeSection }: DesktopNavProps) {
             key={item.label}
             href={item.href}
             className={cn(
-              "relative py-1.5 text-muted-foreground transition-colors duration-300",
-              "hover:text-foreground",
-              "after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-foreground after:transition-all after:duration-300",
-              "hover:after:w-full",
-              isActive && "text-foreground after:w-full"
+              "relative py-1.5 text-muted-foreground transition-all duration-300",
+              "hover:text-foreground group",
+              isActive && "text-primary"
             )}
           >
-            {item.label}
+            <span className={cn(
+              "relative z-10 transition-transform duration-300 inline-block",
+              isActive && "font-semibold"
+            )}>
+              {item.label}
+            </span>
+
+            {/* Simple Underline Effect */}
+            <span className={cn(
+              "absolute left-0 bottom-0 h-0.5 bg-primary transition-all duration-300",
+              "w-0 group-hover:w-full",
+              isActive ? "w-full" : "w-0"
+            )} />
           </Link>
         )
       })}

@@ -8,7 +8,8 @@ import type { ScheduleCallButtonProps } from "@/lib/types/ui"
 export default function ScheduleCallButton({
   variant = "primary",
   className,
-}: ScheduleCallButtonProps) {
+  children = "Book a Strategy Call",
+}: ScheduleCallButtonProps & { children?: React.ReactNode }) {
   const openCal = async () => {
     const cal = await getCalApi()
 
@@ -33,7 +34,7 @@ export default function ScheduleCallButton({
       className={className}
       onClick={openCal}
     >
-      Book a Strategy Call
+      {children}
     </CtaButton>
   )
 }

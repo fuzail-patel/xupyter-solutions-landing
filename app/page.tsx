@@ -1,16 +1,33 @@
 import Header from "@/components/layout/Header"
-import { HeroSection, IndustriesSection, Process, Services, CaseStudies, Testimonials, Contact } from "@/components/sections"
+import {
+  HeroSection,
+  IndustriesSection,
+  Services,
+  Testimonials,
+  Contact,
+  BlogsSection,
+  IndustryImpactSection,
+  WhyXupyterSection,
+  CaseStudies,
+} from "@/components/sections"
+import { ExpertiseMarquee } from "@/components/sections/ExpertiseMarquee"
 
 export default function Home() {
   return (
     <main className="flex flex-col">
-      <Header />
-      <HeroSection />
+      <div className="hero-gradient">
+        <Header />
+        <HeroSection />
+        <ExpertiseMarquee />
+      </div>
+
       <IndustriesSection />
-      <Process />
+      <IndustryImpactSection />
+      <WhyXupyterSection />
       <Services />
       <CaseStudies />
       <Testimonials />
+      <BlogsSection />
       <Contact />
     </main>
   )
