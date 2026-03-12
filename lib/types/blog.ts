@@ -11,15 +11,14 @@ export type BlogPost = {
 
 export type Category =
   | "All"
-  | "System Architecture"
-  | "Internal Tools"
-  | "Automation Infrastructure"
+  | "Architecture"
+  | "Engineering"
+  | "AI & ML"
+  | "Strategy"
+  | "DevOps"
+  | "FinTech"
 
 export type BlogCardProps = {
-  post: BlogPost
-}
-
-export type FeaturedBlogCardProps = {
   post: BlogPost
 }
 

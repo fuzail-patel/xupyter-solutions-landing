@@ -42,7 +42,8 @@ export function ApplyModal({ mode, job, triggerLabel }: ApplyModalProps) {
     setOpen(false)
   }
 
-  const onSubmit = () => {
+  const onSubmit = (data: ApplicationFormValues) => {
+    console.log("Form data:", data)
     handleClose()
   }
 

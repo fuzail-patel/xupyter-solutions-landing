@@ -1,3 +1,4 @@
+import Link from "next/link"
 import {
   BriefcaseIcon,
   BuildingOffice2Icon,
@@ -5,9 +6,9 @@ import {
   MapPinIcon,
   AcademicCapIcon,
 } from "@heroicons/react/24/outline"
-import { ApplyModal } from "@/components/careers/ApplyModal"
 import { SystemList } from "@/components/shared/SystemList"
 import { Card, CardContent } from "@/components/ui/card"
+import { CtaButton } from "@/components/shared/CtaButton"
 import type { JobListingItemProps } from "@/lib/types/careers"
 
 export function JobListingItem({ job, isOpen, onToggle }: JobListingItemProps) {
@@ -26,7 +27,7 @@ export function JobListingItem({ job, isOpen, onToggle }: JobListingItemProps) {
                 onClick={onToggle}
                 className="text-left w-full"
               >
-                <h2 className="text-lg md:text-xl font-semibold text-foreground">
+                <h2 className="text-lg md:text-xl font-semibold text-foreground hover:text-primary transition-colors">
                   {job.title}
                 </h2>
 
@@ -110,12 +111,9 @@ export function JobListingItem({ job, isOpen, onToggle }: JobListingItemProps) {
             </div>
 
             <div className="md:mt-1 md:ml-8">
-              <ApplyModal
-                mode="specific"
-                job={job}
-                jobs={[job]}
-                triggerLabel="Apply Now"
-              />
+              <CtaButton asChild variant="primary" className="font-semibold">
+                <Link href={job.href}>Apply Now</Link>
+              </CtaButton>
             </div>
           </div>
         </CardContent>

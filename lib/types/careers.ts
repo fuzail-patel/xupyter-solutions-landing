@@ -75,7 +75,8 @@ import type { ApplicationFormValues } from "@/lib/schemas/application.schema"
 
 export type ApplyModalFormProps = {
   form: UseFormReturn<ApplicationFormValues>
-  onSubmit: () => void
-  onCancel: () => void
+  onSubmit: (data: ApplicationFormValues) => void
+  onCancel?: () => void
   isSpecific: boolean
+  showCancel?: boolean
 }

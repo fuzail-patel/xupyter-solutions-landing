@@ -31,8 +31,7 @@ export function useBlogListing(posts: BlogPost[]): UseBlogListingResult {
     (searchParams.get("category") as Category | null) ?? "All"
   const initialPage = Number(searchParams.get("page") ?? "1") || 1
 
-  const featuredPost = posts.find((post) => post.featured) ?? posts[0]
-  const otherPosts = posts.filter((post) => post.slug !== featuredPost.slug)
+  const allPosts = posts
 
   const [searchTerm, setSearchTerm] = useState(initialSearch)
   const [debouncedSearch, setDebouncedSearch] = useState(initialSearch)
@@ -65,7 +64,7 @@ export function useBlogListing(posts: BlogPost[]): UseBlogListingResult {
 
   const filteredPosts = useMemo(() => {
     const query = debouncedSearch.trim().toLowerCase()
-    return otherPosts.filter((post) => {
+    return allPosts.filter((post) => {
       const matchesCategory =
         selectedCategory === "All" ||
         post.category.toLowerCase() === selectedCategory.toLowerCase()
@@ -78,9 +77,9 @@ export function useBlogListing(posts: BlogPost[]): UseBlogListingResult {
       const haystack = `${post.title} ${post.excerpt} ${post.category}`.toLowerCase()
       return haystack.includes(query)
     })
-  }, [otherPosts, debouncedSearch, selectedCategory])
+  }, [allPosts, debouncedSearch, selectedCategory])
 
-  const POSTS_PER_PAGE = 6
+  const POSTS_PER_PAGE = 9
   const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE))
   const clampedPage = Math.min(Math.max(currentPage, 1), totalPages || 1)
 
@@ -89,7 +88,7 @@ export function useBlogListing(posts: BlogPost[]): UseBlogListingResult {
     return filteredPosts.slice(startIndex, startIndex + POSTS_PER_PAGE)
   }, [filteredPosts, clampedPage])
 
-  const recentPosts = otherPosts
+  const recentPosts = allPosts
     .slice()
     .sort((a, b) => a.publishedAt.localeCompare(b.publishedAt))
     .slice(0, 3)
@@ -109,8 +108,8 @@ export function useBlogListing(posts: BlogPost[]): UseBlogListingResult {
   }
 
   return {
-    featuredPost,
-    otherPosts,
+    featuredPost: allPosts[0], // fallback or dummy
+    otherPosts: allPosts,
     searchTerm,
     setSearchTerm,
     selectedCategory,

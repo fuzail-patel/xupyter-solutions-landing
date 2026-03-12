@@ -230,6 +230,15 @@
     color: oklch(0.97 0.006 278);
   }
 
+  /* Hide scrollbar utility */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
   /* ------------------------------------------------------------------
      Hero Background
      Near-black #050509 base — tight indigo bloom rising from below

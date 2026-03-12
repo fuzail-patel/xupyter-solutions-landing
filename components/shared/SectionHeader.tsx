@@ -23,7 +23,9 @@ export default function SectionHeader({
       ? "text-4xl sm:text-5xl md:text-6xl lg:text-6xl"
       : size === "lg"
       ? "text-3xl md:text-4xl lg:text-5xl"
-      : "text-2xl md:text-3xl"
+      : size === "md"
+      ? "text-2xl md:text-3xl"
+      : "text-xl md:text-2xl"
 
   return (
     <div

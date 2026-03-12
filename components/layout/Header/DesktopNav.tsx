@@ -1,7 +1,7 @@
-import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { NAV_LINKS } from "@/lib/constants/nav"
 import type { DesktopNavProps } from "@/lib/types/nav"
+import NavSplitLink from "@/components/ui/NavSplitLink"
 
 export function DesktopNav({ pathname, activeSection }: DesktopNavProps) {
   return (
@@ -26,29 +26,12 @@ export function DesktopNav({ pathname, activeSection }: DesktopNavProps) {
         const isActive = isSectionActive || isRouteActive
 
         return (
-          <Link
+          <NavSplitLink
             key={item.label}
             href={item.href}
-            className={cn(
-              "relative py-1.5 text-muted-foreground transition-all duration-300",
-              "hover:text-foreground group",
-              isActive && "text-primary"
-            )}
-          >
-            <span className={cn(
-              "relative z-10 transition-transform duration-300 inline-block",
-              isActive && "font-semibold"
-            )}>
-              {item.label}
-            </span>
-
-            {/* Simple Underline Effect */}
-            <span className={cn(
-              "absolute left-0 bottom-0 h-0.5 bg-primary transition-all duration-300",
-              "w-0 group-hover:w-full",
-              isActive ? "w-full" : "w-0"
-            )} />
-          </Link>
+            label={item.label}
+            active={isActive}
+          />
         )
       })}
     </nav>

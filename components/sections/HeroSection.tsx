@@ -78,7 +78,7 @@ export default function HeroSection() {
             <div ref={eyebrowRef}>
               <Eyebrow
                 text="Architecture-First Software Development"
-                className="text-gradient-primary"
+                className="text-gradient-primary text-[9px] sm:text-[11px]"
               />
             </div>
             <h1
@@ -106,7 +106,7 @@ export default function HeroSection() {
 
           <div
             ref={ctaButtonsRef}
-            className="flex flex-col md:flex-wrap sm:flex-row gap-4"
+            className="flex flex-col flex-wrap sm:flex-row gap-4"
           >
             <ScheduleCallButton
               variant="primary"
@@ -120,7 +120,7 @@ export default function HeroSection() {
 
           <div
             ref={statsRef}
-            className="mt-12 flex items-center justify-between max-w-lg"
+            className="mt-12 flex flex-wrap gap-x-16 gap-y-8 text-center sm:text-left items-center justify-center sm:justify-between w-fit max-w-lg"
           >
             <div>
               <p className="font-bold text-3xl md:text-4xl font-display">100+</p>

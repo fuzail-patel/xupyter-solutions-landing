@@ -3,17 +3,47 @@ import { PageHeader } from "@/components/shared"
 import { PortfolioCard } from "@/components/portfolio"
 import { CtaButton } from "@/components/shared"
 import { CallToAction } from "@/components/sections"
-import { portfolioProjects } from "@/lib/constants/portfolio"
 import { SmartImage } from "@/components/shared/SmartImage"
+import { getProjects } from "@/lib/cms-client"
 
-export default function PortfolioPage() {
+export default async function PortfolioPage() {
+  const projectsData = await getProjects({
+    where: {
+      published: { equals: true },
+    },
+    sort: '-publishedAt',
+  })
+  
+  const projects = projectsData.docs.map((doc: any) => ({
+    id: doc.id,
+    name: doc.title,
+    slug: doc.slug,
+    industry: doc.industry || 'Tech',
+    type: doc.summary,
+    outcome: doc.summary,
+    image: doc.coverImage?.url || '/fallback-image.png',
+    featured: doc.featured,
+    metrics: [], // Can be extended if fields are added to CMS
+    caseStudyUrl: `/portfolio/${doc.slug}`,
+    liveUrl: null,
+  }))
+
   const featuredProject =
-    portfolioProjects.find((project) => project.featured) ??
-    portfolioProjects[0]
+    projects.find((project: any) => project.featured) ??
+    projects[0]
 
-  const otherProjects = portfolioProjects.filter(
-    (project) => project.slug !== featuredProject.slug
+  const otherProjects = projects.filter(
+    (project: any) => project.slug !== featuredProject?.slug
   )
+
+  if (!featuredProject) {
+    return (
+      <main className="flex flex-col bg-background">
+        <Header />
+        <PageHeader eyebrow="Portfolio" titlePrimary="Our" titleSecondary="Work" description="No projects found." />
+      </main>
+    )
+  }
 
   return (
     <main className="flex flex-col bg-background">
@@ -70,7 +100,7 @@ export default function PortfolioPage() {
                   </p>
 
                   <div className="mt-4 flex flex-wrap gap-x-8 gap-y-3">
-                    {featuredProject.metrics.slice(0, 3).map((metric) => (
+                    {featuredProject.metrics?.slice(0, 3).map((metric: any) => (
                       <div key={metric.label} className="flex flex-col">
                         <span className="text-base md:text-lg font-semibold font-[var(--font-satoshi)]">
                           {metric.value}

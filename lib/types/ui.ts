@@ -28,7 +28,7 @@ export interface SectionHeaderProps {
   titleSecondary?: ReactNode
   description?: ReactNode
   align?: "left" | "center"
-  size?: "md" | "lg" | "xl"
+  size?: "sm" | "md" | "lg" | "xl"
   accent?: boolean
   className?: string
   as?: "h1" | "h2"

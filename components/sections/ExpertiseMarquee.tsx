@@ -16,29 +16,29 @@ export function ExpertiseMarquee() {
   });
 
   const items = [
-    "MERN Stack",
-    "React Native",
-    "Flutter",
-    "AWS · Azure · GCP",
-    "Node.js",
-    "Next.js",
-    "PHP / Laravel",
-    "OpenAI / LangChain",
-    "PostgreSQL · MongoDB",
-    "Docker · Kubernetes",
-    "CI/CD Pipelines",
-    "Blockchain / Web3",
-    "IoT Systems",
-    "Tailwind CSS",
-    "REST & GraphQL APIs",
-    "Stripe · Twilio · Firebase",
+    "ERP Systems",
+    "CRM Platforms",
+    "Internal Business Tools",
+    "AI Agents",
+    "AI Automation",
+    "Workflow Automation",
+    "Odoo Customization",
+    "Zoho Integrations",
+    "SAP Integrations",
+    "API Integrations",
+    "Payment Integrations",
+    "Cloud Infrastructure",
+    "Data Pipelines",
+    "Admin & Operations Dashboards",
+    "Enterprise Integrations",
+    "Custom SaaS Platforms",
   ];
 
   return (
     <div ref={ref} style={style} className="pb-8 pt-4">
       <div className="container mx-auto px-4 mb-4">
         <p className="text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground/60 text-center lg:text-left">
-          Our Technology Fingerprint
+          Platforms & Systems We Work With
         </p>
       </div>
       <Marquee

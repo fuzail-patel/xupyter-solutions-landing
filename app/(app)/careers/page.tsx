@@ -1,3 +1,4 @@
+import Link from "next/link"
 import {
   BriefcaseIcon,
   ClockIcon,
@@ -6,15 +7,30 @@ import {
 } from "@heroicons/react/24/solid"
 
 import Header from "@/components/layout/Header"
-import { PageHeader } from "@/components/shared"
+import { PageHeader, CtaButton } from "@/components/shared"
 import { JobListingsSection } from "@/components/careers/job/JobListingsSection"
-import { ApplyModal } from "@/components/careers/ApplyModal"
 import AsymmetricGrid from "@/components/layout/AsymmetricGrid"
-import { careersBenefits, careersPageContent, jobs } from "@/lib/constants/careers"
+import { careersBenefits, careersPageContent } from "@/lib/constants/careers"
 import { jobListSchema } from "@/lib/schemas/careers.schema"
+import { getJobs } from "@/lib/cms-client"
 
-export default function CareersPage() {
-  const validatedJobs = jobListSchema.parse(jobs)
+export default async function CareersPage() {
+  const jobsData = await getJobs()
+  
+  const mappedJobs = jobsData.docs.map((doc: any) => ({
+    id: doc.id,
+    title: doc.title,
+    department: doc.department,
+    location: doc.location,
+    type: doc.type,
+    summary: doc.summary,
+    description: doc.description,
+    requirements: doc.requirements?.map((r: any) => r.requirement) || [],
+    status: doc.status,
+    slug: doc.slug,
+  }))
+
+  const validatedJobs = jobListSchema.parse(mappedJobs)
   const benefitIconMap = {
     remote: HomeModernIcon,
     clock: ClockIcon,
@@ -113,11 +129,9 @@ export default function CareersPage() {
             Share your profile and areas of focus and we’ll match you against current and upcoming roles.
           </p>
           <div className="mt-5 flex justify-center">
-            <ApplyModal
-              mode="general"
-              jobs={validatedJobs}
-              triggerLabel="Apply for a role"
-            />
+            <CtaButton asChild variant="primary" className="font-semibold">
+              <Link href="/careers/general-application">Apply for a role</Link>
+            </CtaButton>
           </div>
         </div>
       </section>

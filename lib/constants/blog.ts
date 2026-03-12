@@ -77,4 +77,59 @@ export const blogPosts: BlogPost[] = [
     image: "/images/blog/fintech.jpg",
     featured: false,
   },
+  {
+    slug: "serverless-scaling-patterns",
+    title: "Serverless Scaling Patterns: Beyond the Basics",
+    excerpt:
+      "Scaling serverless isn't just about 'it scales for you.' Learn about cold starts, database connection pooling, and concurrency limits.",
+    category: "Architecture",
+    readTime: "9 min read",
+    publishedAt: "Jan 25, 2026",
+    image: "/images/blog/serverless.jpg",
+    featured: false,
+  },
+  {
+    slug: "typescript-best-practices",
+    title: "TypeScript Best Practices for Large Scale Applications",
+    excerpt:
+      "Generic types, utility types, and strict mode — how to keep your TypeScript codebase clean as it grows to 100k+ lines.",
+    category: "Engineering",
+    readTime: "6 min read",
+    publishedAt: "Jan 18, 2026",
+    image: "/images/blog/typescript.jpg",
+    featured: false,
+  },
+  {
+    slug: "optimizing-react-performance",
+    title: "Optimizing React Performance: A Practical Guide",
+    excerpt:
+      "Memoization, code splitting, and windowing — how to keep your React app snappy even with complex data visualizations.",
+    category: "Engineering",
+    readTime: "5 min read",
+    publishedAt: "Jan 11, 2026",
+    image: "/images/blog/react-perf.jpg",
+    featured: false,
+  },
+  {
+    slug: "kubernetes-for-startups",
+    title: "Is Kubernetes Overkill for Your Startup?",
+    excerpt:
+      "A honest look at when you should adopt K8s and when you're better off with simpler alternatives like ECS or App Runner.",
+    category: "DevOps",
+    readTime: "8 min read",
+    publishedAt: "Jan 04, 2026",
+    image: "/images/blog/k8s.jpg",
+    featured: false,
+  },
+  {
+    slug: "product-led-growth-engineering",
+    title: "The Engineering Side of Product-Led Growth",
+    excerpt:
+      "Building self-serve onboarding, usage tracking, and automated trials — how engineering enables PLG strategies.",
+    category: "Strategy",
+    readTime: "7 min read",
+    publishedAt: "Dec 28, 2025",
+    image: "/images/blog/plg.jpg",
+    featured: false,
+  },
 ]

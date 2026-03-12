@@ -17,7 +17,7 @@ export const FOOTER_COMPANY_LINKS: NavItem[] = [
 ]
 
 export const FOOTER_RESOURCES_LINKS: NavItem[] = [
-  { label: "Blog", href: "/blog" },
+  { label: "Insights", href: "/blog" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
   { label: "Sitemap", href: "/sitemap" },

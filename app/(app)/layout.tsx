@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Sora, Open_Sans } from "next/font/google"
 import Footer from "@/components/layout/Footer"
-import "./globals.css"
+import "../globals.css"
 
 /**
  * Display font — Sora

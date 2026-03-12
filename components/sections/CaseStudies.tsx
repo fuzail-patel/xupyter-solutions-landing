@@ -119,7 +119,7 @@ export default function CaseStudies() {
 
   return (
     <Section className="bg-background" id="work">
-      <div className="flex flex-col lg:flex-row items-center gap-6 mb-12">
+      <div className="flex flex-col lg:flex-row items-center gap-6 mb-6">
         <SectionHeader 
           eyebrow="What We've Built" 
           titlePrimary="Success Stories"
