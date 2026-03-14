@@ -97,6 +97,12 @@ export default async function ProjectDetailPage({
                       {typeof project.industry === 'object' ? project.industry.name : project.industry}
                     </dd>
                   </div>
+                  <div>
+                    <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Client</dt>
+                    <dd className="mt-1 text-sm font-semibold text-foreground">
+                      {typeof project.client === 'object' ? project.client.name : (project.client || "Xupyter Client")}
+                    </dd>
+                  </div>
                   {project.technologies && project.technologies.length > 0 && (
                     <div>
                       <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Technologies</dt>
@@ -150,7 +156,7 @@ function RichText({ content }: { content: any }) {
           )
         }
         if (node.type === 'heading') {
-          const Tag = node.tag as keyof JSX.IntrinsicElements
+          const Tag = node.tag as any
           return (
             <Tag key={i} className="text-foreground font-bold">
               {node.children?.map((child: any, j: number) => child.text)}

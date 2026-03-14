@@ -25,10 +25,9 @@ export const Projects: CollectionConfig = {
     },
     {
       name: 'client',
-      type: 'text',
-      admin: {
-        placeholder: 'Name of the client',
-      },
+      type: 'relationship',
+      relationTo: 'clients',
+      required: true,
     },
     {
       name: 'liveUrl',

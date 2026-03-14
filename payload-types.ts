@@ -77,6 +77,7 @@ export interface Config {
     jobs: Job;
     industries: Industry;
     testimonials: Testimonial;
+    clients: Client;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -94,6 +95,7 @@ export interface Config {
     jobs: JobsSelect<false> | JobsSelect<true>;
     industries: IndustriesSelect<false> | IndustriesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    clients: ClientsSelect<false> | ClientsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -309,7 +311,7 @@ export interface Project {
   title: string;
   slug: string;
   summary: string;
-  client?: string | null;
+  client: number | Client;
   liveUrl?: string | null;
   industry: number | Industry;
   technologies?:
@@ -321,6 +323,19 @@ export interface Project {
   coverImage: number | Media;
   featured?: boolean | null;
   published?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "clients".
+ */
+export interface Client {
+  id: number;
+  name: string;
+  logo?: (number | null) | Media;
+  industry?: string | null;
+  website?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -528,6 +543,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'testimonials';
         value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'clients';
+        value: number | Client;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -760,6 +779,18 @@ export interface TestimonialsSelect<T extends boolean = true> {
   avatar?: T;
   featured?: T;
   colSpan?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "clients_select".
+ */
+export interface ClientsSelect<T extends boolean = true> {
+  name?: T;
+  logo?: T;
+  industry?: T;
+  website?: T;
   updatedAt?: T;
   createdAt?: T;
 }

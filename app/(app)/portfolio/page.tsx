@@ -31,7 +31,7 @@ export default async function PortfolioPage() {
       title: doc.title,
       slug: doc.slug,
       industry: typeof doc.industry === 'object' ? doc.industry.name : (doc.industry || 'Tech'),
-      client: doc.client || null,
+      client: typeof doc.client === 'object' ? doc.client.name : (doc.client || null),
       description: doc.summary,
       image: getMediaUrl(doc.coverImage),
       featured: doc.featured,
