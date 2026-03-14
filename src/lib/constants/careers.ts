@@ -4,9 +4,6 @@ export const careersPageContent: CareersPageContent = {
   title: "Careers",
   subtitle:
     "Open roles and long-term positions within our engineering and systems teams.",
-  emptyStateMessage: "There are currently no open positions.",
-  emptyStateCtaLabel: "Submit General Application",
-  emptyStateHref: "/careers/general-application",
 }
 
 export const careersBenefits: CareersBenefit[] = [

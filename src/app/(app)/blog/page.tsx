@@ -1,14 +1,12 @@
 import { BlogListingPage } from "@/components/blog"
 import { getPosts } from "@/lib/cms-client"
 import { getDisplayPosts } from "@/utils/blog/mapPost"
+import { pageSEO } from "@/lib/seo/pages"
 import { Metadata } from "next"
 import { Suspense } from "react"
 
 export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: "Insights | Technical perspectives from our engineering and architecture team",
-    description: "Deep dives and notes from our team on systems, architecture, and automation.",
-  }
+  return pageSEO.blog
 }
 
 export default async function BlogPage({

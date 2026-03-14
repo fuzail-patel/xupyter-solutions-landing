@@ -7,9 +7,6 @@ export type Job = PayloadJob
 export type CareersPageContent = {
   title: string
   subtitle: string
-  emptyStateMessage: string
-  emptyStateCtaLabel: string
-  emptyStateHref: string
 }
 
 export type CareersBenefit = {
@@ -30,9 +27,6 @@ export type ApplyModalProps = {
 
 export type JobListingsSectionProps = {
   jobs: Job[]
-  emptyStateMessage: string
-  emptyStateCtaLabel: string
-  emptyStateHref: string
 }
 
 export type JobListingItemProps = {

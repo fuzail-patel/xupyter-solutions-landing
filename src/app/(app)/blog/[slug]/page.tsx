@@ -3,7 +3,6 @@ import { getPosts } from "@/lib/cms-client"
 import { Post } from "@/payload-types"
 import { getMediaUrl } from "@/utils/common"
 import { notFound } from "next/navigation"
-import Image from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next"
 import { blogPosts } from "@/lib/constants/blog"
@@ -138,12 +137,12 @@ export default async function BlogArticlePage({
           <div className="max-w-3xl mx-auto px-6 pb-8 sm:pb-10 md:pb-12">
             <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-muted/60">
               <SmartImage
-                src={getMediaUrl(post.coverImage)}
+                src={getMediaUrl(post.coverImage) || ""}
                 alt={post.title}
                 fill
                 className="object-cover"
                 sizes="(min-width: 1024px) 960px, 100vw"
-                priority
+                preload
               />
             </div>
           </div>
@@ -185,7 +184,7 @@ export default async function BlogArticlePage({
                   >
                     <div className="relative h-14 w-20 overflow-hidden rounded-md bg-muted/60">
                       <SmartImage
-                        src={getMediaUrl(related.coverImage)}
+                        src={getMediaUrl(related.coverImage) || ""}
                         alt={related.title}
                         fill
                         className="object-cover transition-transform duration-150 group-hover:scale-[1.03]"

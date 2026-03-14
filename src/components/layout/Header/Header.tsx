@@ -42,19 +42,19 @@ export default function Header() {
           <div className="flex h-25 items-center gap-6">
             <Link href="/" className="flex items-center">
               <Image
-                src="/logo.jpg"
+                src="/images/brand/logo.jpg"
                 alt="Xupyter logo"
                 width={100}
                 height={24}
                 className="h-12 w-auto"
-                priority
+                preload
               />
             </Link>
 
             <DesktopNav pathname={pathname} activeSection={activeSection} />
 
             <div className="hidden lg:flex">
-              <ScheduleCallButton variant="secondary" className="h-11 text-sm py-6" />
+              <ScheduleCallButton variant="header" className="h-11 text-sm py-6" />
             </div>
 
             <div className="flex items-center lg:hidden ml-auto">

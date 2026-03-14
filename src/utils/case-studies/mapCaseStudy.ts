@@ -52,6 +52,6 @@ export const mapCaseStudyToDisplay = (s: CaseStudy): DisplayStudy => {
     title: s.title || 'Untitled Case Study',
     excerpt: project?.summary || s.title || '',
     date: s.createdAt ? new Date(s.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Recently',
-    image: getMediaUrl(project?.coverImage)
+    image: getMediaUrl(project?.coverImage) || ""
   }
 }

@@ -19,10 +19,10 @@ export const mapCMSToDisplayPost = (post: Post): DisplayPost => {
     excerpt: post.excerpt || '',
     category,
     authorName: author?.name || 'Xupyter Team',
-    authorAvatar: author ? getMediaUrl(author.avatar) : undefined,
+    authorAvatar: author ? getMediaUrl(author.avatar) || undefined : undefined,
     publishedAt: post.publishedAt || '',
     readTime: post.readTime || '5 min read',
-    image: getMediaUrl(post.coverImage),
+    image: getMediaUrl(post.coverImage) || "",
     featured: !!post.featured,
   }
 }

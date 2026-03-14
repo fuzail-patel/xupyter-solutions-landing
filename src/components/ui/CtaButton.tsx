@@ -19,7 +19,7 @@ export function CtaButton({
   onClick, 
 }: CtaButtonProps) {
   const classes = cn(
-    "inline-flex items-center justify-center gap-2 group transition-all duration-200 font-medium disabled:opacity-60 disabled:cursor-not-allowed",
+    "inline-flex items-center justify-center gap-2 group transition-all duration-200 font-medium disabled:opacity-60 disabled:cursor-not-allowed border px-4 rounded-xl",
     {
       "h-14 px-8 rounded-full bg-primary text-white shadow-sm hover:shadow-md hover:-translate-y-0.5 font-semibold":
         variant === "primary",

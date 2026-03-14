@@ -84,12 +84,12 @@ export default async function ProjectDetailPage({
           {/* Main Project Image */}
           <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-muted/60 shadow-xl">
             <SmartImage
-              src={getMediaUrl(project.coverImage)}
+              src={getMediaUrl(project.coverImage) || ""}
               alt={project.title || 'Project Image'}
               fill
               className="object-cover"
               sizes="(min-width: 1024px) 960px, 100vw"
-              priority
+              preload
             />
           </div>
 

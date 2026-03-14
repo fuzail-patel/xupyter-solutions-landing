@@ -32,7 +32,9 @@ export async function POST(request: Request) {
     )
   }
 
-  const { firstName, lastName, emailOrPhone, message } = parsed.data
+  const { name, email, website, message } = parsed.data
+  const [firstName = "", ...lastNameParts] = name.split(" ")
+  const lastName = lastNameParts.join(" ") || "-"
 
   try {
     await connectMongo()
@@ -40,7 +42,8 @@ export async function POST(request: Request) {
     await ContactLead.create({
       firstName,
       lastName,
-      emailOrPhone,
+      emailOrPhone: email,
+      website,
       message,
     })
   } catch {
@@ -57,10 +60,11 @@ export async function POST(request: Request) {
     const subject = `New contact from ${firstName} ${lastName}`
     const text = [
       `Name: ${firstName} ${lastName}`,
-      `Contact: ${emailOrPhone}`,
+      `Contact: ${email}`,
+      website ? `Website: ${website}` : "",
       "",
       message,
-    ].join("\n")
+    ].filter(Boolean).join("\n")
 
     await sendMail({
       subject,

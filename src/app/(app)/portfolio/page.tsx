@@ -3,6 +3,10 @@ import { PortfolioCard } from "@/components/portfolio"
 import { PageHeader } from "@/components/ui"
 import { getCaseStudies, getProjects } from "@/lib/cms-client"
 import { getDisplayProjects } from "@/utils/portfolio/mapProject"
+import { pageSEO } from "@/lib/seo/pages"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = pageSEO.portfolio
 
 export default async function PortfolioPage() {
   const [projectsData, caseStudiesData] = await Promise.all([

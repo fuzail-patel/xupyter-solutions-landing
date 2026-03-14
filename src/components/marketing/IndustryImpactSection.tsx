@@ -74,9 +74,9 @@ export default function IndustryImpactSection() {
           <SectionHeader
             align="left"
             eyebrow="PROVEN RESULTS"
-            titlePrimary="Numbers That Speak"
-            titleSecondary="for Our Work"
-            description="Every metric here is backed by a real project. We let the outcomes do the talking."
+            titlePrimary="Results That"
+            titleSecondary="Speak for Themselves"
+            description="Beyond the code, we focus on the outcomes that matter most to your business. From rapid development cycles to enterprise-grade uptime, we deliver measurable value at every stage."
           />
           <div className="mt-6">
             <CtaButton variant="primary" href="#contact">

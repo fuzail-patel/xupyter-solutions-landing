@@ -37,7 +37,7 @@ export function FeaturedSection({ posts }: FeaturedSectionProps) {
           {featuredPost.author && (
             <div className="flex items-center gap-4">
               <Avatar className="h-12 w-12 border border-border/50">
-                <AvatarImage src={featuredAuthorAvatar} alt={featuredAuthorName} />
+                <AvatarImage src={featuredAuthorAvatar || undefined} alt={featuredAuthorName} />
                 <AvatarFallback>{featuredAuthorName.charAt(0)}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col">

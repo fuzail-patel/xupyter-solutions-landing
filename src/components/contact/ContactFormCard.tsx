@@ -31,9 +31,9 @@ export default function ContactFormCard() {
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      emailOrPhone: "",
+      name: "",
+      email: "",
+      website: "",
       message: "",
     },
   })
@@ -85,119 +85,113 @@ export default function ContactFormCard() {
             {errorMessage && (
               <ContactError message={errorMessage} />
             )}
-            {/* First + Last Name */}
-            <div className="grid gap-5 md:gap-6">
-                <FormField
-                  control={form.control}
-                  name="firstName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <FloatingField id="firstName" label="Enter your name">
-                          <Input
-                            {...field}
-                            id="firstName"
-                            placeholder=" "
-                            variant="minimal"
-                            className="peer text-base md:text-xl font-bold text-foreground/90"
-                          />
-                        </FloatingField>
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
+            
+            {/* Name */}
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <FloatingField id="name" label="Enter your name">
+                      <Input
+                        {...field}
+                        id="name"
+                        placeholder=" "
+                        variant="minimal"
+                        className="peer text-base md:text-xl font-bold text-foreground/90"
+                        autoComplete="name"
+                      />
+                    </FloatingField>
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
 
-                <FormField
-                  control={form.control}
-                  name="lastName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <FloatingField id="lastName" label="Enter your last name">
-                          <Input
-                            {...field}
-                            id="lastName"
-                            placeholder=" "
-                            variant="minimal"
-                            className="peer text-base md:text-xl font-bold text-foreground/90"
-                          />
-                        </FloatingField>
-                      </FormControl>
-                      <FormMessage className="text-xs" />
-                    </FormItem>
-                  )}
-                />
-              </div>
+            {/* Email */}
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <FloatingField id="email" label="Enter your email">
+                      <Input
+                        {...field}
+                        id="email"
+                        placeholder=" "
+                        variant="minimal"
+                        className="peer text-base md:text-xl font-bold text-foreground/90"
+                        type="email"
+                        autoComplete="email"
+                      />
+                    </FloatingField>
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
 
-              {/* Email / Phone */}
-              <FormField
-                control={form.control}
-                name="emailOrPhone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <FloatingField id="contactDetail" label="Enter your email address">
-                        <Input
-                          {...field}
-                          id="contactDetail"
-                          placeholder=" "
-                          variant="minimal"
-                          className="peer text-base md:text-xl font-bold text-foreground/90"
-                        />
-                      </FloatingField>
-                    </FormControl>
-                    <FormMessage className="text-xs" />
-                  </FormItem>
-                )}
-              />
+            {/* Website */}
+            <FormField
+              control={form.control}
+              name="website"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <FloatingField id="website" label="Enter your website (optional)">
+                      <Input
+                        {...field}
+                        id="website"
+                        placeholder=" "
+                        variant="minimal"
+                        className="peer text-base md:text-xl font-bold text-foreground/90"
+                        type="url"
+                      />
+                    </FloatingField>
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
 
-              {/* Message */}
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <FloatingField id="projectDescription" label="Go ahead, we are listening...">
-                        <Textarea
-                          {...field}
-                          id="projectDescription"
-                          placeholder=" "
-                          variant="minimal"
-                          className="peer text-base md:text-xl font-bold text-foreground/90 pt-6 min-h-30"
-                        />
-                      </FloatingField>
-                    </FormControl>
-                    <FormMessage className="text-xs" />
-                  </FormItem>
-                )}
-              />
+            {/* Message */}
+            <FormField
+              control={form.control}
+              name="message"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <FloatingField id="message" label="Tell us about your project">
+                      <Textarea
+                        {...field}
+                        id="message"
+                        placeholder=" "
+                        variant="minimal"
+                        className="peer text-base md:text-xl font-bold text-foreground/90 pt-6 min-h-30"
+                      />
+                    </FloatingField>
+                  </FormControl>
+                  <FormMessage className="text-xs" />
+                </FormItem>
+              )}
+            />
 
-              {/* Submit */}
-              <div className="pt-5 flex items-center justify-start">
-                <CtaButton
-                  variant="primary"
-                  buttonType="submit"
-                  disabled={isSubmitting}
-                  className="w-full md:w-auto min-w-50 text-lg py-6"
-                >
-                  {isSubmitting ? (
-                    <span className="inline-flex items-center gap-2">
-                      <span className="h-5 w-5 rounded-full border-2 border-current border-t-transparent animate-spin" />
-                      Sending…
-                    </span>
-                  ) : (
-                    "Submit"
-                  )}
-                </CtaButton>
-              </div>
-            </form>
-          </Form>
-        )}
+            <CtaButton
+              buttonType="submit"
+              disabled={isSubmitting}
+              className="w-full h-14 text-lg font-bold shadow-lg"
+              variant="primary"
+            >
+              {isSubmitting ? "Sending..." : "Submit"}
+            </CtaButton>
+          </form>
+        </Form>
+      )}
 
-        {isSubmitted && <ContactSuccess />}
-      </div>
-    )
-  }
+      {isSubmitted && <ContactSuccess />}
+    </div>
+  )
+}
 

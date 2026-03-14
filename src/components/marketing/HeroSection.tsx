@@ -25,7 +25,7 @@ export default function HeroSection() {
   })
 
   return (
-    <Section as="section" id="home">
+    <Section as="section" id="home" className="pt-28 lg:pt-36">
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-16 text-white">
         <div className="flex flex-col gap-7 lg:text-left ">
           <div className="space-y-2">

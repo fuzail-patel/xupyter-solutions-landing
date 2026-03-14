@@ -11,12 +11,12 @@ export default function Footer() {
             {/* Logo */}
             <Link href="/" className="flex items-center">
               <Image
-                src="/logo.jpg"
+                src="/images/brand/logo.jpg"
                 alt="Xupyter logo"
                 width={100}
                 height={24}
                 className="h-10 w-auto"
-                priority
+                preload
               />
             </Link>
             <p className="text-sm text-foreground/90 max-w-xs leading-relaxed">
@@ -27,22 +27,19 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="space-y-1">
                 <p className="text-sm font-medium text-foreground">
-                  Bharuch, Gujarat, India
+                  Xupyter Solutions Pvt Ltd
                 </p>
                 <p className="text-xs text-muted-foreground">
-                  Remote-first team
+                  Bharuch, Gujarat, India
                 </p>
               </div>
               <div className="space-y-1">
                 <a
-                  href="mailto:hello@xupyter.com"
+                  href="mailto:contact@xupyter.com"
                   className="text-sm font-medium text-foreground hover:text-primary transition-colors"
                 >
-                  contact@xupyter.in
+                  contact@xupyter.com
                 </a>
-                <p className="text-xs text-muted-foreground">
-                  Typically respond within 24 hours.
-                </p>
               </div>
             </div>
           </div>
@@ -103,9 +100,9 @@ export default function Footer() {
           <p className="text-center md:text-left">© 2026 Xupyter Solutions. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <a
-              href="https://www.linkedin.com/company/xupyter-solutions/"
+              href="https://in.linkedin.com/company/xupyter-solutions"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors group"
               aria-label="LinkedIn"
             >
@@ -114,25 +111,14 @@ export default function Footer() {
               </svg>
             </a>
             <a
-              href="https://instagram.com/xupyter"
+              href="https://www.instagram.com/xupyter.solutions.ai/"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors group"
               aria-label="Instagram"
             >
               <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.35 3.608 1.325.975.975 1.262 2.242 1.324 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.35 2.633-1.324 3.608-.975.975-2.242 1.262-3.608 1.324-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.35-3.608-1.324-.975-.975-1.262-2.242-1.324-3.608C2.175 15.747 2.163 15.367 2.163 12s.012-3.584.07-4.85c.062-1.366.35-2.633 1.324-3.608S6.799 2.225 8.165 2.163C9.431 2.105 9.811 2.163 12 2.163zm0 3.589a5.248 5.248 0 1 0 0 10.496A5.248 5.248 0 0 0 12 5.752zm6.406-.994a1.298 1.298 0 1 0 0 2.596 1.298 1.298 0 0 0 0-2.596zM12 7.436a4.564 4.564 0 1 1 0 9.128 4.564 4.564 0 0 1 0-9.128z"/>
-              </svg>
-            </a>
-            <a
-              href="https://facebook.com/xupyter"
-              target="_blank"
-              rel="noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors group"
-              aria-label="Facebook"
-            >
-              <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M22.676 0H1.326C.594 0 0 .593 0 1.326v21.348C0 23.406.594 24 1.326 24h11.49V14.706h-3.13v-3.615h3.13V8.413c0-3.1 1.894-4.79 4.66-4.79 1.325 0 2.463.099 2.794.143v3.24l-1.918.001c-1.504 0-1.796.716-1.796 1.767v2.317h3.59l-.467 3.615h-3.123V24h6.116C23.406 24 24 23.406 24 22.674V1.326C24 .593 23.406 0 22.676 0z"/>
               </svg>
             </a>
           </div>

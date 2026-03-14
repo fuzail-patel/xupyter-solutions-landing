@@ -11,6 +11,10 @@ import {
   WhyXupyterSection,
   ExpertiseMarquee,
 } from "@/components/marketing"
+import { pageSEO } from "@/lib/seo/pages"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = pageSEO.home
 
 export default async function Home() {
   const [caseStudiesData, postsData, testimonialsData] = await Promise.all([

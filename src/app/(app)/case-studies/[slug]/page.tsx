@@ -135,12 +135,12 @@ export default async function CaseStudyDetailPage({
           {project?.coverImage && (
             <div className="relative aspect-video md:aspect-21/9 w-full overflow-hidden rounded-2xl bg-muted shadow-2xl">
               <SmartImage
-                src={getMediaUrl(project.coverImage)}
+                src={getMediaUrl(project.coverImage) || ""}
                 alt={caseStudy.title || 'Case Study Image'}
                 fill
                 className="object-cover"
                 sizes="100vw"
-                priority
+                preload
               />
               {/* Decorative Scroll Down Indicator (optional, matching image) */}
               <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-background/20 backdrop-blur-md flex items-center justify-center border border-border/20">

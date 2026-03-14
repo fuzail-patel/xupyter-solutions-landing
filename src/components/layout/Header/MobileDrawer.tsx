@@ -33,7 +33,7 @@ export function MobileDrawer({ open, onClose, pathname, activeSection }: MobileD
         <div className="flex items-center justify-between px-8 py-8 h-25">
           <Link href="/" onClick={onClose} className="flex items-center">
             <Image
-              src="/logo.jpg"
+              src="/images/brand/logo.jpg"
               alt="Xupyter logo"
               width={100}
               height={24}

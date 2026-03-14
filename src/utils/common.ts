@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export function getMediaUrl(media: Media | number | string | null | undefined, fallback: string = '/fallback-image.png'): string {
+export function getMediaUrl(media: Media | number | string | null | undefined, fallback: string | null = null): string | null {
   if (typeof media === 'string') return media
   if (!media || typeof media === 'number') return fallback
   

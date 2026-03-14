@@ -3,12 +3,16 @@ import { CtaButton, PageHeader } from "@/components/ui"
 import { getJobs } from "@/lib/cms-client"
 import { careersBenefits, careersPageContent } from "@/lib/constants/careers"
 import { Job } from "@/types/careers"
+import { pageSEO } from "@/lib/seo/pages"
+import type { Metadata } from "next"
 import {
   BriefcaseIcon,
   ClockIcon,
   HomeModernIcon,
   SparklesIcon,
 } from "@heroicons/react/24/solid"
+
+export const metadata: Metadata = pageSEO.careers
 
 export default async function CareersPage() {
   const jobsData = await getJobs()
@@ -96,12 +100,9 @@ export default async function CareersPage() {
 
       <JobListingsSection
         jobs={validatedJobs}
-        emptyStateMessage={careersPageContent.emptyStateMessage}
-        emptyStateCtaLabel={careersPageContent.emptyStateCtaLabel}
-        emptyStateHref={careersPageContent.emptyStateHref}
       />
 
-      <section className="py-10 sm:py-12 md:py-16 border-t border-border/60">
+      <section className={`py-10 sm:py-12 md:py-16 ${validatedJobs.length > 0 ? "border-t border-border/60" : ""}`}>
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-lg md:text-xl font-semibold text-foreground">
             Don’t see a suitable role?
