@@ -13,6 +13,8 @@ import {
 export const SERVICES: Service[] = [
   {
     title: "Business Websites & Digital Foundations",
+    shortDescription:
+      "Strategic business websites built as long-term digital infrastructure, not disposable marketing pages.",
     description:
       "Strategic business websites built as long-term digital infrastructure, not disposable marketing pages. We engineer high-performance websites that strengthen credibility, support marketing initiatives, and provide a scalable foundation for integrations, structured content systems, and future platform expansion as your business evolves.",
     icon: <GlobeAltIcon className="size-6" />,
@@ -21,6 +23,8 @@ export const SERVICES: Service[] = [
   },
   {
     title: "Custom ERP, CRM & Business Platforms",
+    shortDescription:
+      "Operational platforms engineered around how your business actually runs, centralizing data and workflows.",
     description:
       "Operational platforms engineered around how your business actually runs. We build custom ERP, CRM, and internal business systems that centralize data, streamline workflows, and replace fragmented tools with a unified platform. The result is better operational visibility, improved efficiency, and a system that grows with your organization.",
     icon: <Squares2X2Icon className="size-6" />,
@@ -29,6 +33,8 @@ export const SERVICES: Service[] = [
   },
   {
     title: "Automation & AI-Ready Systems",
+    shortDescription:
+      "Systems designed from day one to support automation, integrations, and future AI capabilities.",
     description:
       "Systems designed for automation from the very beginning. We structure platforms to support workflow automation, integrations, and data pipelines so repetitive operational tasks can be eliminated. The architecture also prepares your business for future AI-driven capabilities without requiring major platform rebuilds.",
     icon: <CpuChipIcon className="size-6" />,
@@ -37,6 +43,8 @@ export const SERVICES: Service[] = [
   },
   {
     title: "Architecture & Technical Strategy",
+    shortDescription:
+      "Upfront system architecture and technical direction that keeps your platform scalable and maintainable.",
     description:
       "Before development begins, we define the system architecture and long-term technical direction. This includes data models, technology decisions, infrastructure planning, and integration strategy. The goal is to ensure scalability, maintainability, and the ability for your platform to evolve as business complexity increases.",
     icon: <SquaresPlusIcon className="size-6" />,
@@ -45,6 +53,8 @@ export const SERVICES: Service[] = [
   },
   {
     title: "Application Development",
+    shortDescription:
+      "Custom web applications and platforms engineered for performance, reliability, and long-term adaptability.",
     description:
       "Custom web applications and digital platforms engineered for performance, reliability, and long-term adaptability. From internal operational tools to large customer-facing platforms, we build software using scalable architecture and modern technologies designed to evolve alongside changing business needs.",
     icon: <CodeBracketIcon className="size-6" />,
@@ -53,6 +63,8 @@ export const SERVICES: Service[] = [
   },
   {
     title: "API & System Integrations",
+    shortDescription:
+      "Robust APIs and integration layers that connect your internal tools, SaaS, and enterprise systems.",
     description:
       "Modern businesses rely on multiple systems working together. We design and implement APIs and integration layers that connect internal tools, SaaS platforms, and enterprise systems. This creates a unified operational environment where data flows reliably across your entire technology stack.",
     icon: <ShareIcon className="size-6" />,
@@ -61,6 +73,8 @@ export const SERVICES: Service[] = [
   },
   {
     title: "SAP Integrations",
+    shortDescription:
+      "Connect SAP with modern platforms and products using secure connectors, middleware, and APIs.",
     description:
       "Integrate SAP with modern platforms, applications, and digital products. We build secure connectors, middleware, and APIs that allow SAP systems to communicate with external services and custom platforms. This enables organizations to extend SAP workflows into modern operational tools and customer-facing systems.",
     icon: <CircleStackIcon className="size-6" />,
@@ -69,6 +83,8 @@ export const SERVICES: Service[] = [
   },
   {
     title: "Third-Party Platform Integrations",
+    shortDescription:
+      "Reliable integrations with CRMs, payments, analytics, logistics, and other critical SaaS platforms.",
     description:
       "Reliable integrations with external platforms such as CRMs, payment gateways, analytics tools, logistics systems, and other SaaS services. We ensure stable data exchange and seamless communication between platforms so your technology stack operates as a connected system rather than isolated tools.",
     icon: <PuzzlePieceIcon className="size-6" />,

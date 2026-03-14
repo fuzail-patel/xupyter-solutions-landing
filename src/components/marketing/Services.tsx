@@ -16,6 +16,7 @@ import {
   Share2,
   Server,
   Puzzle,
+  ArrowUpRight,
 } from "lucide-react"
 
 /** Maps service titles to their representative Lucide icon */
@@ -52,10 +53,11 @@ export default function Services() {
           const Icon = SERVICE_ICON[service.title]
 
           return (
-            <div
+            <Link
               key={`${service.title}-${index}`}
+              href={service.href}
               data-service-card
-              className="relative transition-all hover:translate-x-1 group"
+              className="relative transition-all hover:translate-x-1 group block"
             >
               <div className="flex flex-col gap-4">
 
@@ -89,17 +91,23 @@ export default function Services() {
                 </div>
 
                 <div className="space-y-2 mt-5">
-                  <h3 className="text-lg font-bold text-white uppercase tracking-tight">
-                    {service.title}
-                  </h3>
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="text-lg font-bold text-white uppercase tracking-tight">
+                      {service.title}
+                    </h3>
+                    <ArrowUpRight
+                      className="w-4 h-4 text-muted-foreground opacity-0 -translate-y-0.5 -translate-x-0.5 transition-all duration-200 group-hover:opacity-100 group-hover:text-primary group-hover:-translate-y-1 group-hover:translate-x-0"
+                      strokeWidth={1.75}
+                    />
+                  </div>
 
                   <p className="text-sm text-muted-foreground leading-relaxed max-w-sm font-medium">
-                    {service.description}
+                    {service.shortDescription}
                   </p>
                 </div>
 
               </div>
-            </div>
+            </Link>
           )
         })}
       </div>
