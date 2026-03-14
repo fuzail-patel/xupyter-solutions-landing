@@ -1,7 +1,6 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import type { Post } from "@/payload-types"
-import type { Category } from "@/types/blog"
+import type { DisplayPost, Category } from "@/types/blog"
 
 export type UseBlogListingResult = {
   searchTerm: string
@@ -16,7 +15,7 @@ export type UseBlogListingResult = {
   handleClearFilters: () => void
 }
 
-export function useBlogListing(posts: Post[], totalPosts: number): UseBlogListingResult {
+export function useBlogListing(posts: DisplayPost[], totalPosts: number): UseBlogListingResult {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()

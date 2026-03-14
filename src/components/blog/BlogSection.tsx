@@ -6,7 +6,9 @@ import { Section } from "@/components/layout"
 import { AutoCarousel, SectionHeader } from "@/components/ui"
 import { useSectionReveal } from "@/hooks/useSectionReveal"
 import { animateFade } from "@/utils/animations"
+import { getDisplayPosts } from "@/utils/blog/mapPost"
 import type { Post } from "@/payload-types"
+import type { DisplayPost } from "@/types/blog"
 
 interface BlogSectionProps {
   posts?: Post[]
@@ -37,7 +39,7 @@ export default function BlogSection({ posts }: BlogSectionProps) {
     },
   })
 
-  const latestPosts = posts || []
+  const latestPosts = getDisplayPosts(posts)
 
   const [perView, setPerView] = useState(1)
 
@@ -60,7 +62,7 @@ export default function BlogSection({ posts }: BlogSectionProps) {
   }, [])
 
   const slides = useMemo(() => {
-    const chunks: Post[][] = []
+    const chunks: DisplayPost[][] = []
     for (let i = 0; i < latestPosts.length; i += perView) {
       chunks.push(latestPosts.slice(i, i + perView))
     }

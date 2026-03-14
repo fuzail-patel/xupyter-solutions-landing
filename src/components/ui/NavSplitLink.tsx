@@ -12,8 +12,8 @@ export default function NavSplitLink({ href, label, active }: NavSplitLinkProps)
     <Link
       href={href}
       className={cn(
-        "relative py-2 group transition-colors duration-200 font-semibold text-base",
-        active ? "text-primary font-bold" : "text-muted-foreground hover:text-foreground"
+        "relative py-2 group transition-colors duration-200 font-medium text-sm",
+        active ? "text-primary font-bold" : "text-foreground/80 hover:text-primary"
       )}
     >
       <span className="block">

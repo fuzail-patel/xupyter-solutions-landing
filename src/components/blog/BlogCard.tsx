@@ -1,10 +1,11 @@
 import { SmartImage } from "@/components/ui"
-import { mapPostToCardData } from "@/utils/blog/mapPostToCard"
 import Link from "next/link"
 import type { BlogCardProps } from "@/types/blog"
 
 export default function BlogCard({ post }: BlogCardProps) {
-  const { imageUrl, category, authorName, formattedDate, readTime } = mapPostToCardData(post)
+  const formattedDate = post.publishedAt 
+    ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+    : 'Recently'
 
   return (
     <article className="h-full">
@@ -15,9 +16,9 @@ export default function BlogCard({ post }: BlogCardProps) {
         <div className="flex h-full flex-col overflow-hidden rounded-none border border-transparent bg-background transition-colors duration-200">
           {/* Image/Header Area */}
           <div className="relative aspect-16/10 w-full overflow-hidden rounded-none bg-[#F0EEE8] dark:bg-muted/30 border border-border/40">
-            {imageUrl ? (
+            {post.image ? (
               <SmartImage
-                src={imageUrl}
+                src={post.image}
                 alt={post.title || 'Blog Post Image'}
                 fill
                 className="object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
@@ -28,7 +29,7 @@ export default function BlogCard({ post }: BlogCardProps) {
             {/* Overlay Category Tag */}
             <div className="absolute left-4 top-4 z-20">
               <span className="bg-[#1A1A1A] px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white rounded-none">
-                {category}
+                {post.category}
               </span>
             </div>
           </div>
@@ -38,7 +39,7 @@ export default function BlogCard({ post }: BlogCardProps) {
             <div className="flex items-center gap-2 text-[13px] text-muted-foreground/60 mb-3">
               <time dateTime={post.publishedAt || undefined}>{formattedDate}</time>
               <span>·</span>
-              <span>{readTime}</span>
+              <span>{post.readTime}</span>
             </div>
             
             <h3 className="text-[22px] font-semibold leading-tight text-foreground transition-colors duration-200 group-hover:text-primary mb-4 line-clamp-2">
@@ -51,7 +52,7 @@ export default function BlogCard({ post }: BlogCardProps) {
             
             <div className="mt-auto flex items-center justify-between">
               <span className="text-sm font-medium text-muted-foreground/60">
-                {authorName}
+                {post.authorName}
               </span>
               <span className="text-[11px] font-bold uppercase tracking-widest text-[#B54728] group-hover:underline flex items-center gap-1.5 transition-all">
                 Read 

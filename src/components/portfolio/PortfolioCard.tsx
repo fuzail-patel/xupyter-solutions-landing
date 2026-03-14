@@ -6,7 +6,7 @@ import type { PortfolioCardProps } from "@/types/portfolio"
 export default function PortfolioCard({ project }: PortfolioCardProps) {
   const caseStudyHref = project.caseStudyUrl ?? `/portfolio/${project.slug || ''}`
   const imageUrl = getMediaUrl(project.coverImage)
-  const industryName = (typeof project.industry === 'object' && project.industry !== null) ? project.industry.name : 'Tech'
+  const industryName = (typeof project.industry === 'object' && project.industry !== null) ? project.industry : 'Tech'
 
   return (
     <article className="h-full">

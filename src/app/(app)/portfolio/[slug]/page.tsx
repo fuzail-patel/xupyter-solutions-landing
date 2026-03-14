@@ -1,4 +1,3 @@
-import { Header } from "@/components/layout"
 import { CallToAction } from "@/components/marketing"
 import { CtaButton, PageHeader, SmartImage } from "@/components/ui"
 import { getCaseStudyByProject, getProjectBySlug } from "@/lib/cms-client"
@@ -6,7 +5,8 @@ import { getMediaUrl } from "@/utils/common"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import type { Metadata } from "next"
-
+import { portfolioProjects } from "@/lib/constants/portfolio"
+import { mapConstantToDisplayProject } from "@/utils/portfolio/mapProject"
 
 export async function generateMetadata({
   params,
@@ -14,9 +14,16 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const project = await getProjectBySlug(slug)
+  const project = await getProjectBySlug(slug).catch(() => null)
 
   if (!project) {
+    const constantProject = portfolioProjects.find(p => p.slug === slug)
+    if (constantProject) {
+      return {
+        title: `${constantProject.name} | Case Study`,
+        description: constantProject.outcome,
+      }
+    }
     return {
       title: "Project Not Found",
     }
@@ -34,19 +41,37 @@ export default async function ProjectDetailPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const project = await getProjectBySlug(slug)
+  let project = await getProjectBySlug(slug).catch(() => null)
+  let caseStudy = null
 
   if (!project) {
-    notFound()
+    const constantProject = portfolioProjects.find(p => p.slug === slug)
+    if (constantProject) {
+      const displayProject = mapConstantToDisplayProject(constantProject, 0)
+      project = {
+        id: 0,
+        slug: displayProject.slug,
+        title: displayProject.title,
+        summary: displayProject.summary,
+        industry: { name: displayProject.industry } as any,
+        client: { name: 'Proprietary' } as any,
+        coverImage: displayProject.coverImage as any,
+        liveUrl: displayProject.liveUrl,
+        updatedAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+      }
+      caseStudy = { slug: constantProject.caseStudyUrl?.split('/').pop() }
+    } else {
+      notFound()
+    }
+  } else {
+    caseStudy = await getCaseStudyByProject(project.id).catch(() => null)
   }
 
-  const caseStudy = await getCaseStudyByProject(project.id)
   const industryName = (typeof project.industry === 'object' && project.industry !== null) ? project.industry.name : 'Tech'
   const clientName = (typeof project.client === 'object' && project.client !== null) ? project.client.name : (project.client || 'Proprietary')
 
   return (    <main className="flex flex-col bg-background">
-      <Header />
-
       <PageHeader
         eyebrow={industryName}
         titlePrimary={project.title || 'Untitled Project'}

@@ -9,8 +9,22 @@ export type Category =
   | "DevOps"
   | "FinTech"
 
+export type DisplayPost = {
+  id: string | number
+  slug: string
+  title: string
+  excerpt: string
+  category: string
+  readTime: string
+  publishedAt: string
+  image: string
+  featured: boolean
+  authorName: string
+  authorAvatar?: string
+}
+
 export type BlogCardProps = {
-  post: Post
+  post: DisplayPost
 }
 
 export type BlogPost = {

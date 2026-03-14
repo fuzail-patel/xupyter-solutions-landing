@@ -12,8 +12,6 @@ import { useForm } from "react-hook-form"
 
 import Link from "next/link"
 
-import { Header } from "@/components/layout"
-
 export default function JobApplicationPage() {
   const params = useParams()
   const slug = params?.slug as string
@@ -27,7 +25,6 @@ export default function JobApplicationPage() {
   if (!job && !isGeneral) {
     return (
       <div className="flex flex-col min-h-screen">
-        <Header />
         <div className="flex-1 flex items-center justify-center p-6">
           <div className="text-center">
             <h1 className="text-2xl font-bold">Job Not Found</h1>
@@ -60,7 +57,6 @@ export default function JobApplicationPage() {
   if (submitted) {
     return (
       <div className="flex flex-col min-h-screen bg-background">
-        <Header />
         <div className="flex-1 flex items-center justify-center p-6">
           <div className="max-w-md w-full text-center space-y-6">
             <div className="flex justify-center">
@@ -87,8 +83,6 @@ export default function JobApplicationPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <Header />
-      
       <main className="flex-1">
         <div className="max-w-7xl mx-auto px-6 py-8 md:py-12">
           <Link 

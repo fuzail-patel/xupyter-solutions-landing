@@ -10,8 +10,6 @@ import {
   SparklesIcon,
 } from "@heroicons/react/24/solid"
 
-import { Header } from "@/components/layout"
-
 export default async function CareersPage() {
   const jobsData = await getJobs()
   const validatedJobs = jobsData.docs as Job[]
@@ -25,8 +23,6 @@ export default async function CareersPage() {
 
   return (
     <main className="flex flex-col">
-      <Header />
-
       <PageHeader
         eyebrow="Careers"
         titlePrimary="Build Systems"

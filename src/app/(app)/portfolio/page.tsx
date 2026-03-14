@@ -1,10 +1,8 @@
-import { Header } from "@/components/layout"
 import { CallToAction } from "@/components/marketing"
 import { PortfolioCard } from "@/components/portfolio"
-import { CtaButton, PageHeader, SmartImage } from "@/components/ui"
+import { PageHeader } from "@/components/ui"
 import { getCaseStudies, getProjects } from "@/lib/cms-client"
-import { CaseStudy, Project } from "@/payload-types"
-import { getMediaUrl } from "@/utils/common"
+import { getDisplayProjects } from "@/utils/portfolio/mapProject"
 
 export default async function PortfolioPage() {
   const [projectsData, caseStudiesData] = await Promise.all([
@@ -16,27 +14,15 @@ export default async function PortfolioPage() {
       limit: 100,
     }),
     getCaseStudies({
+      where: {
+        published: { equals: true },
+      },
+      sort: '-createdAt',
       limit: 100, // Get enough to map
     })
-  ])
+  ]).catch(() => [{ docs: [] }, { docs: [] }])
 
-  const projects = projectsData.docs.map((doc: Project) => {
-    const relatedCaseStudy = (caseStudiesData.docs as CaseStudy[]).find((cs) =>
-      (typeof cs.project === 'object' && cs.project !== null ? cs.project.id : cs.project) === doc.id
-    )
-
-    return {
-      ...doc,
-      caseStudyUrl: relatedCaseStudy ? `/case-studies/${relatedCaseStudy.slug}` : null,
-    }
-  })
-
-  if (projects.length === 0) {
-    return (<main className="flex flex-col bg-background">
-      <PageHeader eyebrow="Portfolio" titlePrimary="Our" titleSecondary="Work" description="No projects found." />
-    </main>
-    )
-  }
+  const projects = getDisplayProjects(projectsData.docs, caseStudiesData.docs)
 
   return (
     <main className="flex flex-col bg-background">
@@ -52,7 +38,7 @@ export default async function PortfolioPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
             {projects.map((project) => (
-              <PortfolioCard key={project.slug} project={project} />
+              <PortfolioCard key={project.id} project={project} />
             ))}
           </div>
         </div>

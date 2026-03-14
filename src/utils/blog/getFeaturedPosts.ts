@@ -1,6 +1,6 @@
-import type { Post } from "@/payload-types"
+import type { DisplayPost } from "@/types/blog"
 
-export const getFeaturedPosts = (posts: Post[], selectedCategory: string, searchTerm: string) => {
+export const getFeaturedPosts = (posts: DisplayPost[], selectedCategory: string, searchTerm: string) => {
   // Find the featured post from the provided posts
   const globalFeaturedPost = posts.find(post => post.featured) || null
 

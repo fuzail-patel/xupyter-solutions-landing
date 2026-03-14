@@ -1,4 +1,3 @@
-import { Header } from "@/components/layout"
 import { CallToAction } from "@/components/marketing"
 import { CtaButton, PageHeader, SmartImage } from "@/components/ui"
 import { getCaseStudyBySlug } from "@/lib/cms-client"
@@ -7,6 +6,7 @@ import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next"
+import { CASE_STUDIES } from "@/lib/constants/caseStudies"
 
 
 export async function generateMetadata({
@@ -15,9 +15,16 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>
 }): Promise<Metadata> {
   const { slug } = await params
-  const caseStudy = await getCaseStudyBySlug(slug)
+  const caseStudy = await getCaseStudyBySlug(slug).catch(() => null)
 
   if (!caseStudy) {
+    const constantCaseStudy = CASE_STUDIES.find(cs => cs.slug === slug)
+    if (constantCaseStudy) {
+      return {
+        title: `${constantCaseStudy.headline} | Case Study`,
+        description: constantCaseStudy.challenge,
+      }
+    }
     return {
       title: "Case Study Not Found",
     }
@@ -35,10 +42,45 @@ export default async function CaseStudyDetailPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const caseStudy = await getCaseStudyBySlug(slug)
+  let caseStudy = await getCaseStudyBySlug(slug).catch(() => null)
+  let isConstant = false
 
   if (!caseStudy) {
-    notFound()
+    const constantCaseStudy = CASE_STUDIES.find(cs => cs.slug === slug)
+    if (constantCaseStudy) {
+      caseStudy = {
+        id: 1,
+        slug: constantCaseStudy.slug,
+        title: constantCaseStudy.headline,
+        project: {
+          title: constantCaseStudy.industry,
+          summary: constantCaseStudy.challenge,
+          industry: { name: constantCaseStudy.industry } as any,
+          coverImage: `/images/portfolio/${constantCaseStudy.slug.split('-')[0]}.jpg` as any, 
+        } as any,
+        problem: { 
+          root: { 
+            children: [{ 
+              type: 'paragraph', 
+              children: [{ text: constantCaseStudy.challenge }] 
+            }] 
+          } 
+        } as any,
+        solution: { 
+          root: { 
+            children: [{ 
+              type: 'paragraph', 
+              children: [{ text: constantCaseStudy.systemBuilt }] 
+            }] 
+          } 
+        } as any,
+        updatedAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+      }
+      isConstant = true
+    } else {
+      notFound()
+    }
   }
 
   // The project is usually a populated object
@@ -46,8 +88,6 @@ export default async function CaseStudyDetailPage({
 
   return (
     <main className="flex flex-col bg-background min-h-screen">
-      <Header />
-
       {/* New Hero Layout inspired by image */}
       <section className="pt-20 pb-12 md:pt-28 md:pb-16 bg-muted/30">
         <div className="max-w-5xl mx-auto px-6">

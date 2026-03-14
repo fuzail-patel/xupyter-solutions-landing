@@ -3,7 +3,7 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
 import { BlogCard } from "@/components/blog"
 import type { Post } from "@/payload-types"
-import type { Category } from "@/types/blog"
+import type { Category, DisplayPost } from "@/types/blog"
 import { Input, Button } from "@/components/ui"
 import { useBlogListing } from "@/hooks/useBlogListing"
 import Link from "next/link"
@@ -12,7 +12,7 @@ import { getMediaUrl } from "@/utils/common"
 import { getFeaturedPosts } from "@/utils/blog/getFeaturedPosts"
 
 interface BlogListingPageProps {
-  posts: Post[]
+  posts: DisplayPost[]
   totalPosts: number
 }
 
@@ -90,12 +90,12 @@ export default function BlogListingPage({ posts, totalPosts }: BlogListingPagePr
               <div className="flex items-center gap-6">
                 <div className="flex items-center gap-3">
                   <Avatar className="h-10 w-10 border border-border/60">
-                    <AvatarImage src={(typeof featuredPost.author === 'object' && featuredPost.author !== null) ? getMediaUrl(featuredPost.author.avatar) : undefined} />
+                    <AvatarImage src={featuredPost.authorAvatar} />
                     <AvatarFallback className="bg-primary/10 text-primary text-xs font-bold">XT</AvatarFallback>
                   </Avatar>
                   <div className="flex flex-col">
                     <span className="text-sm font-bold text-foreground">
-                      {(typeof featuredPost.author === 'object' && featuredPost.author !== null) ? featuredPost.author.name : 'Xupyter Team'}
+                      {featuredPost.authorName}
                     </span>
                     <span className="text-[11px] text-muted-foreground/60 uppercase tracking-widest font-medium">Author</span>
                   </div>

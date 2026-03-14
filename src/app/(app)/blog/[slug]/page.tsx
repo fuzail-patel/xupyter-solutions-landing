@@ -1,4 +1,3 @@
-import { Header } from "@/components/layout"
 import { SmartImage } from "@/components/ui"
 import { getPosts } from "@/lib/cms-client"
 import { Post } from "@/payload-types"
@@ -7,6 +6,8 @@ import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next"
+import { blogPosts } from "@/lib/constants/blog"
+import { mapConstantToDisplayPost } from "@/utils/blog/mapPost"
 
 export async function generateMetadata({
   params,
@@ -20,10 +21,18 @@ export async function generateMetadata({
         equals: slug,
       },
     },
-  })
-  const post = postsData.docs[0] as Post
+  }).catch(() => ({ docs: [] }))
+  
+  let post = postsData.docs[0] as Post
 
   if (!post) {
+    const constantPost = blogPosts.find(p => p.slug === slug)
+    if (constantPost) {
+      return {
+        title: `${constantPost.title} | Insights`,
+        description: constantPost.excerpt,
+      }
+    }
     return {}
   }
 
@@ -47,21 +56,45 @@ export default async function BlogArticlePage({
         equals: slug,
       },
     },
-  })
-  const post = postsData.docs[0] as Post
+  }).catch(() => ({ docs: [] }))
+  
+  let post = postsData.docs[0] as Post
+  let isConstant = false
 
   if (!post) {
-    notFound()
+    const constantPost = blogPosts.find(p => p.slug === slug)
+    if (constantPost) {
+      // Map constant to a Post-like object for the template
+      const displayPost = mapConstantToDisplayPost(constantPost, 0)
+      post = {
+        id: 0,
+        slug: displayPost.slug,
+        title: displayPost.title,
+        excerpt: displayPost.excerpt,
+        content: { root: { children: [], direction: 'ltr', format: '', indent: 0, type: 'root', version: 1 } },
+        author: { name: displayPost.authorName } as any,
+        tags: [{ name: displayPost.category }] as any,
+        publishedAt: displayPost.publishedAt,
+        readTime: displayPost.readTime,
+        coverImage: displayPost.image as any,
+        updatedAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+      }
+      isConstant = true
+    } else {
+      notFound()
+    }
   }
 
   // Fetch all posts to determine related, previous, and next
   const allPostsData = await getPosts({
     sort: '-publishedAt',
-  })
+  }).catch(() => ({ docs: [] }))
+  
   const allPosts = allPostsData.docs as Post[]
 
   const currentIndex = allPosts.findIndex((p) => p.slug === post.slug)
-  const previousPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null
+  const previousPost = currentIndex > 1 ? allPosts[currentIndex - 1] : null
   const nextPost = currentIndex >= 0 && currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null
 
   const relatedPosts = allPosts
@@ -78,8 +111,6 @@ export default async function BlogArticlePage({
 
   return (
     <main className="flex flex-col">
-      <Header />
-
       <article className="bg-background">
         <header className="bg-background">
           <div className="max-w-3xl mx-auto px-6 pt-10 pb-6 sm:pt-12 sm:pb-8 md:pt-14 md:pb-9">

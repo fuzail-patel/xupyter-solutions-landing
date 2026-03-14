@@ -1,6 +1,5 @@
 "use client"
 import { AboutContent, AboutTabs, MapLegend, WorldMap } from "@/components/about"
-import { Header } from "@/components/layout"
 import { CallToAction } from "@/components/marketing"
 import { PageHeader } from "@/components/ui"
 import { useState } from "react"
@@ -11,8 +10,6 @@ export default function AboutPage() {
 
   return (
     <main className="flex flex-col bg-background">
-      <Header />
-      
       <PageHeader
         eyebrow="About Xupyter"
         titlePrimary="The Thinking Behind"

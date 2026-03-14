@@ -29,7 +29,7 @@ export default async function Home() {
       sort: '-createdAt',
       depth: 1,
     }),
-  ])
+  ]).catch(() => [{ docs: [] }, { docs: [] }, { docs: [] }])
 
   return (
     <main className="flex flex-col">

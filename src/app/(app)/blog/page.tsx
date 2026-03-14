@@ -1,7 +1,6 @@
 import { BlogListingPage } from "@/components/blog"
-import { Header } from "@/components/layout"
 import { getPosts } from "@/lib/cms-client"
-import { getMediaUrl } from "@/utils/common"
+import { getDisplayPosts } from "@/utils/blog/mapPost"
 import { Metadata } from "next"
 import { Suspense } from "react"
 
@@ -44,13 +43,12 @@ export default async function BlogPage({
     sort: '-publishedAt',
     where,
     limit: postsLimit,
-  })
+  }).catch(() => ({ docs: [], totalDocs: 0 }))
   
-  const posts = postsData.docs
+  const posts = getDisplayPosts(postsData.docs)
 
   return (
     <main className="flex flex-col">
-      <Header />
       <Suspense
         key={`${search}-${category}-${postsLimit}`}
         fallback={
@@ -66,7 +64,7 @@ export default async function BlogPage({
           </section>
         }
       >
-        <BlogListingPage posts={posts} totalPosts={postsData.totalDocs} />
+        <BlogListingPage posts={posts} totalPosts={postsData.totalDocs || posts.length} />
       </Suspense>
     </main>
   )
