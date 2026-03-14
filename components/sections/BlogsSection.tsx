@@ -3,13 +3,17 @@
 import { useEffect, useMemo, useState, useRef } from "react"
 import { SectionHeader, AutoCarousel } from "@/components/shared"
 import { BlogCard } from "@/components/blog"
-import { blogPosts } from "@/lib/constants/blog"
 import type { BlogPost } from "@/lib/types/blog"
 import Section from "@/components/layout/Section"
 import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
 import { animateFade } from "@/lib/animations"
+import { getMediaUrl } from "@/lib/utils"
 
-export default function BlogsSection() {
+interface BlogsSectionProps {
+  posts?: any[]
+}
+
+export default function BlogsSection({ posts }: BlogsSectionProps) {
   const headerRef = useRef<HTMLDivElement | null>(null)
   const carouselRef = useRef<HTMLDivElement | null>(null)
 
@@ -35,14 +39,29 @@ export default function BlogsSection() {
   })
 
   const latestPosts = useMemo<BlogPost[]>(() => {
-    return blogPosts
-      .slice()
-      .sort(
-        (a, b) =>
-          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-      )
-      .slice(0, 6)
-  }, [])
+    if (!posts || posts.length === 0) return []
+
+    return posts.map((post) => ({
+      slug: post.slug,
+      title: post.title,
+       excerpt: post.excerpt,
+       category: post.tags?.[0]?.name || "Insight",
+       readTime: post.readTime || "5 min read",
+       publishedAt: post.publishedAt
+        ? new Date(post.publishedAt).toLocaleDateString("en-US", {
+            month: "long",
+            day: "numeric",
+            year: "numeric",
+          })
+        : "Recently",
+      image: getMediaUrl(post.coverImage),
+      featured: post.featured,
+      author: {
+        name: post.author?.name || "Xupyter Team",
+        avatar: getMediaUrl(post.author?.avatar),
+      },
+    }))
+  }, [posts])
 
   const [perView, setPerView] = useState(1)
 

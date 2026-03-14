@@ -3,25 +3,19 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import type { BlogPost, Category } from "@/lib/types/blog"
 
 export type UseBlogListingResult = {
-  featuredPost: BlogPost
-  otherPosts: BlogPost[]
   searchTerm: string
   setSearchTerm: (v: string) => void
   selectedCategory: Category
   setSelectedCategory: (v: Category) => void
-  currentPage: number
-  setCurrentPage: (v: number) => void
-  filteredPosts: BlogPost[]
-  paginatedPosts: BlogPost[]
-  totalPages: number
-  clampedPage: number
-  recentPosts: BlogPost[]
+  visibleCount: number
+  setVisibleCount: (v: number) => void
+  hasMore: boolean
+  handleLoadMore: () => void
   handleCategoryChange: (c: Category) => void
-  handlePageChange: (p: number) => void
   handleClearFilters: () => void
 }
 
-export function useBlogListing(posts: BlogPost[]): UseBlogListingResult {
+export function useBlogListing(posts: BlogPost[], totalPosts: number): UseBlogListingResult {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -29,20 +23,20 @@ export function useBlogListing(posts: BlogPost[]): UseBlogListingResult {
   const initialSearch = searchParams.get("search") ?? ""
   const initialCategory =
     (searchParams.get("category") as Category | null) ?? "All"
-  const initialPage = Number(searchParams.get("page") ?? "1") || 1
-
-  const allPosts = posts
+  const initialLimit = Number(searchParams.get("limit") ?? "6")
+  
+  const POSTS_LIMIT = 6
 
   const [searchTerm, setSearchTerm] = useState(initialSearch)
   const [debouncedSearch, setDebouncedSearch] = useState(initialSearch)
   const [selectedCategory, setSelectedCategory] =
     useState<Category>(initialCategory)
-  const [currentPage, setCurrentPage] = useState(initialPage)
+  const [visibleCount, setVisibleCount] = useState(initialLimit)
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setDebouncedSearch(searchTerm)
-    }, 250)
+    }, 400) // Slightly longer debounce for server-side
     return () => clearTimeout(timeout)
   }, [searchTerm])
 
@@ -54,75 +48,42 @@ export function useBlogListing(posts: BlogPost[]): UseBlogListingResult {
     if (selectedCategory && selectedCategory !== "All") {
       params.set("category", selectedCategory)
     }
-    if (currentPage > 1) {
-      params.set("page", String(currentPage))
+    if (visibleCount > POSTS_LIMIT) {
+      params.set("limit", String(visibleCount))
     }
     const queryString = params.toString()
     const next = queryString ? `${pathname}?${queryString}` : pathname
     router.replace(next, { scroll: false })
-  }, [debouncedSearch, selectedCategory, currentPage, pathname, router])
+  }, [debouncedSearch, selectedCategory, visibleCount, pathname, router])
 
-  const filteredPosts = useMemo(() => {
-    const query = debouncedSearch.trim().toLowerCase()
-    return allPosts.filter((post) => {
-      const matchesCategory =
-        selectedCategory === "All" ||
-        post.category.toLowerCase() === selectedCategory.toLowerCase()
-      if (!matchesCategory) {
-        return false
-      }
-      if (!query) {
-        return true
-      }
-      const haystack = `${post.title} ${post.excerpt} ${post.category}`.toLowerCase()
-      return haystack.includes(query)
-    })
-  }, [allPosts, debouncedSearch, selectedCategory])
-
-  const POSTS_PER_PAGE = 9
-  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / POSTS_PER_PAGE))
-  const clampedPage = Math.min(Math.max(currentPage, 1), totalPages || 1)
-
-  const paginatedPosts = useMemo(() => {
-    const startIndex = (clampedPage - 1) * POSTS_PER_PAGE
-    return filteredPosts.slice(startIndex, startIndex + POSTS_PER_PAGE)
-  }, [filteredPosts, clampedPage])
-
-  const recentPosts = allPosts
-    .slice()
-    .sort((a, b) => a.publishedAt.localeCompare(b.publishedAt))
-    .slice(0, 3)
+  const hasMore = visibleCount < totalPosts
 
   function handleCategoryChange(category: Category) {
     setSelectedCategory(category)
-    setCurrentPage(1)
+    setVisibleCount(POSTS_LIMIT)
   }
-  function handlePageChange(page: number) {
-    setCurrentPage(page)
+
+  function handleLoadMore() {
+    setVisibleCount(prev => prev + POSTS_LIMIT)
   }
+
   function handleClearFilters() {
     setSearchTerm("")
     setDebouncedSearch("")
     setSelectedCategory("All")
-    setCurrentPage(1)
+    setVisibleCount(POSTS_LIMIT)
   }
 
   return {
-    featuredPost: allPosts[0], // fallback or dummy
-    otherPosts: allPosts,
     searchTerm,
     setSearchTerm,
     selectedCategory,
     setSelectedCategory,
-    currentPage,
-    setCurrentPage,
-    filteredPosts,
-    paginatedPosts,
-    totalPages,
-    clampedPage,
-    recentPosts,
+    visibleCount,
+    setVisibleCount,
+    hasMore,
+    handleLoadMore,
     handleCategoryChange,
-    handlePageChange,
     handleClearFilters,
   }
 }

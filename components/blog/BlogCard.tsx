@@ -3,43 +3,58 @@ import { SmartImage } from "@/components/shared"
 import type { BlogCardProps } from "@/lib/types/blog"
 
 export default function BlogCard({ post }: BlogCardProps) {
+  console.log(post)
   return (
     <article className="h-full">
       <Link
         href={`/blog/${post.slug}`}
-        className="group block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-2xl"
+        className="group block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-none"
       >
-        <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-border/60 bg-card transition-all duration-200 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
-          {post.image && (
-            <div className="relative aspect-21/9 w-full overflow-hidden border-b border-border/50 bg-muted/30">
+        <div className="flex h-full flex-col overflow-hidden rounded-none border border-transparent bg-background transition-colors duration-200">
+          {/* Image/Header Area */}
+          <div className="relative aspect-[16/10] w-full overflow-hidden rounded-none bg-[#F0EEE8] dark:bg-muted/30 border border-border/40">
+            {post.image ? (
               <SmartImage
                 src={post.image}
                 alt={post.title}
                 fill
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
                 sizes="(min-width: 1024px) 360px, (min-width: 768px) 50vw, 100vw"
               />
-            </div>
-          )}
-          <div className="flex flex-1 flex-col p-6">
-            <div className="mb-4">
-              <span className="inline-flex items-center rounded-full border border-primary px-2.5 py-0.5 text-xs font-medium text-primary">
+            ) : null}
+            
+            {/* Overlay Category Tag */}
+            <div className="absolute left-4 top-4 z-20">
+              <span className="bg-[#1A1A1A] px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white rounded-none">
                 {post.category}
               </span>
             </div>
+          </div>
+
+          {/* Content Area */}
+          <div className="flex flex-1 flex-col py-6 px-1">
+            <div className="flex items-center gap-2 text-[13px] text-muted-foreground/60 mb-3">
+              <time dateTime={post.publishedAt}>{post.publishedAt}</time>
+              <span>·</span>
+              <span>{post.readTime}</span>
+            </div>
             
-            <h3 className="text-xl font-bold text-foreground transition-colors duration-200 group-hover:text-primary line-clamp-2 min-h-[3.5rem]">
+            <h3 className="text-[22px] font-semibold leading-tight text-foreground transition-colors duration-200 group-hover:text-primary mb-4 line-clamp-2">
               {post.title}
             </h3>
             
-            <p className="mt-3 text-sm text-muted-foreground/90 line-clamp-1">
+            <p className="text-sm leading-relaxed text-muted-foreground/80 line-clamp-3 mb-8">
               {post.excerpt}
             </p>
             
-            <div className="mt-auto pt-6 flex items-center gap-3 text-xs font-medium text-muted-foreground/70">
-              <time dateTime={post.publishedAt}>{post.publishedAt}</time>
-              <span className="h-1 w-1 rounded-full bg-border" />
-              <span>{post.readTime}</span>
+            <div className="mt-auto flex items-center justify-between">
+              <span className="text-sm font-medium text-muted-foreground/60">
+                {post.author?.name || "Team Member"}
+              </span>
+              <span className="text-[11px] font-bold uppercase tracking-widest text-[#B54728] group-hover:underline flex items-center gap-1.5 transition-all">
+                Read 
+                <span className="text-lg leading-none">→</span>
+              </span>
             </div>
           </div>
         </div>

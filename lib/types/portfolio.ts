@@ -1,14 +1,12 @@
-import type { CaseStudyMetric } from "@/lib/types/caseStudies"
-
 export type PortfolioProject = {
   slug: string
-  name: string
+  title: string
   industry: string
-  type: string
-  outcome: string
+  client?: string
+  description: string
   image: string
   featured?: boolean
-  metrics: CaseStudyMetric[]
+  techstack: string[]
   caseStudyUrl?: string
   liveUrl?: string
 }

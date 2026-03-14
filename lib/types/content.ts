@@ -12,15 +12,19 @@ export type Service = {
 }
 
 export type Testimonial = {
-  id: string
-  type: "video" | "text"
-  colSpan: number
+  id?: string
+  type?: "video" | "text"
+  colSpan?: number
   name: string
   location?: string
   role?: string
   content?: string
   videoThumbnail?: string
   rating?: number
+  quote?: string
+  initials?: any
+  industry?: any
+  timeAgo?: any
 }
 
 export type ContactLinkItemProps = {

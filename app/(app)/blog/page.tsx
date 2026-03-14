@@ -1,8 +1,9 @@
 import { Suspense } from "react"
 import { Metadata } from "next"
-import Header from "@/components/layout/Header"
-import { BlogListingPage } from "@/components/blog"
+import BlogListingPage from "@/components/blog/BlogListingPage"
 import { getPosts } from "@/lib/cms-client"
+import Header from "@/components/layout/Header"
+import { getMediaUrl } from "@/lib/utils"
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -11,9 +12,38 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function BlogPage() {
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ search?: string; category?: string; limit?: string }>
+}) {
+  const { search, category, limit } = await searchParams
+  const postsLimit = Number(limit) || 6
+
+  const where: any = {}
+  
+  if (search) {
+    where.or = [
+      { title: { contains: search } },
+      { excerpt: { contains: search } },
+    ]
+  }
+
+  if (category && category !== "All") {
+    where.and = [
+      ...(where.and || []),
+      {
+        'tags.name': {
+          equals: category,
+        },
+      },
+    ]
+  }
+
   const postsData = await getPosts({
     sort: '-publishedAt',
+    where,
+    limit: postsLimit,
   })
   
   const posts = postsData.docs.map((doc: any) => ({
@@ -26,14 +56,20 @@ export default async function BlogPage() {
       day: 'numeric',
       year: 'numeric'
     }),
-    image: doc.coverImage?.url || '/fallback-image.png',
+    image: getMediaUrl(doc.coverImage),
     featured: doc.featured,
+    author: doc.author ? {
+      name: doc.author.name,
+      avatar: getMediaUrl(doc.author.avatar)
+    } : undefined,
+    readTime: `${Math.max(1, Math.ceil((doc.excerpt?.split(' ').length || 0) / 200))} min read`,
   }))
 
   return (
     <main className="flex flex-col">
       <Header />
       <Suspense
+        key={`${search}-${category}-${postsLimit}`}
         fallback={
           <section className="bg-background py-10">
             <div className="max-w-7xl mx-auto px-6">
@@ -47,7 +83,7 @@ export default async function BlogPage() {
           </section>
         }
       >
-        <BlogListingPage posts={posts} />
+        <BlogListingPage posts={posts} totalPosts={postsData.totalDocs} />
       </Suspense>
     </main>
   )

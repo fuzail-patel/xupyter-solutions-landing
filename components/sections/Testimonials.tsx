@@ -10,6 +10,7 @@ import { Testimonial } from "@/lib/types/content"
 import Section from "@/components/layout/Section"
 import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
 import { animateFade, animateStaggered } from "@/lib/animations"
+import { getMediaUrl } from "@/lib/utils"
 
 const STATS = [
   { value: "100+", label: "Projects Delivered" },
@@ -51,9 +52,28 @@ const TESTIMONIALS = [
   },
 ]
 
-export default function TestimonialsSection() {
+interface TestimonialsSectionProps {
+  testimonials?: any[]
+}
+
+export default function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
   const headerRef = useRef<HTMLDivElement | null>(null)
   const kpiRef = useRef<HTMLDivElement | null>(null)
+
+  const displayTestimonials = testimonials && testimonials.length > 0 
+    ? testimonials.map(t => ({
+        id: t.id,
+        type: t.type || 'text',
+        colSpan: t.colSpan || 6,
+        name: t.name,
+        role: t.role,
+        rating: t.rating || 5,
+        content: t.content,
+        avatar: getMediaUrl(t.avatar),
+        videoThumbnail: getMediaUrl(t.videoThumbnail),
+        videoUrl: t.videoUrl
+      }))
+    : TESTIMONIALS
 
   const { ref, style } = useSectionReveal({
     threshold: 0.2,
@@ -115,17 +135,17 @@ export default function TestimonialsSection() {
         <div className="border-t border-foreground/10 pt-10">
           <AsymmetricGrid
             className="gap-4"
-            items={TESTIMONIALS.map((item) => ({
+            items={displayTestimonials.map((item) => ({
               id: item.id,
               colSpan: item.colSpan,
               content:
                 item.type === "video" ? (
                   <div data-testimonial-card>
-                    <VideoCard {...item} />
+                    <VideoCard {...item as any} />
                   </div>
                 ) : (
                   <div data-testimonial-card>
-                    <TextCard {...item} />
+                    <TextCard {...item as any} />
                   </div>
                 ),
             }))}
@@ -190,11 +210,13 @@ function TextCard({
   role,
   content,
   rating = 5,
+  avatar,
 }: {
   name: string
   role?: string
   content: string
   rating?: number
+  avatar?: string
 }) {
   return (
     <Card className="h-full rounded-2xl border border-white/5 bg-background/60 backdrop-blur-lg p-0">
@@ -208,15 +230,27 @@ function TextCard({
         </div>
 
         <div className="mt-8  pt-4 flex items-center gap-6 justify-between">
-          <div>
-            <div className="text-sm font-semibold text-foreground">
-              {name}
-            </div>
-            {role && (
-              <div className="text-xs text-muted-foreground">
-                {role}
+          <div className="flex items-center gap-3">
+            {avatar && (
+              <div className="relative w-10 h-10 rounded-full overflow-hidden">
+                <Image
+                  src={avatar}
+                  alt={name}
+                  fill
+                  className="object-cover"
+                />
               </div>
             )}
+            <div>
+              <div className="text-sm font-semibold text-foreground">
+                {name}
+              </div>
+              {role && (
+                <div className="text-xs text-muted-foreground">
+                  {role}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Rating */}

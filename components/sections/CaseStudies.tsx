@@ -8,6 +8,7 @@ import { CtaButton } from "@/components/shared/CtaButton"
 import { SmartImage } from "@/components/shared/SmartImage"
 import Section from "@/components/layout/Section"
 import SectionHeader from "@/components/shared/SectionHeader"
+import { getMediaUrl } from "@/lib/utils"
 
 /* ── CASE STUDY DATA ── */
 const CASE_STUDIES = [
@@ -62,10 +63,12 @@ const CaseStudyCard = ({
   isActive, 
   onMouseEnter 
 }: { 
-  study: typeof CASE_STUDIES[0], 
+  study: any, 
   isActive: boolean, 
   onMouseEnter: () => void 
 }) => {
+  const href = `/case-studies/${study.slug}`
+
   return (
     <Card 
       onMouseEnter={onMouseEnter}
@@ -97,14 +100,14 @@ const CaseStudyCard = ({
           {study.excerpt}
         </p>
 
-        <div className="mt-auto flex items-center justify-between">
+        <div className="mt-auto flex flex-wrap items-center justify-between gap-4">
           <Link 
-            href={`/projects/${study.id}`}
-            className="text-sm font-bold inline-flex items-center gap-1 transition-colors text-primary hover:text-primary/80"
+            href={href}
+            className="text-sm font-bold inline-flex items-center gap-1.5 transition-colors text-primary hover:text-primary/80 whitespace-nowrap"
           >
-            Continue Reading <span className="text-lg">→</span>
+            Read Case Study <span className="text-lg leading-none">→</span>
           </Link>
-          <span className="text-[11px] text-muted-foreground font-medium">
+          <span className="text-[11px] text-muted-foreground font-medium shrink-0">
             {study.date}
           </span>
         </div>
@@ -114,8 +117,23 @@ const CaseStudyCard = ({
 }
 
 /* ── MAIN SECTION ── */
-export default function CaseStudies() {
+export default function CaseStudies({ studies }: { studies?: any[] }) {
   const [activeIndex, setActiveIndex] = useState(0)
+  
+  const displayStudies = studies && studies.length > 0 
+    ? studies.slice(0, 3).map(s => {
+        const project = typeof s.project === 'object' ? s.project : null
+        return {
+          id: s.id,
+          slug: s.slug,
+          tag: typeof project?.industry === 'object' ? project.industry.name : (project?.industry || "Tech"),
+          title: s.title,
+          excerpt: project?.summary || s.title,
+          date: new Date(s.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+          image: getMediaUrl(project?.coverImage)
+        }
+      })
+    : CASE_STUDIES
 
   return (
     <Section className="bg-background" id="work">
@@ -144,16 +162,16 @@ export default function CaseStudies() {
         {/* Preview Panel Area */}
         <div className="w-full h-[320px] border-b border-border">
           <PreviewPanel 
-            src={CASE_STUDIES[activeIndex].image} 
-            alt={CASE_STUDIES[activeIndex].title} 
+            src={displayStudies[activeIndex].image} 
+            alt={displayStudies[activeIndex].title} 
           />
         </div>
 
         {/* Columns Area */}
         <div className="flex flex-col md:flex-row divide-y md:divide-y-0 md:divide-x divide-border">
-          {CASE_STUDIES.map((study, idx) => (
+          {displayStudies.map((study, idx) => (
             <CaseStudyCard 
-              key={study.id} 
+              key={study.id || study.slug} 
               study={study} 
               isActive={activeIndex === idx}
               onMouseEnter={() => setActiveIndex(idx)}

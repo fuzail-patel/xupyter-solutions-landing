@@ -2,27 +2,32 @@ import Image from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next"
 import Header from "@/components/layout/Header"
-import { blogPosts } from "@/lib/constants/blog"
-
-export async function generateStaticParams() {
-  return blogPosts.map((post) => ({
-    slug: post.slug,
-  }))
-}
+import { getPosts } from "@/lib/cms-client"
+import { notFound } from "next/navigation"
+import { SmartImage } from "@/components/shared/SmartImage"
+import { getMediaUrl } from "@/lib/utils"
+import { Post } from "@/payload-types"
 
 export async function generateMetadata({
   params,
 }: any): Promise<Metadata> {
   const { slug } = await params
-  const post = blogPosts.find((p) => p.slug === slug)
+  const postsData = await getPosts({
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+  })
+  const post = postsData.docs[0] as Post
 
   if (!post) {
     return {}
   }
 
   return {
-    title: `${post.title} | Insights`,
-    description: post.excerpt,
+    title: `${post?.title} | Insights`,
+    description: post?.excerpt,
   }
 }
 
@@ -30,27 +35,40 @@ export default async function BlogArticlePage({
   params,
 }: any) {
   const { slug } = await params
-  const post = blogPosts.find((p) => p.slug === slug)
+  
+  // Fetch the current post
+  const postsData = await getPosts({
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+  })
+  const post = postsData.docs[0] as Post
 
   if (!post) {
-    return (
-      <main className="flex flex-col">
-        <Header />
-        <section className="py-20 text-center">
-          <h1 className="text-2xl font-bold">Article not found</h1>
-          <Link href="/blog" className="mt-4 text-primary hover:underline">Back to blog</Link>
-        </section>
-      </main>
-    )
+    notFound()
   }
 
-  const relatedPosts = blogPosts
-    .filter((p) => p.slug !== post.slug)
+  // Fetch all posts to determine related, previous, and next
+  const allPostsData = await getPosts({
+    sort: '-publishedAt',
+  })
+  const allPosts = allPostsData.docs as Post[]
+
+  const currentIndex = allPosts.findIndex((p: any) => p.slug === post.slug)
+  const previousPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null
+  const nextPost = currentIndex >= 0 && currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null
+
+  const relatedPosts = allPosts
+    .filter((p: any) => p.slug !== post.slug)
     .slice(0, 3)
 
-  const currentIndex = blogPosts.findIndex((p) => p.slug === post.slug)
-  const previousPost = currentIndex > 0 ? blogPosts[currentIndex - 1] : null
-  const nextPost = currentIndex >= 0 && currentIndex < blogPosts.length - 1 ? blogPosts[currentIndex + 1] : null
+  const publishedDate = new Date(post.publishedAt as string).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  })
 
   return (
     <main className="flex flex-col">
@@ -59,27 +77,31 @@ export default async function BlogArticlePage({
       <article className="bg-background">
         <header className="bg-background">
           <div className="max-w-3xl mx-auto px-6 pt-10 pb-6 sm:pt-12 sm:pb-8 md:pt-14 md:pb-9">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/80">
-              {post.category}
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+              {(post.tags?.[0] && typeof post.tags[0] === 'object') ? post.tags[0].name : 'Insights'}
             </p>
-            <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight leading-tight text-foreground">
+            <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight text-foreground">
               {post.title}
             </h1>
             <p className="mt-4 text-sm sm:text-base text-muted-foreground/90">
               {post.excerpt}
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-3 text-xs sm:text-sm text-muted-foreground/80">
-              <span>By Xupyter Systems</span>
+              <span>By {(post.author && typeof post.author === 'object') ? post.author.name : 'Xupyter Systems'}</span>
               <span className="h-1 w-1 rounded-full bg-muted-foreground/60" />
-              <span>{post.publishedAt}</span>
-              <span className="h-1 w-1 rounded-full bg-muted-foreground/60" />
-              <span>{post.readTime}</span>
+              <span>{publishedDate}</span>
+              {post.readTime && (
+                <>
+                  <span className="h-1 w-1 rounded-full bg-muted-foreground/60" />
+                  <span>{post.readTime}</span>
+                </>
+              )}
             </div>
           </div>
           <div className="max-w-3xl mx-auto px-6 pb-8 sm:pb-10 md:pb-12">
             <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-muted/60">
-              <Image
-                src={post.image}
+              <SmartImage
+                src={getMediaUrl(post.coverImage)}
                 alt={post.title}
                 fill
                 className="object-cover"
@@ -94,8 +116,7 @@ export default async function BlogArticlePage({
           <div className="max-w-6xl mx-auto px-6">
             <div className="grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,1.1fr)]">
               <div className="max-w-3xl prose prose-sm sm:prose-base dark:prose-invert">
-                {/* For static data, we just show the excerpt for now */}
-                <p>{post.excerpt}</p>
+                <RichText content={post.content} />
               </div>
 
               <aside className="hidden lg:block">
@@ -119,15 +140,15 @@ export default async function BlogArticlePage({
                 </div>
               </div>
               <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-                {relatedPosts.map((related: any) => (
+                {relatedPosts.map((related) => (
                   <Link
                     key={related.slug}
                     href={`/blog/${related.slug}`}
                     className="group flex items-start gap-3 rounded-lg border border-border/60 bg-background px-3 py-3 transition-colors hover:border-primary/50"
                   >
                     <div className="relative h-14 w-20 overflow-hidden rounded-md bg-muted/60">
-                      <Image
-                        src={related.image || '/fallback-image.png'}
+                      <SmartImage
+                        src={getMediaUrl(related.coverImage)}
                         alt={related.title}
                         fill
                         className="object-cover transition-transform duration-150 group-hover:scale-[1.03]"
@@ -135,14 +156,18 @@ export default async function BlogArticlePage({
                       />
                     </div>
                     <div className="flex flex-1 flex-col gap-1">
-                      <p className="text-xs font-semibold uppercase tracking-widest text-muted-foreground/80">
-                        {related.category || 'Uncategorized'}
+                      <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+                        {(related.tags?.[0] && typeof related.tags[0] === 'object') ? related.tags[0].name : 'Insights'}
                       </p>
                       <p className="text-sm font-medium text-foreground group-hover:text-primary">
                         {related.title}
                       </p>
                       <p className="text-xs text-muted-foreground/80">
-                        {related.publishedAt}
+                        {new Date(related.publishedAt as string).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric'
+                        })}
                       </p>
                     </div>
                   </Link>
@@ -190,5 +215,49 @@ export default async function BlogArticlePage({
         </section>
       </article>
     </main>
+  )
+}
+
+// Helper component for Payload Lexical RichText
+function RichText({ content }: { content: any }) {
+  if (!content || !content.root || !content.root.children) return null
+
+  return (
+    <div className="space-y-4">
+      {content.root.children.map((node: any, i: number) => {
+        if (node.type === 'paragraph') {
+          return (
+            <p key={i}>
+              {node.children?.map((child: any, j: number) => {
+                if (child.format & 1) return <strong key={j}>{child.text}</strong>
+                if (child.format & 2) return <em key={j}>{child.text}</em>
+                return child.text
+              })}
+            </p>
+          )
+        }
+        if (node.type === 'heading') {
+          const Tag = node.tag as any
+          return (
+            <Tag key={i} className="text-foreground font-bold">
+              {node.children?.map((child: any, j: number) => child.text)}
+            </Tag>
+          )
+        }
+        if (node.type === 'list') {
+          const Tag = node.tag === 'ol' ? 'ol' : 'ul'
+          return (
+            <Tag key={i} className="list-inside list-disc space-y-2">
+              {node.children?.map((item: any, j: number) => (
+                <li key={j}>
+                  {item.children?.map((child: any, k: number) => child.text)}
+                </li>
+              ))}
+            </Tag>
+          )
+        }
+        return null
+      })}
+    </div>
   )
 }

@@ -13,6 +13,9 @@ import Section from "@/components/layout/Section"
 
 export default function IndustriesSection() {
   const headerRef = useRef<HTMLDivElement | null>(null)
+
+  const displayIndustries = INDUSTRIES
+
   const { ref, style } = useSectionReveal({
     threshold: 0.2,
     autoAnimate: false,
@@ -49,13 +52,13 @@ export default function IndustriesSection() {
 
       <AsymmetricGrid
         className="gap-4 md:gap-6"
-        items={INDUSTRIES.map((industry) => ({
+        items={displayIndustries.map((industry) => ({
           id: industry.name,
           colSpan: industry.colSpan,
           content: (
             <Link
               key={industry.name}
-              href={industry.href}
+              href={industry.href || "#"}
               className="block group"
             >
               <Card

@@ -1,10 +1,13 @@
 import type { NavItem } from "@/lib/types/nav"
 
 export const FOOTER_SERVICES_LINKS: NavItem[] = [
-  { label: "Business Platforms", href: "/services/business-websites-and-digital-foundations" },
+  { label: "Digital Foundations", href: "/services/business-websites-and-digital-foundations" },
   { label: "ERP & CRM Systems", href: "/services/custom-erp-crm-and-business-platforms" },
-  { label: "Automation & AI Systems", href: "/services/automation-and-ai-ready-systems" },
-  { label: "Architecture Consulting", href: "/services/architecture-and-technical-strategy" },
+  { label: "Automation & AI", href: "/services/automation-and-ai-ready-systems" },
+  { label: "Technical Strategy", href: "/services/architecture-and-technical-strategy" },
+  { label: "App Development", href: "/services/application-development" },
+  { label: "System Integrations", href: "/services/api-and-system-integrations" },
+  { label: "SAP Integrations", href: "/services/sap-integrations" },
 ]
 
 export const FOOTER_COMPANY_LINKS: NavItem[] = [

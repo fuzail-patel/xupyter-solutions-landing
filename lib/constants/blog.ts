@@ -21,6 +21,7 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "Mar 07, 2026",
     image: "/images/blog/saas-architecture.jpg",
     featured: true,
+    author: { name: "Nadia Osei" },
   },
   {
     slug: "mern-vs-laravel",
@@ -32,6 +33,7 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "Mar 01, 2026",
     image: "/images/blog/erp.jpg",
     featured: false,
+    author: { name: "Marcus Chen" },
   },
   {
     slug: "adding-ai-to-your-product",
@@ -43,6 +45,7 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "Feb 22, 2026",
     image: "/images/blog/background-jobs.jpg",
     featured: false,
+    author: { name: "Sarah Jenkins" },
   },
   {
     slug: "true-cost-of-technical-debt",
@@ -54,6 +57,7 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "Feb 15, 2026",
     image: "/images/blog/audit-ready.jpg",
     featured: false,
+    author: { name: "David Miller" },
   },
   {
     slug: "devops-strategy-before-series-a",
@@ -65,6 +69,7 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "Feb 08, 2026",
     image: "/images/blog/multi-tenant-saas.jpg",
     featured: false,
+    author: { name: "Elena Rodriguez" },
   },
   {
     slug: "building-for-fintech",
@@ -76,6 +81,7 @@ export const blogPosts: BlogPost[] = [
     publishedAt: "Feb 01, 2026",
     image: "/images/blog/fintech.jpg",
     featured: false,
+    author: { name: "James Wilson" },
   },
   {
     slug: "serverless-scaling-patterns",

@@ -7,6 +7,10 @@ export type BlogPost = {
   publishedAt: string
   image: string
   featured?: boolean
+  author?: {
+    name: string
+    avatar?: string
+  }
 }
 
 export type Category =
