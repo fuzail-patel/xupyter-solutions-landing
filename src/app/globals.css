@@ -53,103 +53,138 @@
   --radius: 0.375rem;
 
   /* Light mode — white base, electric indigo primary */
-  --background: oklch(0.980 0.003 280);
-  --foreground: oklch(0.08 0.024 280);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.08 0.024 280);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.08 0.024 280);
+  --background:            oklch(0.980 0.003 280);
+  --foreground:            oklch(0.08  0.024 280);
+  --card:                  oklch(1     0     0);
+  --card-foreground:       oklch(0.08  0.024 280);
+  --popover:               oklch(1     0     0);
+  --popover-foreground:    oklch(0.08  0.024 280);
 
   /* Primary — electric indigo #4F46E5 */
-  --primary: oklch(0.49 0.26 278);
-  --primary-foreground: oklch(0.98 0.004 280);
+  --primary:               oklch(0.49  0.26  278);
+  --primary-foreground:    oklch(0.98  0.004 280);
 
-  --secondary: oklch(0.93 0.014 278);
-  --secondary-foreground: oklch(0.18 0.022 278);
-  --muted: oklch(0.94 0.007 278);
-  --muted-foreground: oklch(0.46 0.014 278);
-  --accent: oklch(0.91 0.04 278);
-  --accent-foreground: oklch(0.49 0.26 278);
-  --destructive: oklch(0.54 0.22 27);
-  --border: oklch(0.87 0.010 278);
-  --input: oklch(0.87 0.010 278);
-  --ring: oklch(0.49 0.26 278);
+  --secondary:             oklch(0.93  0.014 278);
+  --secondary-foreground:  oklch(0.18  0.022 278);
+  --muted:                 oklch(0.94  0.007 278);
+  --muted-foreground:      oklch(0.46  0.014 278);
+  --accent:                oklch(0.91  0.04  278);
+  --accent-foreground:     oklch(0.49  0.26  278);
+  --destructive:           oklch(0.54  0.22  27);
+  --border:                oklch(0.87  0.010 278);
+  --input:                 oklch(0.87  0.010 278);
+  --ring:                  oklch(0.49  0.26  278);
 
-  --chart-1: oklch(0.49 0.26 278);
-  --chart-2: oklch(0.40 0.20 272);
-  --chart-3: oklch(0.32 0.15 268);
-  --chart-4: oklch(0.60 0.18 284);
-  --chart-5: oklch(0.70 0.12 290);
+  --chart-1:               oklch(0.49  0.26  278);
+  --chart-2:               oklch(0.40  0.20  272);
+  --chart-3:               oklch(0.32  0.15  268);
+  --chart-4:               oklch(0.60  0.18  284);
+  --chart-5:               oklch(0.70  0.12  290);
 
-  --sidebar: oklch(0.96 0.008 278);
-  --sidebar-foreground: oklch(0.08 0.024 280);
-  --sidebar-primary: oklch(0.49 0.26 278);
+  --sidebar:               oklch(0.96  0.008 278);
+  --sidebar-foreground:    oklch(0.08  0.024 280);
+  --sidebar-primary:       oklch(0.49  0.26  278);
   --sidebar-primary-foreground: oklch(0.98 0.004 280);
-  --sidebar-accent: oklch(0.91 0.04 278);
+  --sidebar-accent:        oklch(0.91  0.04  278);
   --sidebar-accent-foreground: oklch(0.49 0.26 278);
-  --sidebar-border: oklch(0.87 0.010 278);
-  --sidebar-ring: oklch(0.49 0.26 278);
+  --sidebar-border:        oklch(0.87  0.010 278);
+  --sidebar-ring:          oklch(0.49  0.26  278);
 
-  /* Surface hex tokens — near-black with indigo tint */
+  /* ------------------------------------------------------------------
+     Surface hex tokens
+  ------------------------------------------------------------------ */
   --bg-dark-1: #08080f;
   --bg-dark-2: #06060c;
   --bg-dark-3: #0c0b16;
   --bg-dark-4: #050509;
 
-  /* Glow RGB tokens — electric indigo */
-  --glow-indigo: 55, 40, 180;
-  /* #3728B4 — wide base glow          */
-  --glow-indigo-deep: 28, 18, 100;
-  /* near-black indigo core            */
-  --glow-indigo-bright: 99, 80, 240;
-  /* #6350F0 — lifted top bloom        */
+  /* ------------------------------------------------------------------
+     Blood & Ink glow tokens — hero gradient
+  ------------------------------------------------------------------ */
+  --glow-crimson:        120, 10, 10;   /* #780A0A — primary bleed      */
+  --glow-crimson-deep:    60,  5,  5;   /* #3C0505 — mid warmth         */
+  --glow-crimson-void:    30, 10, 10;   /* #1E0A0A — top-right shadow   */
+
+  /* Base surface — near-black with red undertone */
+  --bg-blood: #050208;
 }
 
 /* ============================================================
-   .dark — deep near-black + indigo tint surfaces
+   .dark — Full Crimson theme
+   Deep near-black #050208 base, crimson as primary.
+   Every token carries a red undertone for a fully
+   consistent cinematic dark palette.
    ============================================================ */
 .dark {
-  /* #08080F base — darkness with indigo in its DNA */
-  --background: oklch(0.075 0.028 278);
-  --foreground: oklch(0.90 0.010 278);
+  /* ------------------------------------------------------------------
+     Base surfaces — near-black with red DNA
+  ------------------------------------------------------------------ */
+  --background:            oklch(0.068 0.022 15);   /* #050208 — blood base          */
+  --foreground:            oklch(0.92  0.010 15);   /* #f0e8e8 — warm off-white text */
 
-  --card: oklch(0.110 0.026 276);
-  --card-foreground: oklch(0.90 0.010 278);
-  --popover: oklch(0.100 0.024 276);
-  --popover-foreground: oklch(0.90 0.010 278);
+  --card:                  oklch(0.100 0.020 15);   /* #0f0508 — lifted card surface */
+  --card-foreground:       oklch(0.92  0.010 15);
 
-  /* Primary — full-chroma electric indigo #4F46E5 */
-  --primary: oklch(0.55 0.28 278);
-  --primary-foreground: oklch(0.98 0.004 280);
+  --popover:               oklch(0.090 0.018 15);   /* slightly deeper than card     */
+  --popover-foreground:    oklch(0.92  0.010 15);
 
-  --secondary: oklch(0.140 0.030 276);
-  --secondary-foreground: oklch(0.78 0.012 278);
-  --muted: oklch(0.120 0.022 276);
-  --muted-foreground: oklch(0.42 0.016 278);
+  /* ------------------------------------------------------------------
+     Primary — deep crimson #C0392B
+     Full-chroma red, readable on all dark surfaces
+  ------------------------------------------------------------------ */
+  --primary:               oklch(0.48  0.20  22);   /* #C0392B                       */
+  --primary-foreground:    oklch(0.98  0.004 15);   /* near-white on crimson buttons */
 
-  /* Accent — dim indigo fill for hover states */
-  --accent: oklch(0.160 0.042 276);
-  --accent-foreground: oklch(0.72 0.018 278);
+  /* ------------------------------------------------------------------
+     Secondary — dim crimson-tinted hover surface
+  ------------------------------------------------------------------ */
+  --secondary:             oklch(0.130 0.022 15);   /* #1a0808                       */
+  --secondary-foreground:  oklch(0.78  0.012 15);   /* warm light text               */
 
-  --destructive: oklch(0.60 0.22 22);
-  --border: oklch(1 0 0 / 0.08);
-  --input: oklch(0.130 0.028 276);
-  --ring: oklch(0.55 0.28 278);
+  /* ------------------------------------------------------------------
+     Muted — barely-red dark fill
+  ------------------------------------------------------------------ */
+  --muted:                 oklch(0.110 0.016 15);
+  --muted-foreground:      oklch(0.44  0.014 15);   /* subdued warm-gray             */
 
-  --chart-1: oklch(0.55 0.28 278);
-  --chart-2: oklch(0.44 0.22 272);
-  --chart-3: oklch(0.34 0.16 268);
-  --chart-4: oklch(0.64 0.20 284);
-  --chart-5: oklch(0.74 0.14 290);
+  /* ------------------------------------------------------------------
+     Accent — brighter crimson for hover / focus state fills
+  ------------------------------------------------------------------ */
+  --accent:                oklch(0.150 0.030 15);   /* crimson-tinted hover bg       */
+  --accent-foreground:     oklch(0.65  0.18  22);   /* #e74c3c — accent text         */
 
-  --sidebar: oklch(0.065 0.024 278);
-  --sidebar-foreground: oklch(0.76 0.014 278);
-  --sidebar-primary: oklch(0.55 0.28 278);
-  --sidebar-primary-foreground: oklch(0.98 0.004 280);
-  --sidebar-accent: oklch(0.160 0.042 276);
-  --sidebar-accent-foreground: oklch(0.72 0.018 278);
-  --sidebar-border: oklch(1 0 0 / 0.07);
-  --sidebar-ring: oklch(0.55 0.28 278);
+  /* ------------------------------------------------------------------
+     Destructive — orange-red, distinct from crimson primary
+  ------------------------------------------------------------------ */
+  --destructive:           oklch(0.58  0.22  30);
+
+  /* ------------------------------------------------------------------
+     Border, input, ring
+  ------------------------------------------------------------------ */
+  --border:                oklch(1     0     0   / 0.07);
+  --input:                 oklch(0.115 0.020 15);
+  --ring:                  oklch(0.48  0.20  22);   /* crimson focus ring            */
+
+  /* ------------------------------------------------------------------
+     Charts — full crimson ramp, dark to warm light
+  ------------------------------------------------------------------ */
+  --chart-1:               oklch(0.48  0.20  22);   /* #C0392B — primary crimson     */
+  --chart-2:               oklch(0.40  0.17  18);   /* deeper red                    */
+  --chart-3:               oklch(0.32  0.13  14);   /* dark red                      */
+  --chart-4:               oklch(0.58  0.18  28);   /* lighter red-orange            */
+  --chart-5:               oklch(0.68  0.14  34);   /* warm orange tail              */
+
+  /* ------------------------------------------------------------------
+     Sidebar — deepest surface, crimson carried through
+  ------------------------------------------------------------------ */
+  --sidebar:               oklch(0.058 0.018 15);   /* #030106 — darkest surface     */
+  --sidebar-foreground:    oklch(0.76  0.012 15);   /* warm muted text               */
+  --sidebar-primary:       oklch(0.48  0.20  22);   /* crimson active nav item       */
+  --sidebar-primary-foreground: oklch(0.98 0.004 15);
+  --sidebar-accent:        oklch(0.150 0.030 15);   /* hover fill                    */
+  --sidebar-accent-foreground: oklch(0.65 0.18 22); /* accent text on hover          */
+  --sidebar-border:        oklch(1     0     0   / 0.06);
+  --sidebar-ring:          oklch(0.48  0.20  22);
 }
 
 /* ============================================================
@@ -217,101 +252,86 @@
     background: transparent;
   }
 
-  /* Indigo scrollbar — dim at rest, electric on hover */
+  /* Crimson scrollbar — dim at rest, vivid on hover */
   ::-webkit-scrollbar-thumb {
-    background: oklch(0.20 0.038 278);
+    background: oklch(0.22 0.06 22);
     border-radius: 999px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: oklch(0.55 0.28 278);
+    background: oklch(0.48 0.20 22);
   }
 
-  /* Indigo selection */
+  /* Crimson text selection */
   ::selection {
-    background: oklch(0.55 0.28 278 / 0.25);
-    color: oklch(0.97 0.006 278);
+    background: oklch(0.48 0.20 22 / 0.28);
+    color: oklch(0.97 0.006 15);
   }
 
   /* Hide scrollbar utility */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
-
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
 
   /* ------------------------------------------------------------------
-     Hero Background
-     Near-black #050509 base — tight indigo bloom rising from below
+     Hero Background — Blood & Ink
+     Cinematic deep crimson bleeds from the bottom-left corner
+     into a near-black void (#050208 base).
   ------------------------------------------------------------------ */
   .hero-gradient {
     @apply relative overflow-hidden;
 
-    /* ── Glow token overrides (navy palette) */
-    --glow-navy: 10, 22, 70;
-    --glow-navy-deep: 6, 14, 48;
-    --glow-navy-bright: 15, 52, 96;
-
     background:
-      radial-gradient(ellipse 55% 50% at -5% 50%,
-        rgba(var(--glow-navy-bright), 0.55) 0%,
-        transparent 65%),
-      radial-gradient(ellipse 50% 45% at 105% 40%,
-        rgba(var(--glow-navy), 0.45) 0%,
-        transparent 60%),
-      radial-gradient(ellipse 75% 60% at 50% 105%,
-        rgba(var(--glow-navy-bright), 0.50) 0%,
-        rgba(var(--glow-navy), 0.28) 50%,
-        transparent 72%),
-      radial-gradient(ellipse 40% 35% at 85% 100%,
-        rgba(var(--glow-navy-deep), 0.40) 0%,
-        transparent 58%),
-      #060814;
+      /* Primary bleed — deep crimson from bottom-left corner */
+      radial-gradient(
+        ellipse 70% 60% at 0% 100%,
+        rgba(var(--glow-crimson),      0.75) 0%,
+        transparent 60%
+      ),
+      /* Counter shadow — dark red top-right, prevents flat look */
+      radial-gradient(
+        ellipse 50% 40% at 100% 0%,
+        rgba(var(--glow-crimson-void), 0.50) 0%,
+        transparent 55%
+      ),
+      /* Center depth — subtle mid warmth, adds film-like body */
+      radial-gradient(
+        ellipse 40% 35% at 50% 50%,
+        rgba(var(--glow-crimson-deep), 0.30) 0%,
+        transparent 65%
+      ),
+      /* Base — pure near-black with red undertone */
+      var(--bg-blood);
   }
 
   /* ------------------------------------------------------------------
-     Text Gradient — indigo → amber animated sweep
-     Mirrors the shifting hue effect seen on modern enterprise sites
+     Text Gradient — crimson → ember animated sweep
   ------------------------------------------------------------------ */
 
   @keyframes gradient-shift {
-    0% {
-      background-position: 0% 50%;
-    }
-
-    50% {
-      background-position: 100% 50%;
-    }
-
-    100% {
-      background-position: 0% 50%;
-    }
+    0%   { background-position: 0%   50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0%   50%; }
   }
 
   .text-gradient-primary {
     @apply bg-clip-text text-transparent;
 
-    background-image: linear-gradient(270deg,
-        #4f46e5,
-        /* electric indigo        */
-        #6366f1,
-        /* mid indigo             */
-        #818cf8,
-        /* light indigo           */
-        #f59e0b,
-        /* amber                  */
-        #d97706,
-        /* deep amber             */
-        #f59e0b,
-        /* amber return           */
-        #818cf8,
-        /* light indigo return    */
-        #4f46e5
-        /* electric indigo loop   */
-      );
+    background-image: linear-gradient(
+      270deg,
+      #c0392b,   /* deep crimson           */
+      #e74c3c,   /* mid crimson            */
+      #f87171,   /* light red              */
+      #f97316,   /* ember orange           */
+      #ea580c,   /* deep ember             */
+      #f97316,   /* ember return           */
+      #f87171,   /* light red return       */
+      #c0392b    /* deep crimson loop      */
+    );
     background-size: 300% 300%;
     animation: gradient-shift 30s ease infinite;
   }
@@ -319,38 +339,43 @@
   /* Static snapshot for reduced-motion preference */
   @media (prefers-reduced-motion: reduce) {
     .text-gradient-primary {
-      background-image: linear-gradient(95deg,
-          #4f46e5 0%,
-          #818cf8 35%,
-          #f59e0b 70%,
-          #d97706 100%);
+      background-image: linear-gradient(
+        95deg,
+        #c0392b 0%,
+        #f87171 35%,
+        #f97316 70%,
+        #ea580c 100%
+      );
       animation: none;
     }
   }
 
   /* ------------------------------------------------------------------
-     Eyebrow Pill — near-black body, indigo inner glow
-     Minimal, sharp — reads as a system status tag
+     Eyebrow Pill — near-black body, tight centered crimson bloom
+     ::after glow is contained within the pill — no background bleed
   ------------------------------------------------------------------ */
   .eyebrow-pill {
-    @apply relative inline-flex items-center px-4 py-1.5 rounded-full border border-white/9 backdrop-blur-md text-[11px] font-bold tracking-widest uppercase;
+    @apply relative inline-flex items-center px-4 py-1.5 rounded-full
+           border border-white/9 backdrop-blur-md
+           text-[11px] font-bold tracking-widest uppercase;
 
-    background-color: #08080f;
-    color: oklch(0.65 0.18 278);
-    text-shadow: 0 0 6px rgba(99, 102, 241, 0.2);
+    background-color: #08030a;
+    color: oklch(0.62 0.18 22);
+    text-shadow: 0 0 6px rgba(192, 57, 43, 0.25);
 
-    /* Electric inner glow — indigo phosphor bloom */
+    /* Crimson inner glow */
     box-shadow:
-      inset 0 0 16px rgba(99, 102, 241, 0.1),
-      inset 0 0 32px rgba(99, 102, 241, 0.05),
-      inset 0 1px 1px rgba(255, 255, 255, 0.06);
+      inset 0 0 16px rgba(192, 57, 43, 0.10),
+      inset 0 0 32px rgba(192, 57, 43, 0.05),
+      inset 0 1px 1px rgba(255, 255, 255, 0.05);
 
-    /* Indigo soft glow — no longer a line, but a diffused bloom */
+    /* Tight centered bottom bloom — no background bleed */
     &::after {
       content: '';
-      @apply absolute bottom-0 left-1/2 -translate-x-1/2 w-[80%] h-[40%] rounded-[100%] bottom-[-2px] left-1/2 -translate-x-1/2 w-[40%] h-[60%] rounded-full transition-all duration-500;
-
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+      @apply absolute bottom-[-2px] left-1/2 -translate-x-1/2
+             w-[40%] h-[60%] rounded-full
+             transition-all duration-500;
+      background: radial-gradient(ellipse at center, rgba(192, 57, 43, 0.45) 0%, transparent 70%);
       filter: blur(6px);
       z-index: -1;
     }
@@ -358,7 +383,8 @@
     /* Cold glass sheen */
     &::before {
       content: '';
-      @apply absolute inset-0 bg-gradient-to-b from-white/[0.04] to-transparent pointer-events-none rounded-full;
+      @apply absolute inset-0 bg-gradient-to-b from-white/[0.04]
+             to-transparent pointer-events-none rounded-full;
     }
   }
 }
