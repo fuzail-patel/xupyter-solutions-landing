@@ -33,7 +33,6 @@ export function JobApplicationForm({ job, isGeneral }: JobApplicationFormProps) 
   })
 
   const onSubmit = (data: ApplicationFormValues) => {
-    console.log("Form data:", data)
     setSubmitted(true)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }

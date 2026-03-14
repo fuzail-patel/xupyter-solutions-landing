@@ -35,15 +35,6 @@ export type JobListingItemProps = {
   onToggle: () => void
 }
 
-export type JobDetailTopProps = {
-  job: Job
-  allJobs: Job[]
-}
-
-export type JobDetailSectionsProps = {
-  job: Job
-}
-
 export type ApplyModalFormProps = {
   form: UseFormReturn<ApplicationFormValues>
   onSubmit: (data: ApplicationFormValues) => void

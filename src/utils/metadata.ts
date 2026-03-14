@@ -1,5 +1,6 @@
-export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://xupyter.in"
+import { SITE_URL } from "@/lib/seo/site"
 
+export { SITE_URL }
 export const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",

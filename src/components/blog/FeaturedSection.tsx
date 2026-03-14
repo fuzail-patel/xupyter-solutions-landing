@@ -1,6 +1,7 @@
 "use client"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui"
 import { getMediaUrl } from "@/utils/common"
+import { formatDate } from "@/utils/formatDate"
 
 import Link from "next/link"
 import type { Post } from "@/payload-types"
@@ -59,7 +60,7 @@ export function FeaturedSection({ posts }: FeaturedSectionProps) {
         <div className="mt-16 flex flex-col justify-center gap-12 px-6 md:mt-0 md:pl-12 lg:pl-16">
           {secondaryPosts.map((post) => {
             const category = (typeof post.tags?.[0] === 'object' && post.tags[0] !== null) ? post.tags[0].name : 'Insight'
-            const publishedAt = post.publishedAt ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Recently'
+            const publishedAt = formatDate(post.publishedAt)
             
             return (
               <Link key={post.slug} href={`/blog/${post.slug || ''}`} className="group flex flex-col gap-3">

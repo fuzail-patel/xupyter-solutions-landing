@@ -1,6 +1,6 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { Post, Project, CaseStudy, Job, Industry, Testimonial } from '@/payload-types'
+import { Post, Project, CaseStudy, Job, Industry, Tag, Testimonial } from '@/payload-types'
 
 export const getPayloadInstance = async () => {
   return await getPayload({
@@ -69,6 +69,15 @@ export async function getPosts(options: any = {}) {
     collection: 'posts',
     ...options,
   }) as unknown as { docs: Post[], totalDocs: number, limit: number, totalPages: number, page: number, pagingCounter: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage: number | null, nextPage: number | null }
+}
+
+export async function getTags(options: { limit?: number; sort?: string } = {}) {
+  const payload = await getPayloadInstance()
+  return await payload.find({
+    collection: 'tags',
+    sort: options.sort ?? 'name',
+    limit: options.limit ?? 100,
+  }) as unknown as { docs: Tag[]; totalDocs: number }
 }
 
 export async function getJobs(options: any = {}) {

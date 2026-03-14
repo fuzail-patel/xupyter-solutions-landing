@@ -1,4 +1,5 @@
 import { CallToAction } from "@/components/marketing"
+import { RichText } from "@/components/shared"
 import { CtaButton, PageHeader, SmartImage } from "@/components/ui"
 import { getCaseStudyBySlug } from "@/lib/cms-client"
 import { getMediaUrl } from "@/utils/common"
@@ -202,49 +203,5 @@ export default async function CaseStudyDetailPage({
 
       <CallToAction />
     </main>
-  )
-}
-
-// Helper component for Payload Lexical RichText
-function RichText({ content }: { content: any }) {
-  if (!content || !content.root || !content.root.children) return null
-
-  return (
-    <div className="space-y-4">
-      {content.root.children.map((node: any, i: number) => {
-        if (node.type === 'paragraph') {
-          return (
-            <p key={i}>
-              {node.children?.map((child: any, j: number) => {
-                if (child.format & 1) return <strong key={j}>{child.text}</strong>
-                if (child.format & 2) return <em key={j}>{child.text}</em>
-                return child.text
-              })}
-            </p>
-          )
-        }
-        if (node.type === 'heading') {
-          const Tag = (node.tag || 'h2') as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
-          return (
-            <Tag key={i} className="text-foreground font-bold">
-              {node.children?.map((child: any) => child.text)}
-            </Tag>
-          )
-        }
-        if (node.type === 'list') {
-          const Tag = node.tag === 'ol' ? 'ol' : 'ul'
-          return (
-            <Tag key={i} className="list-inside list-disc space-y-2">
-              {node.children?.map((item: any, j: number) => (
-                <li key={j}>
-                  {item.children?.map((child: any, k: number) => child.text)}
-                </li>
-              ))}
-            </Tag>
-          )
-        }
-        return null
-      })}
-    </div>
   )
 }

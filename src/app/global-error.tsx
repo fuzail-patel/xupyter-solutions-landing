@@ -1,23 +1,9 @@
 "use client";
 
-import { Sora, Open_Sans } from "next/font/google";
 import { Header, Footer } from "@/components/layout";
 import { CtaButton } from "@/components/ui";
+import { sora, plusJakartaSans } from "@/utils/fonts";
 import "./globals.css";
-
-const sora = Sora({
-    subsets: ["latin"],
-    weight: ["400", "500", "600", "700", "800"],
-    variable: "--font-sora",
-    display: "swap",
-})
-
-const plusJakartaSans = Open_Sans({
-    subsets: ["latin"],
-    weight: ["300", "400", "500", "600", "700", "800"],
-    variable: "--font-plus-jakarta-sans",
-    display: "swap",
-})
 
 export default function GlobalError({
     error,

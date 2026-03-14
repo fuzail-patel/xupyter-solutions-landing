@@ -1,6 +1,8 @@
-import { FOOTER_COMPANY_LINKS, FOOTER_RESOURCES_LINKS, FOOTER_SERVICES_LINKS } from "@/lib/constants/footer"
+import { FOOTER_COMPANY_LINKS, FOOTER_RESOURCES_LINKS, FOOTER_SERVICES_LINKS, FOOTER_SOCIALS_LINKS } from "@/lib/constants/footer"
+import { ExternalLink, Globe } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { SiFacebook, SiInstagram } from "react-icons/si"
 
 export default function Footer() {
   return (
@@ -35,10 +37,10 @@ export default function Footer() {
               </div>
               <div className="space-y-1">
                 <a
-                  href="mailto:contact@xupyter.com"
+                  href="mailto:contact@xupyter.in"
                   className="text-sm font-medium text-foreground hover:text-primary transition-colors"
                 >
-                  contact@xupyter.com
+                  contact@xupyter.in
                 </a>
               </div>
             </div>
@@ -94,34 +96,38 @@ export default function Footer() {
               ))}
             </nav>
           </div>
+
         </div>
 
         <div className="mt-12 pt-8 border-t border-border/60 flex flex-col gap-4 items-center justify-between text-xs text-muted-foreground md:flex-row">
           <p className="text-center md:text-left">© 2026 Xupyter Solutions. All rights reserved.</p>
-          <div className="flex items-center gap-4">
-            <a
-              href="https://in.linkedin.com/company/xupyter-solutions"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors group"
-              aria-label="LinkedIn"
-            >
-              <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-              </svg>
-            </a>
-            <a
-              href="https://www.instagram.com/xupyter.solutions.ai/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-primary transition-colors group"
-              aria-label="Instagram"
-            >
-              <svg className="w-4 h-4 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.35 3.608 1.325.975.975 1.262 2.242 1.324 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.35 2.633-1.324 3.608-.975.975-2.242 1.262-3.608 1.324-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.35-3.608-1.324-.975-.975-1.262-2.242-1.324-3.608C2.175 15.747 2.163 15.367 2.163 12s.012-3.584.07-4.85c.062-1.366.35-2.633 1.324-3.608S6.799 2.225 8.165 2.163C9.431 2.105 9.811 2.163 12 2.163zm0 3.589a5.248 5.248 0 1 0 0 10.496A5.248 5.248 0 0 0 12 5.752zm6.406-.994a1.298 1.298 0 1 0 0 2.596 1.298 1.298 0 0 0 0-2.596zM12 7.436a4.564 4.564 0 1 1 0 9.128 4.564 4.564 0 0 1 0-9.128z"/>
-              </svg>
-            </a>
-          </div>
+          <nav className="flex items-center gap-4" aria-label="Social and external links">
+            {FOOTER_SOCIALS_LINKS.map((item) => {
+              const iconClass = "w-4 h-4 group-hover:scale-110 transition-transform shrink-0"
+              const linkProps = {
+                key: item.href,
+                href: item.href,
+                target: "_blank" as const,
+                rel: "noopener noreferrer",
+                className: "text-muted-foreground hover:text-primary transition-colors group",
+                "aria-label": `${item.label} (opens in new tab)`,
+              }
+              if (item.label === "LinkedIn") {
+                return (
+                  <a {...linkProps}>
+                    <svg className={iconClass} fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                  </a>
+                )
+              }
+              if (item.label === "Clutch") return <a {...linkProps}><ExternalLink className={iconClass} aria-hidden /></a>
+              if (item.label === "Instagram") return <a {...linkProps}><SiInstagram className={iconClass} aria-hidden /></a>
+              if (item.label === "Facebook") return <a {...linkProps}><SiFacebook className={iconClass} aria-hidden /></a>
+              if (item.label === "Website") return <a {...linkProps}><Globe className={iconClass} aria-hidden /></a>
+              return null
+            })}
+          </nav>
         </div>
       </div>
     </footer>

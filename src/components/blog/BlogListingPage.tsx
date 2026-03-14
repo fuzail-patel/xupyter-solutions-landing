@@ -8,25 +8,19 @@ import { Input, Button } from "@/components/ui"
 import { useBlogListing } from "@/hooks/useBlogListing"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui"
+import { BLOG_CATEGORIES } from "@/lib/constants/blog"
 import { getMediaUrl } from "@/utils/common"
 import { getFeaturedPosts } from "@/utils/blog/getFeaturedPosts"
+import { formatDate } from "@/utils/formatDate"
 
 interface BlogListingPageProps {
+  categories?: string[]
   posts: DisplayPost[]
   totalPosts: number
 }
 
-const CATEGORIES: Category[] = [
-  "All",
-  "Architecture",
-  "Engineering",
-  "AI & ML",
-  "Strategy",
-  "DevOps",
-  "FinTech",
-]
-
-export default function BlogListingPage({ posts, totalPosts }: BlogListingPageProps) {
+export default function BlogListingPage({ categories: categoriesProp, posts, totalPosts }: BlogListingPageProps) {
+  const categories = categoriesProp?.length ? categoriesProp : [...BLOG_CATEGORIES]
   const {
     searchTerm,
     setSearchTerm,
@@ -45,7 +39,7 @@ export default function BlogListingPage({ posts, totalPosts }: BlogListingPagePr
       <nav className="border-b border-border/40 sticky top-25 z-40 bg-background/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-start md:justify-start gap-8 overflow-x-auto no-scrollbar py-4 scroll-smooth">
-            {CATEGORIES.map((category) => (
+            {categories.map((category) => (
               <button
                 key={category}
                 type="button"
@@ -105,7 +99,7 @@ export default function BlogListingPage({ posts, totalPosts }: BlogListingPagePr
                 
                 <div className="flex flex-col">
                   <span className="text-sm font-bold text-foreground">
-                    {featuredPost.publishedAt ? new Date(featuredPost.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Recently'}
+                    {formatDate(featuredPost.publishedAt)}
                   </span>
                   <span className="text-[11px] text-muted-foreground/60 uppercase tracking-widest font-medium">Published</span>
                 </div>

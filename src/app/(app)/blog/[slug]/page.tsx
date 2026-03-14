@@ -1,7 +1,9 @@
+import { RichText } from "@/components/shared"
 import { SmartImage } from "@/components/ui"
 import { getPosts } from "@/lib/cms-client"
 import { Post } from "@/payload-types"
 import { getMediaUrl } from "@/utils/common"
+import { formatDate } from "@/utils/formatDate"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import type { Metadata } from "next"
@@ -100,13 +102,7 @@ export default async function BlogArticlePage({
     .filter((p) => p.slug && p.slug !== post.slug)
     .slice(0, 3)
 
-  const publishedDate = post.publishedAt 
-    ? new Date(post.publishedAt).toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
-      })
-    : 'Recently'
+  const publishedDate = formatDate(post.publishedAt)
 
   return (
     <main className="flex flex-col">
@@ -199,11 +195,7 @@ export default async function BlogArticlePage({
                         {related.title}
                       </p>
                       <p className="text-xs text-muted-foreground/80">
-                        {new Date(related.publishedAt as string).toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric'
-                        })}
+                        {formatDate(related.publishedAt, 'Recently', { month: 'short' })}
                       </p>
                     </div>
                   </Link>
@@ -251,49 +243,5 @@ export default async function BlogArticlePage({
         </section>
       </article>
     </main>
-  )
-}
-
-// Helper component for Payload Lexical RichText
-function RichText({ content }: { content: any }) {
-  if (!content || !content.root || !content.root.children) return null
-
-  return (
-    <div className="space-y-4">
-      {content.root.children.map((node: any, i: number) => {
-        if (node.type === 'paragraph') {
-          return (
-            <p key={i}>
-              {node.children?.map((child: any, j: number) => {
-                if (child.format & 1) return <strong key={j}>{child.text}</strong>
-                if (child.format & 2) return <em key={j}>{child.text}</em>
-                return child.text
-              })}
-            </p>
-          )
-        }
-        if (node.type === 'heading') {
-          const Tag = node.tag as any
-          return (
-            <Tag key={i} className="text-foreground font-bold">
-              {node.children?.map((child: any, j: number) => child.text)}
-            </Tag>
-          )
-        }
-        if (node.type === 'list') {
-          const Tag = node.tag === 'ol' ? 'ol' : 'ul'
-          return (
-            <Tag key={i} className="list-inside list-disc space-y-2">
-              {node.children?.map((item: any, j: number) => (
-                <li key={j}>
-                  {item.children?.map((child: any, k: number) => child.text)}
-                </li>
-              ))}
-            </Tag>
-          )
-        }
-        return null
-      })}
-    </div>
   )
 }

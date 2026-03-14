@@ -39,12 +39,6 @@ export type BlogPost = {
   author?: { name: string }
 }
 
-export type PaginationProps = {
-  currentPage: number
-  totalPages: number
-  onPageChange: (page: number) => void
-}
-
 export type BlogFilterProps = {
   categories?: Category[]
   selectedCategory: Category

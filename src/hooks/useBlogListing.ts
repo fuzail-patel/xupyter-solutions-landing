@@ -1,17 +1,17 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
-import type { DisplayPost, Category } from "@/types/blog"
+import type { DisplayPost } from "@/types/blog"
 
 export type UseBlogListingResult = {
   searchTerm: string
   setSearchTerm: (v: string) => void
-  selectedCategory: Category
-  setSelectedCategory: (v: Category) => void
+  selectedCategory: string
+  setSelectedCategory: (v: string) => void
   visibleCount: number
   setVisibleCount: (v: number) => void
   hasMore: boolean
   handleLoadMore: () => void
-  handleCategoryChange: (c: Category) => void
+  handleCategoryChange: (c: string) => void
   handleClearFilters: () => void
 }
 
@@ -21,16 +21,14 @@ export function useBlogListing(posts: DisplayPost[], totalPosts: number): UseBlo
   const searchParams = useSearchParams()
 
   const initialSearch = searchParams.get("search") ?? ""
-  const initialCategory =
-    (searchParams.get("category") as Category | null) ?? "All"
+  const initialCategory = searchParams.get("category") ?? "All"
   const initialLimit = Number(searchParams.get("limit") ?? "6")
   
   const POSTS_LIMIT = 6
 
   const [searchTerm, setSearchTerm] = useState(initialSearch)
   const [debouncedSearch, setDebouncedSearch] = useState(initialSearch)
-  const [selectedCategory, setSelectedCategory] =
-    useState<Category>(initialCategory)
+  const [selectedCategory, setSelectedCategory] = useState<string>(initialCategory)
   const [visibleCount, setVisibleCount] = useState(initialLimit)
 
   useEffect(() => {
@@ -58,7 +56,7 @@ export function useBlogListing(posts: DisplayPost[], totalPosts: number): UseBlo
 
   const hasMore = visibleCount < totalPosts
 
-  function handleCategoryChange(category: Category) {
+  function handleCategoryChange(category: string) {
     setSelectedCategory(category)
     setVisibleCount(POSTS_LIMIT)
   }

@@ -1,5 +1,6 @@
 import { BlogListingPage } from "@/components/blog"
-import { getPosts } from "@/lib/cms-client"
+import { getPosts, getTags } from "@/lib/cms-client"
+import { BLOG_CATEGORIES } from "@/lib/constants/blog"
 import { getDisplayPosts } from "@/utils/blog/mapPost"
 import { pageSEO } from "@/lib/seo/pages"
 import { Metadata } from "next"
@@ -37,13 +38,21 @@ export default async function BlogPage({
     ]
   }
 
-  const postsData = await getPosts({
-    sort: '-publishedAt',
-    where,
-    limit: postsLimit,
-  }).catch(() => ({ docs: [], totalDocs: 0 }))
-  
+  const [postsData, tagsData] = await Promise.all([
+    getPosts({
+      sort: '-publishedAt',
+      where,
+      limit: postsLimit,
+    }).catch(() => ({ docs: [], totalDocs: 0 })),
+    getTags().catch(() => ({ docs: [], totalDocs: 0 })),
+  ])
+
   const posts = getDisplayPosts(postsData.docs)
+  const categoryNames = tagsData.docs.map((t) => t.name).filter(Boolean)
+  const categories =
+    categoryNames.length > 0
+      ? ["All", ...categoryNames.sort((a, b) => a.localeCompare(b))]
+      : [...BLOG_CATEGORIES]
 
   return (
     <main className="flex flex-col">
@@ -62,7 +71,7 @@ export default async function BlogPage({
           </section>
         }
       >
-        <BlogListingPage posts={posts} totalPosts={postsData.totalDocs || posts.length} />
+        <BlogListingPage categories={categories} posts={posts} totalPosts={postsData.totalDocs || posts.length} />
       </Suspense>
     </main>
   )

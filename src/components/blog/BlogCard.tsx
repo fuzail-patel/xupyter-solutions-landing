@@ -1,11 +1,10 @@
 import { SmartImage } from "@/components/ui"
+import { formatDate } from "@/utils/formatDate"
 import Link from "next/link"
 import type { BlogCardProps } from "@/types/blog"
 
 export default function BlogCard({ post }: BlogCardProps) {
-  const formattedDate = post.publishedAt 
-    ? new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
-    : 'Recently'
+  const formattedDate = formatDate(post.publishedAt)
 
   return (
     <article className="h-full">

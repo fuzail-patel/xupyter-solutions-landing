@@ -1,4 +1,5 @@
 import { getMediaUrl } from "@/utils/common"
+import { formatDate } from "@/utils/formatDate"
 import type { CaseStudy } from "@/payload-types"
 
 export interface DisplayStudy {
@@ -51,7 +52,7 @@ export const mapCaseStudyToDisplay = (s: CaseStudy): DisplayStudy => {
     tag: industry?.name || "Tech",
     title: s.title || 'Untitled Case Study',
     excerpt: project?.summary || s.title || '',
-    date: s.createdAt ? new Date(s.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Recently',
+    date: formatDate(s.createdAt),
     image: getMediaUrl(project?.coverImage) || ""
   }
 }

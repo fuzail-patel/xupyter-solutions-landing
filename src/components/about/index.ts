@@ -1,4 +1,3 @@
-export { default as AboutHeader } from "./AboutHeader"
 export { default as AboutContent } from "./AboutContent"
 export { default as AboutTabs } from "./AboutTabs"
 export { default as MapLegend } from "./MapLegend"

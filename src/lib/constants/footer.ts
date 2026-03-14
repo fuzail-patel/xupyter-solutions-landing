@@ -11,11 +11,11 @@ export const FOOTER_SERVICES_LINKS: NavItem[] = [
 ]
 
 export const FOOTER_COMPANY_LINKS: NavItem[] = [
-  { label: "About", href: "#about" },
-  { label: "Case Studies", href: "#work" },
-  { label: "Industries", href: "#industries" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/about" },
+  { label: "Case Studies", href: "/#work" },
+  { label: "Industries", href: "/#industries" },
+  { label: "Testimonials", href: "/#testimonials" },
+  { label: "Contact", href: "/#contact" },
   { label: "Careers", href: "/careers" },
 ]
 
@@ -23,5 +23,13 @@ export const FOOTER_RESOURCES_LINKS: NavItem[] = [
   { label: "Insights", href: "/blog" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
-  { label: "Sitemap", href: "/sitemap" },
+  { label: "Sitemap", href: "/sitemap.xml" },
+]
+
+export const FOOTER_SOCIALS_LINKS: NavItem[] = [
+  { label: "LinkedIn", href: "https://www.linkedin.com/company/xupyter-solutions" },
+  { label: "Clutch", href: "https://clutch.co/profile/xupyter-solutions" },
+  { label: "Instagram", href: "https://www.instagram.com/xupyter.solutions.ai/" },
+  { label: "Facebook", href: "https://www.facebook.com/people/Xupyter-Solutions-Pvt-Ltd/61586004966522/" },
+  { label: "Website", href: "https://xupyter.in" },
 ]
