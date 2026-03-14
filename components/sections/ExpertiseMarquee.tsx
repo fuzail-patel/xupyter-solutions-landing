@@ -5,7 +5,7 @@ import { useSectionReveal } from "@/lib/hooks/useSectionReveal";
 import { animateFade } from "@/lib/animations";
 
 export function ExpertiseMarquee() {
-  const { ref, style } = useSectionReveal({
+  const { ref, style } = useSectionReveal<HTMLDivElement>({
     autoAnimate: false,
     onReveal: (el) => {
       animateFade(el);

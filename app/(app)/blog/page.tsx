@@ -46,24 +46,7 @@ export default async function BlogPage({
     limit: postsLimit,
   })
   
-  const posts = postsData.docs.map((doc: any) => ({
-    slug: doc.slug,
-    title: doc.title,
-    excerpt: doc.excerpt,
-    category: doc.tags?.[0]?.name || 'Uncategorized',
-    publishedAt: new Date(doc.publishedAt).toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric'
-    }),
-    image: getMediaUrl(doc.coverImage),
-    featured: doc.featured,
-    author: doc.author ? {
-      name: doc.author.name,
-      avatar: getMediaUrl(doc.author.avatar)
-    } : undefined,
-    readTime: `${Math.max(1, Math.ceil((doc.excerpt?.split(' ').length || 0) / 200))} min read`,
-  }))
+  const posts = postsData.docs
 
   return (
     <main className="flex flex-col">

@@ -6,24 +6,18 @@ export function JobDetailTop({ job, allJobs }: JobDetailTopProps) {
     <section className="border-b border-border/60 bg-background">
       <div className="max-w-5xl mx-auto px-6 py-10 sm:py-12 md:py-16">
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight text-foreground">
-          {job.title}
+          {job.title || 'Untitled Role'}
         </h1>
 
         <div className="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs sm:text-sm text-muted-foreground/90">
-          <span>{job.meta.employmentType}</span>
+          <span>{job.type || 'Full-time'}</span>
           <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
-          <span>{job.meta.location}</span>
+          <span>{job.location || 'Remote'}</span>
           <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
-          <span>{job.meta.department}</span>
-          <span className="h-1 w-1 rounded-full bg-muted-foreground/50" />
-          <span>{job.meta.experienceLevel}</span>
+          <span>{job.department || 'Engineering'}</span>
         </div>
 
-        {job.salary && (
-          <p className="mt-3 text-sm text-muted-foreground/90">
-            {job.salary.value}
-          </p>
-        )}
+        {/* salary is missing in Payload Job */}
 
         <div className="mt-6">
           <ApplyModal

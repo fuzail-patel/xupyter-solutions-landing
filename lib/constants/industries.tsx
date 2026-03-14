@@ -9,9 +9,9 @@ import {
   TableCellsIcon,
 } from "@heroicons/react/24/solid"
 
-import type { Industry } from "@/lib/types/content"
+import type { UIIndustry } from "@/lib/types/content"
 
-export const INDUSTRIES: Industry[] = [
+export const INDUSTRIES: UIIndustry[] = [
   {
     name: "SaaS Products",
     description:

@@ -39,7 +39,7 @@ const HIGHLIGHTED_IDS = [
  */
 export default function WorldMap() {
   return (
-    <div className="w-full bg-white rounded-[2rem] overflow-hidden aspect-[16/10] border border-border/40 shadow-sm">
+    <div className="w-full bg-white rounded-[2rem] overflow-hidden aspect-video border border-border/40 shadow-sm">
       <ComposableMap
         projection="geoMercator"
         projectionConfig={{

@@ -1,28 +1,9 @@
-export type JobMeta = {
-  employmentType: string
-  location: string
-  department: string
-  experienceLevel: string
-}
+import type { Job as PayloadJob } from "@/payload-types"
+import type { UseFormReturn } from "react-hook-form"
+import type { ApplicationFormValues } from "@/lib/schemas/application.schema"
 
-export type Salary = {
-  value: string
-}
-
-export type Job = {
-  id: string
-  title: string
-  meta: JobMeta
-  shortDescription: string
-  salary?: Salary
-  href: string
-  overview?: string
-  techStack?: string[]
-  responsibilities?: string[]
-  requirements?: string[]
-  benefits?: string[]
-  successIndicators?: string[]
-}
+// Phase 2: Replace custom Job with Payload Job
+export type Job = PayloadJob
 
 export type CareersPageContent = {
   title: string
@@ -69,9 +50,6 @@ export type JobDetailTopProps = {
 export type JobDetailSectionsProps = {
   job: Job
 }
-
-import type { UseFormReturn } from "react-hook-form"
-import type { ApplicationFormValues } from "@/lib/schemas/application.schema"
 
 export type ApplyModalFormProps = {
   form: UseFormReturn<ApplicationFormValues>

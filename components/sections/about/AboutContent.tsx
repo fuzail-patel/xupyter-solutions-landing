@@ -27,7 +27,7 @@ export default function AboutContent({ activeTab }: AboutContentProps) {
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] mb-6 text-foreground">
                 From Blockchain Pioneers to AI Innovators
               </h2>
-              <div className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-500 via-purple-500 to-indigo-600 mb-8">
+              <div className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-orange-500 via-purple-500 to-indigo-600 mb-8">
                 Evolving Since 2021
               </div>
             </div>
@@ -64,7 +64,7 @@ export default function AboutContent({ activeTab }: AboutContentProps) {
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] mb-6 text-foreground">
                 Engineering for Long-Term Clarity
               </h2>
-              <div className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-teal-500 to-emerald-600 mb-8">
+              <div className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-blue-500 via-teal-500 to-emerald-600 mb-8">
                 Built to Scale, Not Just to Ship
               </div>
             </div>
@@ -93,7 +93,7 @@ export default function AboutContent({ activeTab }: AboutContentProps) {
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.05] mb-6 text-foreground">
                 Principles Over Templates
               </h2>
-              <div className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-600 mb-8">
+              <div className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-indigo-500 via-purple-500 to-pink-600 mb-8">
                 Integrity in Architecture
               </div>
             </div>

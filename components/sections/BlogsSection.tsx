@@ -3,14 +3,13 @@
 import { useEffect, useMemo, useState, useRef } from "react"
 import { SectionHeader, AutoCarousel } from "@/components/shared"
 import { BlogCard } from "@/components/blog"
-import type { BlogPost } from "@/lib/types/blog"
+import type { Post } from "@/payload-types"
 import Section from "@/components/layout/Section"
 import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
 import { animateFade } from "@/lib/animations"
-import { getMediaUrl } from "@/lib/utils"
 
 interface BlogsSectionProps {
-  posts?: any[]
+  posts?: Post[]
 }
 
 export default function BlogsSection({ posts }: BlogsSectionProps) {
@@ -38,30 +37,7 @@ export default function BlogsSection({ posts }: BlogsSectionProps) {
     },
   })
 
-  const latestPosts = useMemo<BlogPost[]>(() => {
-    if (!posts || posts.length === 0) return []
-
-    return posts.map((post) => ({
-      slug: post.slug,
-      title: post.title,
-       excerpt: post.excerpt,
-       category: post.tags?.[0]?.name || "Insight",
-       readTime: post.readTime || "5 min read",
-       publishedAt: post.publishedAt
-        ? new Date(post.publishedAt).toLocaleDateString("en-US", {
-            month: "long",
-            day: "numeric",
-            year: "numeric",
-          })
-        : "Recently",
-      image: getMediaUrl(post.coverImage),
-      featured: post.featured,
-      author: {
-        name: post.author?.name || "Xupyter Team",
-        avatar: getMediaUrl(post.author?.avatar),
-      },
-    }))
-  }, [posts])
+  const latestPosts = posts || []
 
   const [perView, setPerView] = useState(1)
 
@@ -84,7 +60,7 @@ export default function BlogsSection({ posts }: BlogsSectionProps) {
   }, [])
 
   const slides = useMemo(() => {
-    const chunks: BlogPost[][] = []
+    const chunks: Post[][] = []
     for (let i = 0; i < latestPosts.length; i += perView) {
       chunks.push(latestPosts.slice(i, i + perView))
     }

@@ -86,7 +86,7 @@ export default function Services() {
                   <span className="
     absolute -left-2 -top-2
     w-3 h-3
-    border-l-[2px] border-t-[2px] border-muted-foreground
+    border-l-2 border-t-2 border-muted-foreground
     transition-all duration-300 ease-out
     group-hover:w-1/2 group-hover:h-1/2 group-hover:border-primary
   " />
@@ -95,7 +95,7 @@ export default function Services() {
                   <span className="
     absolute -right-2 -bottom-2
     w-3 h-3
-    border-r-[2px] border-b-[2px] border-muted-foreground
+    border-r-2 border-b-2 border-muted-foreground
     transition-all duration-300 ease-out
     group-hover:w-1/2 group-hover:h-1/2 group-hover:border-primary
   " />

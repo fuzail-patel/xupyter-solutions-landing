@@ -1,4 +1,3 @@
-import Link from "next/link"
 import {
   BriefcaseIcon,
   ClockIcon,
@@ -9,34 +8,20 @@ import {
 import Header from "@/components/layout/Header"
 import { PageHeader, CtaButton } from "@/components/shared"
 import { JobListingsSection } from "@/components/careers/job/JobListingsSection"
-import AsymmetricGrid from "@/components/layout/AsymmetricGrid"
 import { careersBenefits, careersPageContent } from "@/lib/constants/careers"
-import { jobListSchema } from "@/lib/schemas/careers.schema"
 import { getJobs } from "@/lib/cms-client"
+import { Job } from "@/lib/types/careers"
 
 export default async function CareersPage() {
   const jobsData = await getJobs()
-  
-  const mappedJobs = jobsData.docs.map((doc: any) => ({
-    id: doc.id,
-    title: doc.title,
-    department: doc.department,
-    location: doc.location,
-    type: doc.type,
-    summary: doc.summary,
-    description: doc.description,
-    requirements: doc.requirements?.map((r: any) => r.requirement) || [],
-    status: doc.status,
-    slug: doc.slug,
-  }))
+  const validatedJobs = jobsData.docs as Job[]
 
-  const validatedJobs = jobListSchema.parse(mappedJobs)
-  const benefitIconMap = {
+  const benefitIconMap: Record<string, React.ComponentType<{ className?: string }>> = {
     remote: HomeModernIcon,
     clock: ClockIcon,
     briefcase: BriefcaseIcon,
     sparkles: SparklesIcon,
-  } as const
+  }
 
   return (
     <main className="flex flex-col">
@@ -75,7 +60,7 @@ export default async function CareersPage() {
                       <span className="
                         absolute -left-2 -top-2
                         w-3 h-3
-                        border-l-[2px] border-t-[2px] border-muted-foreground/50
+                        border-l-2 border-t-2 border-muted-foreground/50
                         transition-all duration-300 ease-out
                         group-hover:w-1/2 group-hover:h-1/2 group-hover:border-primary
                       " />
@@ -84,7 +69,7 @@ export default async function CareersPage() {
                       <span className="
                         absolute -right-2 -bottom-2
                         w-3 h-3
-                        border-r-[2px] border-b-[2px] border-muted-foreground/50
+                        border-r-2 border-b-2 border-muted-foreground/50
                         transition-all duration-300 ease-out
                         group-hover:w-1/2 group-hover:h-1/2 group-hover:border-primary
                       " />
@@ -129,8 +114,8 @@ export default async function CareersPage() {
             Share your profile and areas of focus and we’ll match you against current and upcoming roles.
           </p>
           <div className="mt-5 flex justify-center">
-            <CtaButton asChild variant="primary" className="font-semibold">
-              <Link href="/careers/general-application">Apply for a role</Link>
+            <CtaButton href="/careers/general-application" variant="primary" className="font-semibold">
+              Apply for a role
             </CtaButton>
           </div>
         </div>

@@ -12,9 +12,9 @@ import { CtaButton } from "@/components/shared/CtaButton"
 import type { JobListingItemProps } from "@/lib/types/careers"
 
 export function JobListingItem({ job, isOpen, onToggle }: JobListingItemProps) {
-  const hasTechStack = job.techStack && job.techStack.length > 0
-  const hasResponsibilities = job.responsibilities && job.responsibilities.length > 0
+  // Flag: missing fields from Payload: techStack, responsibilities, salary, benefits, successIndicators
   const hasRequirements = job.requirements && job.requirements.length > 0
+  const requirementsList = job.requirements?.map(r => r.requirement).filter(Boolean) as string[] || []
 
   return (
     <article className="py-4">
@@ -34,86 +34,51 @@ export function JobListingItem({ job, isOpen, onToggle }: JobListingItemProps) {
                 <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm text-muted-foreground/90">
                   <span className="inline-flex items-center gap-1.5">
                     <BriefcaseIcon className="h-3.5 w-3.5 text-muted-foreground/80" />
-                    <span>{job.meta.employmentType}</span>
+                    <span>{job.type || 'Full-time'}</span>
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <MapPinIcon className="h-3.5 w-3.5 text-muted-foreground/80" />
-                    <span>{job.meta.location}</span>
+                    <span>{job.location || 'Remote'}</span>
                   </span>
                   <span className="inline-flex items-center gap-1.5">
                     <BuildingOffice2Icon className="h-3.5 w-3.5 text-muted-foreground/80" />
-                    <span>{job.meta.department}</span>
+                    <span>{job.department || 'Engineering'}</span>
                   </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <AcademicCapIcon className="h-3.5 w-3.5 text-muted-foreground/80" />
-                    <span>{job.meta.experienceLevel}</span>
-                  </span>
-                  {job.salary && (
-                    <span className="inline-flex items-center gap-1.5">
-                      <CurrencyDollarIcon className="h-3.5 w-3.5 text-muted-foreground/80" />
-                      <span>{job.salary.value}</span>
-                    </span>
-                  )}
+                  {/* experienceLevel is missing in Payload Job */}
                 </div>
 
                 <p className="mt-3 text-sm text-muted-foreground/90 max-w-2xl">
-                  {job.shortDescription}
+                  {job.summary || ''}
                 </p>
 
                 <div className="my-8"></div>
-
-                {hasTechStack && (
-                  <div className="mt-3 space-y-2">
-                    <p className="font-semibold text-foreground">
-                      Key Skills/Tech Stack
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {job.techStack?.map((item) => (
-                        <span
-                          key={item}
-                          className="rounded-full border border-border/60 bg-muted/30 px-3 py-1 text-xs text-muted-foreground"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
               </button>
 
               {isOpen && (
                 <div className="mt-4 space-y-6 text-sm md:text-base text-muted-foreground/90">
-                  {(hasResponsibilities || hasRequirements) && (
+                  {requirementsList.length > 0 && (
                     <div className="space-y-4">
                       <div className="grid gap-6 md:grid-cols-2">
-                        {hasResponsibilities && (
-                          <div className="space-y-2">
-                            <p className="font-semibold text-foreground">
-                              Responsibilities
-                            </p>
-                            <SystemList items={job.responsibilities} size="sm" />
-                          </div>
-                        )}
-
-                        {hasRequirements && (
-                          <div className="space-y-2">
-                            <p className="font-semibold text-foreground">
-                              Requirements
-                            </p>
-                            <SystemList items={job.requirements} size="sm" />
-                          </div>
-                        )}
+                        <div className="space-y-2">
+                          <p className="font-semibold text-foreground">
+                            Requirements
+                          </p>
+                          <SystemList items={requirementsList} size="sm" />
+                        </div>
                       </div>
                     </div>
                   )}
+                  <div className="flex justify-start mt-6">
+                    <CtaButton
+                      variant="primary"
+                      href={`/careers/${job.id}`}
+                      className="text-sm"
+                    >
+                      View Details & Apply
+                    </CtaButton>
+                  </div>
                 </div>
               )}
-            </div>
-
-            <div className="md:mt-1 md:ml-8">
-              <CtaButton asChild variant="primary" className="font-semibold">
-                <Link href={job.href}>Apply Now</Link>
-              </CtaButton>
             </div>
           </div>
         </CardContent>

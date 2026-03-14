@@ -7,10 +7,13 @@ import SectionHeader from "@/components/shared/SectionHeader"
 import AsymmetricGrid from "@/components/layout/AsymmetricGrid"
 import { PlayCircleIcon, StarIcon } from "@heroicons/react/24/solid"
 import { Testimonial } from "@/lib/types/content"
+import { GridColSpan } from "@/lib/types/layout"
 import Section from "@/components/layout/Section"
 import { useSectionReveal } from "@/lib/hooks/useSectionReveal"
 import { animateFade, animateStaggered } from "@/lib/animations"
 import { getMediaUrl } from "@/lib/utils"
+
+import { TESTIMONIALS } from "@/lib/constants/testimonials"
 
 const STATS = [
   { value: "100+", label: "Projects Delivered" },
@@ -19,41 +22,8 @@ const STATS = [
   { value: "7+", label: "Industries" },
 ]
 
-const TESTIMONIALS = [
-  {
-    id: "1",
-    type: "text",
-    colSpan: 6,
-    name: "[Client Name]",
-    role: "[Founder / CTO]",
-    rating: 5,
-    content:
-      "Xupyter didn't just build our platform — they helped us think through the product. Within 10 weeks we had a live MVP that our investors actually loved. Their full-cycle approach saved us from at least 6 months of mistakes.",
-  },
-  {
-    id: "2",
-    type: "text",
-    colSpan: 6,
-    name: "[Client Name]",
-    role: "[Product Lead]",
-    rating: 5,
-    content:
-      "The team at Xupyter moves fast without breaking things. We've gone through 3 major feature releases in 4 months and our uptime has stayed rock solid.",
-  },
-  {
-    id: "3",
-    type: "text",
-    colSpan: 12,
-    name: "[Client Name]",
-    role: "[CEO]",
-    rating: 5,
-    content:
-      "Working with Xupyter felt like having a CTO on call. They flagged architecture issues before they became problems and always had a plan ready.",
-  },
-]
-
 interface TestimonialsSectionProps {
-  testimonials?: any[]
+  testimonials?: Testimonial[]
 }
 
 export default function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
@@ -61,19 +31,30 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
   const kpiRef = useRef<HTMLDivElement | null>(null)
 
   const displayTestimonials = testimonials && testimonials.length > 0 
-    ? testimonials.map(t => ({
-        id: t.id,
+    ? testimonials.map((t, idx) => ({
+        id: t.id?.toString() || idx.toString(),
         type: t.type || 'text',
-        colSpan: t.colSpan || 6,
-        name: t.name,
-        role: t.role,
+        colSpan: (t.colSpan || 6) as GridColSpan,
+        name: t.name || 'Client',
+        role: t.role || '',
         rating: t.rating || 5,
-        content: t.content,
+        content: t.content || '',
         avatar: getMediaUrl(t.avatar),
         videoThumbnail: getMediaUrl(t.videoThumbnail),
         videoUrl: t.videoUrl
       }))
-    : TESTIMONIALS
+    : TESTIMONIALS.map((t, idx) => ({
+        id: t.id?.toString() || idx.toString(),
+        type: t.type || 'text',
+        colSpan: (t.colSpan || 6) as GridColSpan,
+        name: t.name || 'Client',
+        role: t.role || '',
+        rating: t.rating || 5,
+        content: t.content || '',
+        avatar: getMediaUrl(t.avatar),
+        videoThumbnail: getMediaUrl(t.videoThumbnail),
+        videoUrl: t.videoUrl
+      }))
 
   const { ref, style } = useSectionReveal({
     threshold: 0.2,
@@ -160,11 +141,15 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
    Video Card
 --------------------------------*/
 
+interface VideoCardProps {
+  name: string
+  videoThumbnail?: string
+}
+
 function VideoCard({
   name,
-  location,
   videoThumbnail,
-}: Testimonial) {
+}: VideoCardProps) {
   return (
     <Card className="relative overflow-hidden rounded-2xl border border-white/5 bg-background/60 backdrop-blur-lg group cursor-pointer p-0">
       <div className="relative h-72 md:h-80">
@@ -186,15 +171,10 @@ function VideoCard({
         </div>
 
         {/* Name */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent">
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-linear-to-t from-black/80 to-transparent">
           <div className="text-sm font-semibold text-white">
             {name}
           </div>
-          {location && (
-            <div className="text-xs text-white/70">
-              {location}
-            </div>
-          )}
         </div>
       </div>
     </Card>
@@ -205,19 +185,21 @@ function VideoCard({
    Text Card
 --------------------------------*/
 
+interface TextCardProps {
+  name: string
+  role?: string
+  content: string
+  rating?: number
+  avatar?: string
+}
+
 function TextCard({
   name,
   role,
   content,
   rating = 5,
   avatar,
-}: {
-  name: string
-  role?: string
-  content: string
-  rating?: number
-  avatar?: string
-}) {
+}: TextCardProps) {
   return (
     <Card className="h-full rounded-2xl border border-white/5 bg-background/60 backdrop-blur-lg p-0">
       <CardContent className="p-6 flex flex-col justify-between h-full">

@@ -1,16 +1,18 @@
-export type PortfolioProject = {
-  slug: string
-  title: string
-  industry: string
-  client?: string
-  description: string
-  image: string
-  featured?: boolean
-  techstack: string[]
-  caseStudyUrl?: string
-  liveUrl?: string
-}
+import type { Project } from "@/payload-types"
 
 export type PortfolioCardProps = {
-  project: PortfolioProject
+  project: Project & { caseStudyUrl?: string | null }
+}
+
+export type PortfolioProject = {
+  slug: string
+  name: string
+  industry: string
+  type: string
+  outcome: string
+  image: string
+  featured?: boolean
+  metrics: { value: string; label: string }[]
+  caseStudyUrl: string
+  liveUrl: string
 }

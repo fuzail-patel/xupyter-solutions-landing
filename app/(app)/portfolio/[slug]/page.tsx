@@ -1,4 +1,3 @@
-import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
@@ -12,7 +11,9 @@ import { getMediaUrl } from "@/lib/utils"
 
 export async function generateMetadata({
   params,
-}: any): Promise<Metadata> {
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
   const { slug } = await params
   const project = await getProjectBySlug(slug)
 
@@ -23,14 +24,16 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${project.title} | Case Study`,
-    description: project.summary,
+    title: `${project.title || 'Project'} | Case Study`,
+    description: project.summary || '',
   }
 }
 
 export default async function ProjectDetailPage({
   params,
-}: any) {
+}: {
+  params: Promise<{ slug: string }>
+}) {
   const { slug } = await params
   const project = await getProjectBySlug(slug)
 
@@ -39,25 +42,26 @@ export default async function ProjectDetailPage({
   }
 
   const caseStudy = await getCaseStudyByProject(project.id)
+  const industryName = (typeof project.industry === 'object' && project.industry !== null) ? project.industry.name : 'Tech'
+  const clientName = (typeof project.client === 'object' && project.client !== null) ? project.client.name : (project.client || 'Proprietary')
 
-  return (
-    <main className="flex flex-col bg-background">
+  return (    <main className="flex flex-col bg-background">
       <Header />
 
       <PageHeader
-        eyebrow={(typeof project.industry === 'object' ? project.industry.name : project.industry) || "Portfolio"}
-        titlePrimary={project.title}
+        eyebrow={industryName}
+        titlePrimary={project.title || 'Untitled Project'}
         titleSecondary=""
-        description={project.summary}
+        description={project.summary || ''}
       />
 
       <section className="py-10 sm:py-12 md:py-16">
         <div className="max-w-5xl mx-auto px-6 space-y-12 md:space-y-16">
           {/* Main Project Image */}
-          <div className="relative aspect-16/9 w-full overflow-hidden rounded-2xl bg-muted/60 shadow-xl">
+          <div className="relative aspect-video w-full overflow-hidden rounded-2xl bg-muted/60 shadow-xl">
             <SmartImage
               src={getMediaUrl(project.coverImage)}
-              alt={project.title}
+              alt={project.title || 'Project Image'}
               fill
               className="object-cover"
               sizes="(min-width: 1024px) 960px, 100vw"
@@ -70,7 +74,7 @@ export default async function ProjectDetailPage({
               <div className="space-y-4">
                 <h2 className="text-2xl font-bold text-foreground">Project Summary</h2>
                 <p className="text-muted-foreground leading-relaxed text-lg">
-                  {project.summary}
+                  {project.summary || ''}
                 </p>
               </div>
 
@@ -80,7 +84,7 @@ export default async function ProjectDetailPage({
                     <h3 className="text-xl font-bold text-foreground">Deep Dive Available</h3>
                     <p className="text-muted-foreground">We've written a detailed case study about the technical challenges and solutions for this project.</p>
                   </div>
-                  <CtaButton variant="primary" href={`/case-studies/${caseStudy.slug}`}>
+                  <CtaButton variant="primary" href={`/case-studies/${caseStudy.slug || ''}`}>
                     Read Full Case Study
                   </CtaButton>
                 </div>
@@ -94,28 +98,34 @@ export default async function ProjectDetailPage({
                   <div>
                     <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Industry</dt>
                     <dd className="mt-1 text-sm font-semibold text-foreground">
-                      {typeof project.industry === 'object' ? project.industry.name : project.industry}
+                      {industryName}
                     </dd>
                   </div>
                   <div>
                     <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Client</dt>
                     <dd className="mt-1 text-sm font-semibold text-foreground">
-                      {typeof project.client === 'object' ? project.client.name : (project.client || "Xupyter Client")}
+                      {clientName}
                     </dd>
                   </div>
                   {project.technologies && project.technologies.length > 0 && (
                     <div>
-                      <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Technologies</dt>
-                      <dd className="mt-2 flex flex-wrap gap-2">
-                        {project.technologies.map((item: any) => (
-                          <span
-                            key={item.id}
-                            className="inline-flex items-center rounded-full bg-secondary px-2.5 py-0.5 text-xs font-medium text-secondary-foreground"
-                          >
-                            {item.technology}
-                          </span>
+                      <dt className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-2">Technologies</dt>
+                      <dd className="flex flex-wrap gap-2">
+                        {project.technologies.map((tech: any) => (
+                          (typeof tech === 'object' && tech !== null) ? (
+                            <span key={tech.id} className="inline-flex items-center rounded-md bg-muted px-2 py-1 text-xs font-medium text-muted-foreground border border-border/50">
+                              {tech.technology}
+                            </span>
+                          ) : null
                         ))}
                       </dd>
+                    </div>
+                  )}
+                  {project.liveUrl && (
+                    <div className="pt-4 border-t border-border/50">
+                      <CtaButton variant="primary" href={project.liveUrl} className="w-full text-center py-2 text-xs">
+                        View Live Site
+                      </CtaButton>
                     </div>
                   )}
                 </dl>

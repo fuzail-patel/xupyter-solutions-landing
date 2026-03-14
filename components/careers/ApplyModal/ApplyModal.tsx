@@ -64,7 +64,7 @@ export function ApplyModal({ mode, job, triggerLabel }: ApplyModalProps) {
                 </h2>
                 {isSpecific && job ? (
                   <p className="mt-1 text-xs text-muted-foreground/80">
-                    {job.meta.employmentType} • {job.meta.location} • {job.meta.department}
+                    {job.type} • {job.location} • {job.department}
                   </p>
                 ) : null}
               </div>

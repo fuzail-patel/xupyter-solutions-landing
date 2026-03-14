@@ -15,4 +15,4 @@ const nextConfig = {
 
 // Make sure you wrap your `nextConfig`
 // with the `withPayload` plugin
-export default withPayload(nextConfig)
+export default withPayload(nextConfig as any)

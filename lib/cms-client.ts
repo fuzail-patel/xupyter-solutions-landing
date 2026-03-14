@@ -79,6 +79,14 @@ export async function getJobs(options: any = {}) {
   }) as unknown as { docs: Job[], totalDocs: number, limit: number, totalPages: number, page: number, pagingCounter: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage: number | null, nextPage: number | null }
 }
 
+export async function getJobById(id: number): Promise<Job | null> {
+  const payload = await getPayloadInstance()
+  return await payload.findByID({
+    collection: 'jobs',
+    id,
+  }) || null
+}
+
 export async function getTestimonials(options: any = {}) {
   const payload = await getPayloadInstance()
   return await payload.find({

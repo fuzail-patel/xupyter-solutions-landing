@@ -1,4 +1,5 @@
 import type { ReactElement } from "react"
+import type { CaseStudy as PayloadCaseStudy } from "@/payload-types"
 
 export type CaseStudyMetric = {
   value: string
@@ -13,5 +14,4 @@ export type CaseStudy = {
   challenge: string
   systemBuilt: string
   metrics: CaseStudyMetric[]
-  image?: string
-}
+} & Partial<PayloadCaseStudy>

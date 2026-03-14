@@ -324,7 +324,7 @@
   ------------------------------------------------------------------ */
   .eyebrow-pill {
     @apply relative inline-flex items-center px-4 py-1.5 rounded-full
-           border border-white/[0.09] backdrop-blur-md
+           border border-white/9 backdrop-blur-md
            text-[11px] font-bold tracking-widest uppercase;
 
     background-color: #08080f;

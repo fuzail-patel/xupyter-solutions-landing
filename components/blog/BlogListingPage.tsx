@@ -1,16 +1,18 @@
 "use client"
 
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"
-import { BlogCard, Pagination } from "@/components/blog"
-import type { BlogPost, Category } from "@/lib/types/blog"
+import { BlogCard } from "@/components/blog"
+import type { Post } from "@/payload-types"
+import type { Category } from "@/lib/types/blog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useBlogListing } from "@/lib/hooks/useBlogListing"
 import Link from "next/link"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { getMediaUrl } from "@/lib/utils"
 
 interface BlogListingPageProps {
-  posts: BlogPost[]
+  posts: Post[]
   totalPosts: number
 }
 
@@ -50,11 +52,10 @@ export default function BlogListingPage({ posts, totalPosts }: BlogListingPagePr
   
   // Regular posts: exclude the featured post from the grid if it's currently being shown as featured
   const regularPosts = featuredPost 
-    ? posts.filter(p => p.slug !== featuredPost.slug)
+    ? posts.filter(p => p.slug && p.slug !== featuredPost.slug)
     : posts
 
-  return (
-    <div className="bg-background min-h-screen pt-25">
+  return (    <div className="bg-background min-h-screen pt-25">
       {/* Category Navigation Bar */}
       <nav className="border-b border-border/40 sticky top-25 z-40 bg-background/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6">
@@ -87,36 +88,48 @@ export default function BlogListingPage({ posts, totalPosts }: BlogListingPagePr
           <section className="mb-24">
             <div className="max-w-4xl">
               <div className="flex items-center gap-3 mb-6">
-                <span className="h-[1px] w-8 bg-primary/40" />
+                <span className="h-px w-8 bg-primary/40" />
                 <span className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">Featured</span>
               </div>
               
-              <Link href={`/blog/${featuredPost.slug}`} className="group block">
+              <Link href={`/blog/${featuredPost.slug || ''}`} className="group block">
                 <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground mb-8 leading-[1.1] group-hover:text-primary transition-colors">
-                  {featuredPost.title}
+                  {featuredPost.title || 'Untitled Post'}
                 </h1>
                 
                 <p className="text-lg md:text-xl text-muted-foreground/80 leading-relaxed mb-10 max-w-3xl line-clamp-3">
-                  {featuredPost.excerpt}
+                  {featuredPost.excerpt || ''}
                 </p>
               </Link>
-
-              <div className="flex items-center gap-4">
-                <Avatar className="h-12 w-12 border border-border/40">
-                  {featuredPost.author?.avatar && <AvatarImage src={featuredPost.author.avatar} />}
-                  <AvatarFallback className="text-xs bg-muted">
-                    {featuredPost.author?.name?.split(' ').map(n => n[0]).join('') || 'TM'}
-                  </AvatarFallback>
-                </Avatar>
-                <div>
-                  <div className="text-sm font-semibold text-foreground">
-                    {featuredPost.author?.name || "Team Member"}
+              
+              <div className="flex items-center gap-6">
+                <div className="flex items-center gap-3">
+                  <Avatar className="h-10 w-10 border border-border/60">
+                    <AvatarImage src={(typeof featuredPost.author === 'object' && featuredPost.author !== null) ? getMediaUrl(featuredPost.author.avatar) : undefined} />
+                    <AvatarFallback className="bg-primary/10 text-primary text-xs font-bold">XT</AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col">
+                    <span className="text-sm font-bold text-foreground">
+                      {(typeof featuredPost.author === 'object' && featuredPost.author !== null) ? featuredPost.author.name : 'Xupyter Team'}
+                    </span>
+                    <span className="text-[11px] text-muted-foreground/60 uppercase tracking-widest font-medium">Author</span>
                   </div>
-                  <div className="text-[12px] text-muted-foreground/60 flex items-center gap-2">
-                    <time dateTime={featuredPost.publishedAt}>{featuredPost.publishedAt}</time>
-                    <span>·</span>
-                    <span>{featuredPost.readTime}</span>
-                  </div>
+                </div>
+                
+                <div className="h-8 w-px bg-border/40" />
+                
+                <div className="flex flex-col">
+                  <span className="text-sm font-bold text-foreground">
+                    {featuredPost.publishedAt ? new Date(featuredPost.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Recently'}
+                  </span>
+                  <span className="text-[11px] text-muted-foreground/60 uppercase tracking-widest font-medium">Published</span>
+                </div>
+                
+                <div className="h-8 w-px bg-border/40 hidden sm:block" />
+                
+                <div className="hidden sm:flex flex-col">
+                  <span className="text-sm font-bold text-foreground">{featuredPost.readTime || '5 min read'}</span>
+                  <span className="text-[11px] text-muted-foreground/60 uppercase tracking-widest font-medium">Read Time</span>
                 </div>
               </div>
             </div>

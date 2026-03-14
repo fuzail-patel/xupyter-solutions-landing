@@ -6,6 +6,7 @@ import { CallToAction } from "@/components/sections"
 import { SmartImage } from "@/components/shared/SmartImage"
 import { getProjects, getCaseStudies } from "@/lib/cms-client"
 import { getMediaUrl } from "@/lib/utils"
+import { Project, CaseStudy } from "@/payload-types"
 
 export default async function PortfolioPage() {
   const [projectsData, caseStudiesData] = await Promise.all([
@@ -21,23 +22,14 @@ export default async function PortfolioPage() {
     })
   ])
 
-  const projects = projectsData.docs.map((doc: any) => {
-    const relatedCaseStudy = caseStudiesData.docs.find((cs: any) =>
-      (typeof cs.project === 'object' ? cs.project.id : cs.project) === doc.id
+  const projects = projectsData.docs.map((doc: Project) => {
+    const relatedCaseStudy = (caseStudiesData.docs as CaseStudy[]).find((cs) =>
+      (typeof cs.project === 'object' && cs.project !== null ? cs.project.id : cs.project) === doc.id
     )
 
     return {
-      id: doc.id,
-      title: doc.title,
-      slug: doc.slug,
-      industry: typeof doc.industry === 'object' ? doc.industry.name : (doc.industry || 'Tech'),
-      client: typeof doc.client === 'object' ? doc.client.name : (doc.client || null),
-      description: doc.summary,
-      image: getMediaUrl(doc.coverImage),
-      featured: doc.featured,
-      techstack: doc.technologies?.map((t: any) => t.technology).filter(Boolean) || [],
+      ...doc,
       caseStudyUrl: relatedCaseStudy ? `/case-studies/${relatedCaseStudy.slug}` : null,
-      liveUrl: doc.liveUrl || null,
     }
   })
 
@@ -61,7 +53,7 @@ export default async function PortfolioPage() {
       <section className="py-20 md:py-24">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project: any) => (
+            {projects.map((project) => (
               <PortfolioCard key={project.slug} project={project} />
             ))}
           </div>

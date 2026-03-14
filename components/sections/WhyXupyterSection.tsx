@@ -107,7 +107,7 @@ export default function WhyXupyterSection() {
               data-why-card
               className="relative pl-6 border-l border-white/10 transition-all hover:translate-x-1 group"
             >
-              <span className="absolute left-[-1px] top-0 h-10 w-[2px] bg-primary/70 group-hover:bg-primary rounded-full" />
+              <span className="absolute -left-px top-0 h-10 w-0.5 bg-primary/70 group-hover:bg-primary rounded-full" />
 
               <div className="flex flex-col gap-3">
                 <div className="w-10 h-10 rounded-md bg-primary/10 flex items-center justify-center">

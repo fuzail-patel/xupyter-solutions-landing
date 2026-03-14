@@ -22,7 +22,7 @@ const Section = forwardRef<HTMLElement, SectionProps>(function Section(
 ) {
   return (
     <Component
-      ref={ref as React.Ref<HTMLElement>}
+      ref={ref as any}
       className={cn("py-16", className)}
       {...rest}
     >

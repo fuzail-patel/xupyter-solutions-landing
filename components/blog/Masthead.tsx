@@ -37,7 +37,7 @@ export function Masthead() {
           <h1 className="text-5xl font-black tracking-tighter md:text-7xl lg:text-8xl">
             THE BLOG
           </h1>
-          <p className="mt-4 max-w-[600px] text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground md:text-sm">
+          <p className="mt-4 max-w-150 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground md:text-sm">
             Perspectives on Engineering, Architecture, and Digital Evolution
           </p>
         </div>

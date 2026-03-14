@@ -10,7 +10,9 @@ import { Post } from "@/payload-types"
 
 export async function generateMetadata({
   params,
-}: any): Promise<Metadata> {
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
   const { slug } = await params
   const postsData = await getPosts({
     where: {
@@ -26,14 +28,16 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${post?.title} | Insights`,
-    description: post?.excerpt,
+    title: `${post?.title || 'Insight'} | Insights`,
+    description: post?.excerpt || '',
   }
 }
 
 export default async function BlogArticlePage({
   params,
-}: any) {
+}: {
+  params: Promise<{ slug: string }>
+}) {
   const { slug } = await params
   
   // Fetch the current post
@@ -56,19 +60,21 @@ export default async function BlogArticlePage({
   })
   const allPosts = allPostsData.docs as Post[]
 
-  const currentIndex = allPosts.findIndex((p: any) => p.slug === post.slug)
+  const currentIndex = allPosts.findIndex((p) => p.slug === post.slug)
   const previousPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null
   const nextPost = currentIndex >= 0 && currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null
 
   const relatedPosts = allPosts
-    .filter((p: any) => p.slug !== post.slug)
+    .filter((p) => p.slug && p.slug !== post.slug)
     .slice(0, 3)
 
-  const publishedDate = new Date(post.publishedAt as string).toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
-  })
+  const publishedDate = post.publishedAt 
+    ? new Date(post.publishedAt).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      })
+    : 'Recently'
 
   return (
     <main className="flex flex-col">
@@ -78,16 +84,16 @@ export default async function BlogArticlePage({
         <header className="bg-background">
           <div className="max-w-3xl mx-auto px-6 pt-10 pb-6 sm:pt-12 sm:pb-8 md:pt-14 md:pb-9">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-              {(post.tags?.[0] && typeof post.tags[0] === 'object') ? post.tags[0].name : 'Insights'}
+              {(post.tags?.[0] && typeof post.tags[0] === 'object' && post.tags[0] !== null) ? post.tags[0].name : 'Insights'}
             </p>
             <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-tight text-foreground">
-              {post.title}
+              {post.title || 'Untitled Post'}
             </h1>
             <p className="mt-4 text-sm sm:text-base text-muted-foreground/90">
-              {post.excerpt}
+              {post.excerpt || ''}
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-3 text-xs sm:text-sm text-muted-foreground/80">
-              <span>By {(post.author && typeof post.author === 'object') ? post.author.name : 'Xupyter Systems'}</span>
+              <span>By {(post.author && typeof post.author === 'object' && post.author !== null) ? post.author.name : 'Xupyter Systems'}</span>
               <span className="h-1 w-1 rounded-full bg-muted-foreground/60" />
               <span>{publishedDate}</span>
               {post.readTime && (
@@ -99,7 +105,7 @@ export default async function BlogArticlePage({
             </div>
           </div>
           <div className="max-w-3xl mx-auto px-6 pb-8 sm:pb-10 md:pb-12">
-            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-xl bg-muted/60">
+            <div className="relative aspect-video w-full overflow-hidden rounded-xl bg-muted/60">
               <SmartImage
                 src={getMediaUrl(post.coverImage)}
                 alt={post.title}

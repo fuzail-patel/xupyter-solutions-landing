@@ -182,7 +182,7 @@ export function ContactFormCard() {
                   variant="primary"
                   buttonType="submit"
                   disabled={isSubmitting}
-                  className="w-full md:w-auto min-w-[200px] text-lg py-6"
+                  className="w-full md:w-auto min-w-50 text-lg py-6"
                 >
                   {isSubmitting ? (
                     <span className="inline-flex items-center gap-2">

@@ -12,7 +12,9 @@ import { getMediaUrl } from "@/lib/utils"
 
 export async function generateMetadata({
   params,
-}: any): Promise<Metadata> {
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
   const { slug } = await params
   const caseStudy = await getCaseStudyBySlug(slug)
 
@@ -23,14 +25,16 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${caseStudy.title} | Case Study`,
-    description: caseStudy.problem?.root?.children?.[0]?.children?.[0]?.text || "Case Study Detail",
+    title: `${caseStudy.title || 'Case Study'} | Case Study`,
+    description: "Case Study Detail",
   }
 }
 
 export default async function CaseStudyDetailPage({
   params,
-}: any) {
+}: {
+  params: Promise<{ slug: string }>
+}) {
   const { slug } = await params
   const caseStudy = await getCaseStudyBySlug(slug)
 
@@ -39,7 +43,7 @@ export default async function CaseStudyDetailPage({
   }
 
   // The project is usually a populated object
-  const project = typeof caseStudy.project === 'object' ? caseStudy.project : null
+  const project = (typeof caseStudy.project === 'object' && caseStudy.project !== null) ? caseStudy.project : null
 
   return (
     <main className="flex flex-col bg-background min-h-screen">
@@ -51,13 +55,13 @@ export default async function CaseStudyDetailPage({
           <div className="space-y-8">
             {/* Eyebrow */}
             <div className="flex items-center gap-4 text-primary font-medium tracking-[0.2em] text-xs uppercase">
-              <span className="w-8 h-[1px] bg-primary" />
+              <span className="w-8 h-px bg-primary" />
               CASE STUDY — {caseStudy.id?.toString().padStart(2, '0') || '01'}
             </div>
 
             {/* Title */}
             <h1 className="text-4xl md:text-6xl font-bold text-foreground leading-[1.1] max-w-4xl">
-              {caseStudy.title}
+              {caseStudy.title || 'Untitled Case Study'}
             </h1>
 
             {/* Excerpt/Summary */}
@@ -74,7 +78,7 @@ export default async function CaseStudyDetailPage({
               <div className="space-y-1">
                 <span className="text-[10px] uppercase tracking-widest text-muted-foreground font-semibold">Industry</span>
                 <p className="text-sm font-medium">
-                  {typeof project?.industry === 'object' ? project.industry.name : (project?.industry || "Technology")}
+                  {(typeof project?.industry === 'object' && project.industry !== null) ? project.industry.name : "Technology"}
                 </p>
               </div>
               <div className="space-y-1">
@@ -90,10 +94,10 @@ export default async function CaseStudyDetailPage({
       <section className="bg-muted/30 pb-12 md:pb-20">
         <div className="max-w-6xl mx-auto px-6">
           {project?.coverImage && (
-            <div className="relative aspect-[16/9] md:aspect-[21/9] w-full overflow-hidden rounded-2xl bg-muted shadow-2xl">
+            <div className="relative aspect-video md:aspect-21/9 w-full overflow-hidden rounded-2xl bg-muted shadow-2xl">
               <SmartImage
                 src={getMediaUrl(project.coverImage)}
-                alt={caseStudy.title}
+                alt={caseStudy.title || 'Case Study Image'}
                 fill
                 className="object-cover"
                 sizes="100vw"
@@ -181,10 +185,10 @@ function RichText({ content }: { content: any }) {
           )
         }
         if (node.type === 'heading') {
-          const Tag = node.tag as keyof JSX.IntrinsicElements
+          const Tag = (node.tag || 'h2') as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
           return (
             <Tag key={i} className="text-foreground font-bold">
-              {node.children?.map((child: any, j: number) => child.text)}
+              {node.children?.map((child: any) => child.text)}
             </Tag>
           )
         }

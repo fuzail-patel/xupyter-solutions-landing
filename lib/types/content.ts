@@ -1,5 +1,6 @@
 import type { ReactElement, ReactNode } from "react"
 import type { GridColSpan } from "@/lib/types/layout"
+import type { Testimonial as PayloadTestimonial, Industry as PayloadIndustry } from "@/payload-types"
 
 export type Service = {
   title: string
@@ -11,21 +12,11 @@ export type Service = {
   colSpan: GridColSpan
 }
 
-export type Testimonial = {
-  id?: string
-  type?: "video" | "text"
-  colSpan?: number
-  name: string
-  location?: string
-  role?: string
-  content?: string
-  videoThumbnail?: string
-  rating?: number
-  quote?: string
-  initials?: any
-  industry?: any
-  timeAgo?: any
-}
+// Rename existing Testimonial to prevent conflict if needed, 
+// but Phase 2 rule 2.1 says replace.
+// I'll export PayloadTestimonial as Testimonial for backward compatibility 
+// with components while moving them to Payload types.
+export type Testimonial = PayloadTestimonial
 
 export type ContactLinkItemProps = {
   icon: ReactNode
@@ -34,7 +25,8 @@ export type ContactLinkItemProps = {
   href: string
 }
 
-export type Industry = {
+// Keeping UIIndustry for hardcoded constants
+export type UIIndustry = {
   name: string
   description: string
   icon: ReactElement
@@ -42,3 +34,6 @@ export type Industry = {
   colSpan: GridColSpan
   subLinks?: string[]
 }
+
+// Exporting Payload Industry as Industry
+export type Industry = PayloadIndustry

@@ -83,7 +83,7 @@ export default function Header() {
           "transition-all duration-500",
           scrolled
             /* glassmorphism — frosted dark glass on scroll */
-            ? "bg-[#0c0c13]/70 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_4px_24px_rgba(1,31,91,0.25)]"
+            ? "bg-[#0c0c13]/70 backdrop-blur-xl border-b border-white/6 shadow-[0_4px_24px_rgba(1,31,91,0.25)]"
             /* transparent — visually part of hero gradient at top */
             : "bg-transparent"
         )}

@@ -1,17 +1,4 @@
-export type BlogPost = {
-  slug: string
-  title: string
-  excerpt: string
-  category: string
-  readTime: string
-  publishedAt: string
-  image: string
-  featured?: boolean
-  author?: {
-    name: string
-    avatar?: string
-  }
-}
+import type { Post } from "@/payload-types"
 
 export type Category =
   | "All"
@@ -23,7 +10,19 @@ export type Category =
   | "FinTech"
 
 export type BlogCardProps = {
-  post: BlogPost
+  post: Post
+}
+
+export type BlogPost = {
+  slug: string
+  title: string
+  excerpt: string
+  category: Category
+  readTime: string
+  publishedAt: string
+  image: string
+  featured: boolean
+  author?: { name: string }
 }
 
 export type PaginationProps = {
@@ -41,9 +40,9 @@ export type BlogFilterProps = {
 }
 
 export type BlogArticlePageProps = {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export type TocItem = {

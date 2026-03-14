@@ -13,7 +13,7 @@ export function JobListingsSection({
   emptyStateHref,
 }: JobListingsSectionProps) {
   const hasJobs = jobs.length > 0
-  const [openJobIds, setOpenJobIds] = useState<string[]>(() =>
+  const [openJobIds, setOpenJobIds] = useState<number[]>(() =>
     jobs.map((job) => job.id)
   )
 

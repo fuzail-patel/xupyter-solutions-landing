@@ -20,7 +20,7 @@ export default function JobApplicationPage() {
   const router = useRouter()
   const [submitted, setSubmitted] = useState(false)
 
-  const job = jobs.find((j) => j.id === slug) || jobs.find(j => j.href.endsWith(slug))
+  const job = jobs.find((j) => j.id.toString() === slug)
   
   const isGeneral = slug === "general-application"
   
@@ -108,77 +108,24 @@ export default function JobApplicationPage() {
                 </h1>
                 {job && (
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm md:text-base text-muted-foreground/90">
-                    <span>{job.meta.employmentType}</span>
+                    <span>{job.type}</span>
                     <span className="h-1 w-1 rounded-full bg-border/80" />
-                    <span>{job.meta.location}</span>
+                    <span>{job.location}</span>
                     <span className="h-1 w-1 rounded-full bg-border/80" />
-                    <span>{job.meta.department}</span>
-                    <span className="h-1 w-1 rounded-full bg-border/80" />
-                    <span>{job.meta.experienceLevel}</span>
+                    <span>{job.department}</span>
                   </div>
-                )}
-                {job?.salary && (
-                  <p className="text-sm md:text-base text-muted-foreground/90 font-medium">
-                    {job.salary.value}
-                  </p>
                 )}
               </div>
 
+              {/* salary, overview, techStack, responsibilities, benefits are missing in Payload Job */}
               {job ? (
                 <div className="space-y-10">
-                  {job.overview && (
-                    <div className="space-y-3">
-                      <h2 className="text-base font-bold text-foreground uppercase tracking-wider">
-                        Overview
-                      </h2>
-                      <p className="text-sm md:text-base text-muted-foreground/90 leading-relaxed">
-                        {job.overview}
-                      </p>
-                    </div>
-                  )}
-
-                  {job.techStack && job.techStack.length > 0 && (
-                    <div className="space-y-3">
-                      <h2 className="text-base font-bold text-foreground uppercase tracking-wider">
-                        Key skills / Tech stack
-                      </h2>
-                      <div className="flex flex-wrap gap-2">
-                        {job.techStack.map((item) => (
-                          <span
-                            key={item}
-                            className="rounded-full border border-border/70 bg-muted/40 px-3 py-1 text-xs md:text-sm text-muted-foreground"
-                          >
-                            {item}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  {job.responsibilities && job.responsibilities.length > 0 && (
-                    <div className="space-y-3">
-                      <h2 className="text-base font-bold text-foreground uppercase tracking-wider">
-                        Responsibilities
-                      </h2>
-                      <SystemList items={job.responsibilities} />
-                    </div>
-                  )}
-
                   {job.requirements && job.requirements.length > 0 && (
                     <div className="space-y-3">
                       <h2 className="text-base font-bold text-foreground uppercase tracking-wider">
                         Requirements
                       </h2>
-                      <SystemList items={job.requirements} />
-                    </div>
-                  )}
-
-                  {job.benefits && job.benefits.length > 0 && (
-                    <div className="space-y-3">
-                      <h2 className="text-base font-bold text-foreground uppercase tracking-wider">
-                        Benefits
-                      </h2>
-                      <SystemList items={job.benefits} />
+                      <SystemList items={job.requirements.map(r => r.requirement).filter(Boolean) as string[]} />
                     </div>
                   )}
                 </div>

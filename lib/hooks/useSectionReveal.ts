@@ -9,13 +9,13 @@ type SectionRevealOptions = {
   initialStyles?: CSSProperties
 }
 
-type SectionRevealResult = {
-  ref: RefObject<HTMLElement | null>
+type SectionRevealResult<T extends HTMLElement> = {
+  ref: RefObject<T | null>
   style: CSSProperties
   hasRevealed: boolean
 }
 
-export function useSectionReveal({
+export function useSectionReveal<T extends HTMLElement = HTMLElement>({
   threshold = 0.2,
   onReveal,
   autoAnimate = true,
@@ -23,8 +23,8 @@ export function useSectionReveal({
     opacity: 0,
     transform: "translateY(12px)",
   },
-}: SectionRevealOptions = {}): SectionRevealResult {
-  const elementRef = useRef<HTMLElement | null>(null)
+}: SectionRevealOptions = {}): SectionRevealResult<T> {
+  const elementRef = useRef<T | null>(null)
   const [hasRevealed, setHasRevealed] = useState<boolean>(() => {
     if (typeof window === "undefined") return false
     return prefersReducedMotion()
