@@ -1,5 +1,6 @@
 import { ApplyModal } from "@/components/careers/ApplyModal"
 import type { JobDetailTopProps } from "@/types/careers"
+import { HowWeWorkSection } from "./HowWeWorkSection"
 
 export function JobDetailTop({ job, allJobs }: JobDetailTopProps) {
   return (
@@ -27,6 +28,8 @@ export function JobDetailTop({ job, allJobs }: JobDetailTopProps) {
             triggerLabel="Apply for this role"
           />
         </div>
+
+        <HowWeWorkSection />
       </div>
     </section>
   )
