@@ -10,7 +10,7 @@ import {
 
 const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json"
 
-// Numeric IDs for highlighted regions (India, Europe, Middle East)
+// Numeric IDs for highlighted regions (India, Europe, Middle East, North America)
 const HIGHLIGHTED_IDS = [
   "356", // India
   "826", // UK
@@ -31,6 +31,8 @@ const HIGHLIGHTED_IDS = [
   "818", // Egypt
   "400", // Jordan
   "368", // Iraq
+  "840", // USA
+  "124", // Canada
 ]
 
 /**

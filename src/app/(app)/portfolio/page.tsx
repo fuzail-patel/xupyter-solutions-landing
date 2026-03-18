@@ -1,5 +1,5 @@
 import { CallToAction } from "@/components/marketing"
-import { PortfolioCard } from "@/components/portfolio"
+import { PortfolioGrid } from "@/components/portfolio"
 import { PageHeader } from "@/components/ui"
 import { getCaseStudies, getProjects } from "@/lib/cms-client"
 import { getDisplayProjects } from "@/utils/portfolio/mapProject"
@@ -38,15 +38,7 @@ export default async function PortfolioPage() {
         description="Custom SaaS platforms, internal tools, ERP systems, and automation infrastructure built with scalability in mind."
       />
 
-      <section className="py-20 md:py-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project) => (
-              <PortfolioCard key={project.id} project={project} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <PortfolioGrid projects={projects} />
 
       <CallToAction />
     </main>

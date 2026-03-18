@@ -4,8 +4,9 @@ import { MobileDrawer } from "./MobileDrawer"
 import { useHeaderScroll } from "@/hooks/useHeaderScroll"
 import { cn } from "@/utils/common"
 import { usePathname } from "next/navigation"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { StaggeredHamburger } from "./StaggeredHamburger"
+import { animateFade } from "@/utils/animations"
 
 import Image from "next/image"
 import Link from "next/link"
@@ -16,6 +17,8 @@ export default function Header() {
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
   const { scrolled, activeSection } = useHeaderScroll(pathname)
+  const headerRef = useRef<HTMLDivElement | null>(null)
+  const isHome = pathname === "/"
 
   useEffect(() => {
     if (!open) return
@@ -26,9 +29,21 @@ export default function Header() {
     }
   }, [open])
 
+  useEffect(() => {
+    if (isHome && headerRef.current) {
+      animateFade(headerRef.current, {
+        translateY: [-12, 0],
+        duration: 100,
+        delay: 50,
+      })
+    }
+  }, [isHome])
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 w-full">
       <div
+        ref={headerRef}
+        style={isHome ? { opacity: 0, transform: "translateY(-12px)" } : {}}
         className={cn(
           "transition-all duration-500",
           scrolled

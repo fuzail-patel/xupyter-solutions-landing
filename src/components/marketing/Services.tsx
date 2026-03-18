@@ -61,7 +61,7 @@ export default function Services() {
             >
               <div className="flex flex-col gap-4">
 
-                <div className="relative w-8 h-8 flex items-center justify-center">
+                <div className="relative w-8 h-8 flex items-center justify-center text-primary">
 
                   {/* top-left */}
                   <span className="

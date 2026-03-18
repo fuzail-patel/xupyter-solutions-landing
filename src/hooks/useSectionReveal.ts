@@ -1,3 +1,5 @@
+"use client"
+
 import { animateSectionReveal, prefersReducedMotion } from "@/utils/animations"
 import { useEffect, useRef, useState } from "react"
 import type { CSSProperties, RefObject } from "react"
@@ -16,12 +18,12 @@ type SectionRevealResult<T extends HTMLElement> = {
 }
 
 export function useSectionReveal<T extends HTMLElement = HTMLElement>({
-  threshold = 0.2,
+  threshold = 0.25,
   onReveal,
   autoAnimate = true,
   initialStyles = {
     opacity: 0,
-    transform: "translateY(12px)",
+    transform: "translateY(16px)",
   },
 }: SectionRevealOptions = {}): SectionRevealResult<T> {
   const elementRef = useRef<T | null>(null)

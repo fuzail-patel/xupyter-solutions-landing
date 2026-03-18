@@ -12,6 +12,9 @@ import { BLOG_CATEGORIES } from "@/lib/constants/blog"
 import { getMediaUrl } from "@/utils/common"
 import { getFeaturedPosts } from "@/utils/blog/getFeaturedPosts"
 import { formatDate } from "@/utils/formatDate"
+import { useSectionReveal } from "@/hooks/useSectionReveal"
+import { animateFade, animateStaggered } from "@/utils/animations"
+import { useRef } from "react"
 
 interface BlogListingPageProps {
   categories?: string[]
@@ -34,7 +37,33 @@ export default function BlogListingPage({ categories: categoriesProp, posts, tot
 
   const { featuredPost, regularPosts } = getFeaturedPosts(posts, selectedCategory, searchTerm)
 
-  return (    <div className="bg-background min-h-screen pt-25">
+  const featuredRef = useRef<HTMLDivElement | null>(null)
+  const gridRef = useRef<HTMLDivElement | null>(null)
+
+  const { ref: sectionRef, style: sectionStyle } = useSectionReveal<HTMLDivElement>({
+    threshold: 0.1,
+    autoAnimate: false,
+    onReveal: (el) => {
+      if (featuredRef.current) {
+        animateFade(featuredRef.current, {
+          translateY: [20, 0],
+          duration: 1000,
+        })
+      }
+
+      if (gridRef.current) {
+        const cards = gridRef.current.querySelectorAll<HTMLElement>("[data-blog-card]")
+        animateStaggered(cards, {
+          translateY: [16, 0],
+          staggerDelay: 100,
+          delay: 300,
+        })
+      }
+    },
+  })
+
+  return (
+    <div ref={sectionRef} style={sectionStyle} className="bg-background min-h-screen pt-25">
       {/* Category Navigation Bar */}
       <nav className="border-b border-border/40 sticky top-25 z-40 bg-background/80 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-6">
@@ -64,7 +93,7 @@ export default function BlogListingPage({ categories: categoriesProp, posts, tot
       <div className="max-w-7xl mx-auto px-6 py-12 md:py-20">
         {/* Featured Post Section */}
         {featuredPost && (
-          <section className="mb-24">
+          <section ref={featuredRef} className="mb-24">
             <div className="max-w-4xl">
               <div className="flex items-center gap-3 mb-6">
                 <span className="h-px w-8 bg-primary/40" />
@@ -141,9 +170,11 @@ export default function BlogListingPage({ categories: categoriesProp, posts, tot
         {/* Posts Grid */}
         {posts.length > 0 ? (
           <div className="space-y-24">
-            <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
+            <div ref={gridRef} className="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
               {regularPosts.map((post) => (
-                <BlogCard key={post.slug} post={post} />
+                <div key={post.slug} data-blog-card>
+                  <BlogCard post={post} />
+                </div>
               ))}
             </div>
             

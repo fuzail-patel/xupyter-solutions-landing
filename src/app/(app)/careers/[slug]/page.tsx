@@ -38,5 +38,9 @@ export default async function JobApplicationPage({ params }: PageProps) {
     notFound()
   }
 
-  return <JobApplicationForm job={job} isGeneral={isGeneral} />
+  return (
+    <div className="pt-20">
+      <JobApplicationForm job={job} isGeneral={isGeneral} />
+    </div>
+  )
 }

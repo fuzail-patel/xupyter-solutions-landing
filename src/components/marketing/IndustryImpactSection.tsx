@@ -6,44 +6,7 @@ import { CtaButton, SectionHeader } from "@/components/ui"
 import { useSectionReveal } from "@/hooks/useSectionReveal"
 import { animateFade, animateStaggered } from "@/utils/animations"
 import { cn } from "@/utils/common"
-import {
-  ArrowTrendingUpIcon as TrendingUpIcon,
-  ClockIcon,
-  ShieldCheckIcon,
-  WalletIcon,
-  CpuChipIcon as CpuIcon,
-} from "@heroicons/react/24/outline"
-
-const IMPACT_METRICS = [
-  {
-    icon: ClockIcon,
-    value: "[3x]",
-    title: "Faster Time-to-Market",
-    description:
-      "Startups working with Xupyter ship their MVPs up to 3x faster through our pre-built component libraries and parallel dev sprints.",
-  },
-  {
-    icon: ShieldCheckIcon,
-    value: "[99.9%]",
-    title: "Infrastructure Uptime",
-    description:
-      "Our DevOps setups are production-hardened with auto-scaling and health checks — keeping your platform online when it matters most.",
-  },
-  {
-    icon: WalletIcon,
-    value: "[40%]",
-    title: "Average Cost Reduction",
-    description:
-      "By right-sizing cloud infrastructure and automating manual workflows, our clients consistently reduce operational overhead.",
-  },
-  {
-    icon: TrendingUpIcon,
-    value: "[50+]",
-    title: "Products Shipped",
-    description:
-      "Across 7 industries and multiple countries, we've taken ideas from concept to live product — repeatedly and reliably.",
-  },
-]
+import { IMPACT_METRICS } from "@/lib/constants/impact"
 
 export default function IndustryImpactSection() {
   const leftColRef = useRef<HTMLDivElement | null>(null)
@@ -93,7 +56,7 @@ export default function IndustryImpactSection() {
                 key={`${item.title}-${idx}`}
                 data-impact-card
                 className={cn(
-                  "rounded-xl border-0 bg-card backdrop-blur-sm p-5 flex gap-4 items-start transition-all hover:border-primary/20",
+                  "rounded-xl border border-muted-foreground/10 bg-card backdrop-blur-sm p-5 flex gap-4 items-start transition-all hover:border-primary/20",
                   "md:odd:translate-x-2 md:even:-translate-x-2"
                 )}
               >

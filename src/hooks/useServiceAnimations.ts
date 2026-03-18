@@ -1,3 +1,5 @@
+"use client"
+
 import { useSectionReveal } from "@/hooks/useSectionReveal"
 import { animateFade, animateStaggered } from "@/utils/animations"
 import { type RefObject } from "react"

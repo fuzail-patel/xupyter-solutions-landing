@@ -17,7 +17,7 @@ export default function LottieAnimation({
   autoplay = true,
 }: Props) {
   return (
-    <div className={cn("overflow-hidden flex items-center justify-center transform-gpu", className)}>
+    <div data-lottie className={cn("overflow-hidden flex items-center justify-center transform-gpu", className)}>
       <DotLottieReact
         src={src}
         loop={loop}

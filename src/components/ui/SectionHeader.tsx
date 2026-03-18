@@ -37,10 +37,11 @@ export default function SectionHeader({
         className
       )}
     >
-      {eyebrow && <EyeBrow text={eyebrow} />}
+      {eyebrow && <EyeBrow data-eyebrow text={eyebrow} />}
 
       <div className={cn("w-full space-y-2 mt-1", align === "center" ? "max-w-4xl" : "max-w-3xl")}>
         <Tag
+          data-title
           className={cn(
             "font-display tracking-tight leading-tight",
             titleSize
@@ -56,6 +57,7 @@ export default function SectionHeader({
 
         {description && (
           <div
+            data-description
             className={cn(
               "text-sm md:text-base font-semibold text-muted-foreground/80",
               "leading-relaxed",

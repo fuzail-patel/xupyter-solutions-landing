@@ -62,7 +62,7 @@ export default function IndustrySection() {
               <Card
                 data-industry-card
                 className="h-full rounded-2xl p-0 gap-0 
-                 border-0 backdrop-blur-sm 
+                 border border-muted-foreground/10 backdrop-blur-sm 
                  transition-all duration-300 
                  hover:text-primary
                  hover:border-primary/20 hover:bg-card/60"

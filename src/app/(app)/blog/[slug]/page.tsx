@@ -9,6 +9,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { blogPosts } from "@/lib/constants/blog"
 import { mapConstantToDisplayPost } from "@/utils/blog/mapPost"
+import { BlogArticleReveal } from "@/components/blog/BlogArticleReveal"
 
 export async function generateMetadata({
   params,
@@ -24,7 +25,7 @@ export async function generateMetadata({
     },
   }).catch(() => ({ docs: [] }))
   
-  let post = postsData.docs[0] as Post
+  const post = postsData.docs[0] as Post
 
   if (!post) {
     const constantPost = blogPosts.find(p => p.slug === slug)
@@ -81,7 +82,6 @@ export default async function BlogArticlePage({
         updatedAt: new Date().toISOString(),
         createdAt: new Date().toISOString(),
       }
-      isConstant = true
     } else {
       notFound()
     }
@@ -105,10 +105,11 @@ export default async function BlogArticlePage({
   const publishedDate = formatDate(post.publishedAt)
 
   return (
-    <main className="flex flex-col">
-      <article className="bg-background">
-        <header className="bg-background">
-          <div className="max-w-3xl mx-auto px-6 pt-10 pb-6 sm:pt-12 sm:pb-8 md:pt-14 md:pb-9">
+    <main className="flex flex-col pt-15">
+      <BlogArticleReveal>
+        <article className="bg-background">
+          <header data-article-header className="bg-background">
+            <div className="max-w-3xl mx-auto px-6 pt-10 pb-6 sm:pt-12 sm:pb-8 md:pt-14 md:pb-9">
             <p className="text-xs font-semibold uppercase tracking-widest text-primary">
               {(post.tags?.[0] && typeof post.tags[0] === 'object' && post.tags[0] !== null) ? post.tags[0].name : 'Insights'}
             </p>
@@ -144,7 +145,7 @@ export default async function BlogArticlePage({
           </div>
         </header>
 
-        <section className="py-10 sm:py-12 md:py-14">
+        <section data-article-content className="py-10 sm:py-12 md:py-14">
           <div className="max-w-6xl mx-auto px-6">
             <div className="grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,1.1fr)]">
               <div className="max-w-3xl prose prose-sm sm:prose-base dark:prose-invert">
@@ -158,7 +159,7 @@ export default async function BlogArticlePage({
         </section>
 
         {relatedPosts.length > 0 && (
-          <section className="bg-muted/30">
+          <section data-related-articles className="bg-muted/30">
             <div className="max-w-6xl mx-auto px-6 py-10 sm:py-12 md:py-14">
               <div className="flex items-center justify-between gap-4">
                 <div>
@@ -204,8 +205,10 @@ export default async function BlogArticlePage({
             </div>
           </section>
         )}
+      </article>
+    </BlogArticleReveal>
 
-        <section className="bg-background">
+    <section className="bg-background">
           <div className="max-w-3xl mx-auto px-6 py-8 sm:py-10 md:py-12">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex-1">
@@ -241,7 +244,6 @@ export default async function BlogArticlePage({
             </div>
           </div>
         </section>
-      </article>
     </main>
   )
 }

@@ -28,7 +28,7 @@ export default function Error({
         </h1>
 
         <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-          An unexpected error occurred. We've been notified and are working to fix it.
+          {error.message || "An unexpected error occurred. We've been notified and are working to fix it."}
         </p>
 
         {error.digest && (

@@ -44,7 +44,7 @@ export function MobileDrawer({ open, onClose, pathname, activeSection }: MobileD
             type="button"
             aria-label="Close navigation"
             onClick={onClose}
-            className="group inline-flex h-12 w-12 items-center justify-center rounded-full bg-foreground text-background transition-transform active:scale-90"
+            className="group inline-flex h-12 w-12 items-center justify-center rounded-full bg-foreground/10 text-primary-foreground transition-transform active:scale-90"
           >
             <FiX className="size-6 transition-transform group-hover:rotate-90" />
           </button>

@@ -1,6 +1,10 @@
+"use client"
+
 import { cn } from "@/utils/common"
 import type { SectionHeaderProps } from "@/types/ui"
 import SectionHeader from "./SectionHeader"
+import { useSectionReveal } from "@/hooks/useSectionReveal"
+import { animateFade } from "@/utils/animations"
 
 /**
  * PageHeader component for main pages (About, Careers, etc.)
@@ -15,8 +19,42 @@ export default function PageHeader({
   size = "xl",
   className,
 }: SectionHeaderProps) {
+  const { ref, style } = useSectionReveal({
+    threshold: 0,
+    autoAnimate: false,
+    onReveal: (el) => {
+      // Find elements within the section header
+      const eyebrowEl = el.querySelector("[data-eyebrow]")
+      const titleEl = el.querySelector("[data-title]")
+      const descEl = el.querySelector("[data-description]")
+
+      if (eyebrowEl) {
+        animateFade(eyebrowEl as HTMLElement, {
+          translateY: [10, 0],
+          delay: 0,
+        })
+      }
+
+      if (titleEl) {
+        animateFade(titleEl as HTMLElement, {
+          translateY: [16, 0],
+          delay: 100,
+        })
+      }
+
+      if (descEl) {
+        animateFade(descEl as HTMLElement, {
+          translateY: [12, 0],
+          delay: 200,
+        })
+      }
+    },
+  })
+
   return (
     <section 
+      ref={ref}
+      style={style}
       className={cn(
         "w-full hero-gradient border-b border-border relative flex flex-col justify-center",
         "min-h-[40vh] sm:min-h-[45vh] md:min-h-[50vh]",

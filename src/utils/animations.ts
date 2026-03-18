@@ -9,8 +9,8 @@ export type FadeOptions = {
   easing?: string
 }
 
-const DURATION_BASE = 600
-const EASING_OUT = "easeOutQuad"
+const DURATION_BASE = 850
+const EASING_OUT = "easeOutCubic"
 const STAGGER_BASE = 100
 
 function isBrowser() {

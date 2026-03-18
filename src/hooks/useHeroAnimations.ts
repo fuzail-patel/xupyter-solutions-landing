@@ -1,3 +1,5 @@
+"use client"
+
 import { animateFade, animateStaggered } from "@/utils/animations"
 import { type RefObject, useEffect } from "react"
 
@@ -23,7 +25,7 @@ export const useHeroAnimations = ({
     if (eyebrowRef.current) {
       animateFade(eyebrowRef.current, {
         translateY: [10, 0],
-        delay: 0,
+        delay: 10,
       })
     }
 
@@ -31,14 +33,14 @@ export const useHeroAnimations = ({
     if (headingRef.current) {
       animateFade(headingRef.current, {
         translateY: [16, 0],
-        delay: 100,
+        delay: 200,
       })
     }
 
     // Subheadline paragraph: fade-in, delay 220ms
     if (descriptionRef.current) {
       animateFade(descriptionRef.current, {
-        delay: 220,
+        delay: 300,
       })
     }
 
@@ -47,17 +49,29 @@ export const useHeroAnimations = ({
       const buttons = ctaButtonsRef.current.children
       animateStaggered(buttons as any, {
         translateY: [8, 0],
-        delay: 340,
-        staggerDelay: 80,
+        delay: 500,
+        duration: 500,
+        staggerDelay: 50,
       })
     }
 
     // Right column visual/media: fade-in + translateX(20px → 0), delay 200ms
     if (heroMediaRef.current) {
+      // Animate the container
       animateFade(heroMediaRef.current, {
         translateX: [20, 0],
-        delay: 200,
+        delay: 300,
+        duration: 1500,
       })
+
+      // If it contains a Lottie animation, ensure it's also faded in smoothly
+      const lottie = heroMediaRef.current.querySelector('[data-lottie]')
+      if (lottie) {
+        animateFade(lottie as HTMLElement, {
+          delay: 400,
+          duration: 2000,
+        })
+      }
     }
 
     // Stats strip (3 items): fade-in, stagger 100ms, delay 460ms
