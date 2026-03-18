@@ -39,7 +39,7 @@ function ServiceNotFound() {
       </p>
       <Link
         href="/#services"
-        className="px-6 py-2 bg-primary text-primary-foreground rounded-[8px] font-medium text-[14px]"
+        className="px-6 py-2 bg-primary text-primary-foreground rounded-xl font-medium text-[14px]"
       >
         View all services
       </Link>

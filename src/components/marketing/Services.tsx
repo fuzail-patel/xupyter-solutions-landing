@@ -59,7 +59,7 @@ export default function Services() {
               data-service-card
               className="relative transition-all hover:translate-x-1 group block"
             >
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col items-center md:items-start gap-4 text-center md:text-left">
 
                 <div className="relative w-8 h-8 flex items-center justify-center text-primary">
 
@@ -91,7 +91,7 @@ export default function Services() {
                 </div>
 
                 <div className="space-y-2 mt-5">
-                  <div className="flex items-center gap-1.5">
+                  <div className="flex items-center justify-center md:justify-start gap-1.5">
                     <h3 className="text-lg font-bold text-white uppercase tracking-tight">
                       {service.title}
                     </h3>
@@ -101,7 +101,7 @@ export default function Services() {
                     />
                   </div>
 
-                  <p className="text-sm text-muted-foreground leading-relaxed max-w-sm font-medium">
+                  <p className="text-sm text-muted-foreground leading-relaxed max-w-sm mx-auto md:mx-0 font-medium">
                     {service.shortDescription}
                   </p>
                 </div>
