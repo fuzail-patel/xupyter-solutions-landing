@@ -39,4 +39,8 @@ export const pageSEO: Record<string, Metadata> = {
     title: "Privacy Policy | Xupyter Solutions",
     description: "Our policies on data collection, usage, and security for our clients and visitors.",
   },
+  termsOfService: {
+    title: "Terms of Service | Xupyter Solutions",
+    description: "Terms and conditions governing our software development and consulting services.",
+  },
 }

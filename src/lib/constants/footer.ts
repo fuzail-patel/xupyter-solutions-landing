@@ -22,7 +22,7 @@ export const FOOTER_COMPANY_LINKS: NavItem[] = [
 export const FOOTER_RESOURCES_LINKS: NavItem[] = [
   { label: "Insights", href: "/blog" },
   { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms", href: "/terms" },
+  { label: "Terms", href: "/terms-of-service" },
   { label: "Sitemap", href: "/sitemap.xml" },
 ]
 
