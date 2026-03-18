@@ -53,7 +53,7 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
 
   return (
     <Section ref={ref} style={style} className="relative">
-      <div className="bg-card p-6 rounded-xl">
+      <div className="bg-card p-6 rounded-xl space-y-5">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-x-10 gap-y-5">
           <div ref={headerRef} className="max-w-lg">

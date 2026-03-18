@@ -27,7 +27,7 @@ export function TextCard({
 
         </div>
 
-        <div className="mt-8  pt-4 flex items-center gap-6 justify-between">
+        <div className="mt-8  pt-4 flex items-center flex-wrap gap-6">
           <div className="flex items-center gap-3">
             <Avatar size="lg" className="border border-white/10 bg-muted">
               {avatar && <AvatarImage src={avatar} alt={name} className="object-cover" />}
@@ -47,7 +47,7 @@ export function TextCard({
             </div>
           </div>
 
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 ms-auto">
             {Array.from({ length: 5 }).map((_, i) => (
               <StarIcon
                 key={i}

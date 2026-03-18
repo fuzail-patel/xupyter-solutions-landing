@@ -33,7 +33,7 @@ export default function Contact() {
                 rel={item.external ? "noreferrer" : undefined}
                 className="group flex items-start gap-5 transition-colors"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-foreground transition-all shrink-0">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary group-hover:bg-primary/30 transition-all shrink-0">
                   {item.icon}
                 </div>
                 <div className="flex flex-col space-y-1 pt-1">

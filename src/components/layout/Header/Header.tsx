@@ -5,7 +5,7 @@ import { useHeaderScroll } from "@/hooks/useHeaderScroll"
 import { cn } from "@/utils/common"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
-import { FiMenu } from "react-icons/fi"
+import { StaggeredHamburger } from "./StaggeredHamburger"
 
 import Image from "next/image"
 import Link from "next/link"
@@ -58,14 +58,10 @@ export default function Header() {
             </div>
 
             <div className="flex items-center lg:hidden ml-auto">
-              <button
-                type="button"
-                aria-label="Toggle navigation"
-                onClick={() => setOpen((value) => !value)}
-                className="group inline-flex h-11 w-11 items-center justify-center rounded-full bg-foreground text-background hover:scale-105 active:scale-95 transition-all shadow-md"
-              >
-                <FiMenu className="size-5 transition-transform group-hover:rotate-12" />
-              </button>
+              <StaggeredHamburger
+                open={open}
+                toggle={() => setOpen((value) => !value)}
+              />
             </div>
           </div>
         </div>

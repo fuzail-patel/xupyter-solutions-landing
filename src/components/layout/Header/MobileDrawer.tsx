@@ -85,7 +85,7 @@ export function MobileDrawer({ open, onClose, pathname, activeSection }: MobileD
                       "group relative flex items-center gap-6 text-4xl font-black transition-all duration-300 tracking-tight",
                       isActive 
                         ? "text-primary" 
-                        : "text-muted-foreground/30 hover:text-foreground"
+                        : "text-muted-foreground/40 hover:text-foreground"
                     )}
                     style={{ 
                       transitionDelay: `${index * 50 + 200}ms`,
