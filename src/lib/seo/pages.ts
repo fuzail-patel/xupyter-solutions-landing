@@ -35,4 +35,8 @@ export const pageSEO: Record<string, Metadata> = {
     title: "Insights | Technical perspectives from our engineering and architecture team",
     description: "Deep dives and notes from our team on systems, architecture, and automation.",
   },
+  privacyPolicy: {
+    title: "Privacy Policy | Xupyter Solutions",
+    description: "Our policies on data collection, usage, and security for our clients and visitors.",
+  },
 }
