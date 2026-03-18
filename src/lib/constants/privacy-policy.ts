@@ -134,7 +134,7 @@ export const PRIVACY_POLICY_SECTIONS: PrivacySection[] = [
     label: "Contact Us",
     title: "Contact Us",
     content: [
-      "If you have any questions regarding this Privacy Policy, please reach out to us at legal@xupyter.com. You can also contact us via our main contact form or at our registered office in India.",
+      "If you have any questions regarding this Privacy Policy, please reach out to us at contact@xupyter.in. You can also contact us via our main contact form.",
       "We are dedicated to resolving any privacy-related issues promptly and transparently. Our team is available to clarify any aspects of our data handling practices.",
     ],
   },
