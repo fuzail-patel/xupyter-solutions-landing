@@ -1,4 +1,3 @@
-import { sendMail } from "@/lib/mailer"
 import { getPayloadInstance } from "@/lib/cms-client"
 import { contactSchema } from "@/utils/schemas/contact.schema"
 import { NextResponse } from "next/server"
@@ -58,24 +57,6 @@ export async function POST(request: Request) {
       },
       { status: 500 }
     )
-  }
-
-  try {
-    const subject = `New contact from ${firstName} ${lastName}`
-    const text = [
-      `Name: ${firstName} ${lastName}`,
-      `Contact: ${email}`,
-      website ? `Website: ${website}` : "",
-      "",
-      message,
-    ].filter(Boolean).join("\n")
-
-    await sendMail({
-      subject,
-      text,
-    })
-  } catch {
-    console.error("Failed to send contact notification email")
   }
 
   return NextResponse.json(

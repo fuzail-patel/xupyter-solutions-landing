@@ -498,6 +498,7 @@ export interface ContactLead {
   companySize?: string | null;
   budgetRange?: string | null;
   serviceSlug?: string | null;
+  email_status?: ('pending' | 'sent' | 'failed') | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -834,6 +835,7 @@ export interface ContactLeadsSelect<T extends boolean = true> {
   companySize?: T;
   budgetRange?: T;
   serviceSlug?: T;
+  email_status?: T;
   updatedAt?: T;
   createdAt?: T;
 }

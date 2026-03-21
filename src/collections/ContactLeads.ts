@@ -73,6 +73,23 @@ export const ContactLeads: CollectionConfig = {
       name: 'serviceSlug',
       type: 'text',
     },
+    {
+      name: 'email_status',
+      type: 'select',
+      defaultValue: 'pending',
+      options: [
+        { label: 'Pending', value: 'pending' },
+        { label: 'Sent', value: 'sent' },
+        { label: 'Failed', value: 'failed' },
+      ],
+      admin: {
+        readOnly: true,
+        position: 'sidebar',
+      },
+      access: {
+        update: ({ req: { user } }) => !!user, // Only admins/users can update
+      },
+    },
   ],
   timestamps: true,
 }
