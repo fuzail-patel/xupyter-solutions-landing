@@ -10,7 +10,10 @@
     "start": "next start",
     "lint": "eslint",
     "generate:types": "payload generate:types",
-    "generate:importmap": "payload generate:importMap"
+    "generate:importmap": "payload generate:importMap",
+    "db:generate": "payload migrate:create",
+    "db:migrate": "payload migrate",
+    "db:fresh": "payload migrate:fresh"
   },
   "dependencies": {
     "@calcom/atoms": "2.3.5",
