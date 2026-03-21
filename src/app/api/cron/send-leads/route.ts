@@ -1,6 +1,7 @@
 import { sendMail } from "@/lib/mailer"
 import { getPayloadInstance } from "@/lib/cms-client"
 import { NextResponse } from "next/server"
+import { getEmailTemplate } from "@/lib/mail-templates"
 
 export async function GET(request: Request) {
   const authHeader = request.headers.get("authorization")
@@ -21,7 +22,12 @@ export async function GET(request: Request) {
   try {
     const payload = await getPayloadInstance()
     
-    // Fetch all leads with email_status = pending
+    // Configurable batch size (default 5)
+    const BATCH_SIZE = parseInt(process.env.EMAIL_BATCH_SIZE || "5", 10)
+
+    // Fetch pending leads:
+    // 1. Prioritize quotes (isQuote: true first)
+    // 2. Then by creation date (oldest first)
     const { docs: pendingLeads } = await payload.find({
       collection: "contact-leads",
       where: {
@@ -29,7 +35,8 @@ export async function GET(request: Request) {
           equals: "pending",
         },
       },
-      limit: 100, // Process in batches if necessary
+      sort: "-isQuote,createdAt", // '-' prefix for descending (isQuote: true first)
+      limit: BATCH_SIZE,
     })
 
     summary.processed = pendingLeads.length
@@ -37,14 +44,16 @@ export async function GET(request: Request) {
     for (const lead of pendingLeads) {
       try {
         const isQuote = lead.isQuote
+        const name = `${lead.firstName} ${lead.lastName}`
         const subject = isQuote 
           ? `New Service Quote Request: ${lead.serviceSlug}`
-          : `New contact from ${lead.firstName} ${lead.lastName}`
+          : `New contact from ${name}`
         
+        // Generate plain text as fallback
         const text = isQuote ? [
           `*** SERVICE QUOTE REQUEST ***`,
           `Service: ${lead.serviceSlug}`,
-          `Name: ${lead.firstName} ${lead.lastName}`,
+          `Name: ${name}`,
           `Work email: ${lead.emailOrPhone}`,
           `Company size: ${lead.companySize}`,
           `Budget range: ${lead.budgetRange}`,
@@ -52,16 +61,32 @@ export async function GET(request: Request) {
           `Message:`,
           lead.message || "No additional message provided.",
         ].filter(Boolean).join("\n") : [
-          `Name: ${lead.firstName} ${lead.lastName}`,
+          `Name: ${name}`,
           `Contact: ${lead.emailOrPhone}`,
           lead.website ? `Website: ${lead.website}` : "",
           "",
           lead.message,
         ].filter(Boolean).join("\n")
 
+        // Generate HTML from templates
+        const html = isQuote 
+          ? getEmailTemplate("quote-template", {
+              name,
+              email: lead.emailOrPhone || "",
+              company_size: lead.companySize || "N/A",
+              budget: lead.budgetRange || "N/A",
+              message: lead.message || "No additional message provided.",
+            })
+          : getEmailTemplate("contact-template", {
+              name,
+              email: lead.emailOrPhone || "",
+              message: lead.message || "No additional message provided.",
+            })
+
         await sendMail({
           subject,
           text,
+          html,
         })
 
         // Update status to sent

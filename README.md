@@ -12,7 +12,7 @@ A modern, full-stack company website built with Next.js 16, PayloadCMS, and Type
 - **UI Components**: Radix UI, shadcn/ui
 - **Animations**: Lottie, Anime.js
 - **Forms**: React Hook Form + Zod
-- **Email**: Nodemailer
+- **Email**: Nodemailer with HTML templates
 - **Booking**: Cal.com integration
 
 ## Features
@@ -24,7 +24,7 @@ A modern, full-stack company website built with Next.js 16, PayloadCMS, and Type
 - 💬 Testimonials (text & video)
 - 🏢 Client & Industry management
 - 💼 Job postings
-- 📧 Contact form with email notifications
+- 📧 Contact & Quote forms with automated email delivery
 - 🎨 Dynamic theming
 - 📱 Fully responsive design
 - 🔍 SEO optimized with sitemap generation
@@ -57,14 +57,9 @@ pnpm install
 cp .env.example .env
 ```
 
-Edit `.env` with your configuration:
-- Database connection string
-- Cloudinary credentials
-- Gmail credentials for contact form
-- PayloadCMS secret
-- Site URLs
+Edit `.env` with your configuration (see [Environment Variables](#environment-variables) section).
 
-4. Run database migrations (if needed):
+4. Run database migrations:
 ```bash
 # PayloadCMS will auto-create tables on first run
 ```
@@ -90,113 +85,78 @@ pnpm dev
 ├── src/
 │   ├── app/                    # Next.js App Router
 │   │   ├── (app)/             # Public-facing routes
-│   │   │   ├── about/
-│   │   │   ├── blog/
-│   │   │   ├── careers/
-│   │   │   ├── case-studies/
-│   │   │   ├── portfolio/
-│   │   │   └── services/
 │   │   ├── (payload)/         # CMS routes
-│   │   │   └── admin/
-│   │   └── api/               # API routes
+│   │   └── api/               # API routes (Contact, Quote, Cron)
 │   ├── collections/           # PayloadCMS collections
 │   ├── components/            # React components
-│   ├── hooks/                 # Custom React hooks
-│   ├── lib/                   # Utilities and constants
-│   ├── models/                # Data models
-│   ├── types/                 # TypeScript types
-│   └── utils/                 # Helper functions
+│   ├── lib/                   # Utilities (Mailer, Templates, CMS Client)
+│   ├── utils/                 # Helper functions and Zod schemas
+│   └── payload-types.ts       # Auto-generated types
+├── templates/                 # Email HTML templates
 ├── public/                    # Static assets
-│   ├── animations/
-│   ├── favicons/
-│   ├── fonts/
-│   └── images/
-└── docs/                      # Documentation
+└── docs/                      # Detailed documentation
 ```
 
-## Available Scripts
+## Email Delivery System
 
-```bash
-# Development
-pnpm dev                    # Start dev server
+The project includes a robust email delivery system for handling leads.
 
-# Production
-pnpm build                  # Build for production
-pnpm start                  # Start production server
+### 1. Lead Collection
+Leads are collected via two main endpoints:
+- `POST /api/contact`: Standard contact form submissions.
+- `POST /api/services/[slug]/quote`: Service-specific quote requests.
 
-# Code Quality
-pnpm lint                   # Run ESLint
+All leads are stored in the `contact-leads` collection with an initial `email_status` of `pending`.
 
-# PayloadCMS
-pnpm generate:types         # Generate TypeScript types from CMS
-pnpm generate:importmap     # Generate import map
-```
+### 2. Automated Delivery (Cron Job)
+A background cron job processes pending leads and sends them to the configured administrator email.
+- **Endpoint**: `GET /api/cron/send-leads`
+- **Authorization**: Requires `Authorization: Bearer <CRON_SECRET>` header.
+- **Batching**: Configurable via `EMAIL_BATCH_SIZE` (default: 5).
+- **Prioritization**: Quote requests are automatically prioritized over standard contact messages.
+- **Ordering**: Within each category, older leads are processed first.
 
-## CMS Collections
+### 3. Email Templates
+Email templates are located in the `/templates` directory:
+- `contact-template.html`: Used for standard contact messages.
+- `quote-template.html`: Used for service quote requests.
 
-The project uses PayloadCMS with the following collections:
-
-- **Authors**: Blog post authors with bio and avatar
-- **Posts**: Blog posts with rich content, tags, and SEO
-- **Projects**: Portfolio projects with client and industry info
-- **Case Studies**: Detailed project case studies
-- **Clients**: Client information and logos
-- **Industries**: Industry categories
-- **Testimonials**: Customer testimonials (text/video)
-- **Jobs**: Job postings with requirements
-- **Tags**: Content categorization
-- **Media**: Image/file uploads (stored in Cloudinary)
-- **Users**: Admin users with role-based access
-
-For detailed collection schemas and API usage, see [docs/CMS_COLLECTIONS.md](./docs/CMS_COLLECTIONS.md)
+Templates use `{{variable}}` syntax for dynamic data replacement.
 
 ## Environment Variables
 
-See `.env.example` for all required environment variables:
+The application requires the following environment variables. See `.env.example` for a template.
 
-- `NEXT_PUBLIC_SERVER_URL`: Your app URL
-- `DATABASE_URL`: PostgreSQL connection string
-- `PAYLOAD_SECRET`: Secret key for PayloadCMS
-- `CLOUDINARY_*`: Cloudinary credentials
-- `GMAIL_USER` & `GMAIL_PASS`: Email configuration
-- `NEXT_PUBLIC_CAL_LINK`: Cal.com booking link
+### Core
+- `NEXT_PUBLIC_SERVER_URL`: Base URL of the application.
+- `PAYLOAD_SECRET`: Secret key for PayloadCMS authentication.
+- `DATABASE_URL`: PostgreSQL connection string.
+
+### Media (Cloudinary)
+- `CLOUDINARY_CLOUD_NAME`
+- `CLOUDINARY_API_KEY`
+- `CLOUDINARY_API_SECRET`
+
+### Email (Nodemailer)
+- `GMAIL_USER`: Gmail address for sending emails.
+- `GMAIL_PASS`: Gmail App Password.
+- `MAIL_FROM`: Display name and email for outgoing mail.
+- `CONTACT_NOTIFICATION_TO`: Recipient email for lead notifications.
+
+### Cron & Batching
+- `CRON_SECRET`: Secret key to authorize cron job executions.
+- `EMAIL_BATCH_SIZE`: Number of emails to process per cron run (e.g., `5`).
 
 ## Deployment
 
 ### Vercel (Recommended)
+1. Push code to GitHub.
+2. Import project in Vercel.
+3. Configure Environment Variables in Vercel Dashboard.
+4. Set up a **Vercel Cron** to call `/api/cron/send-leads` periodically.
 
-1. Push your code to GitHub
-2. Import project in Vercel
-3. Add environment variables
-4. Deploy
-
-### Other Platforms
-
-Ensure your platform supports:
-- Node.js 20+
-- PostgreSQL database
-- Environment variables
-
-Build command: `pnpm build`
-Start command: `pnpm start`
-
-## API Routes
-
-- `POST /api/contact` - Contact form submission
-- `GET /api/services` - Fetch services data
-- PayloadCMS REST API: `/api/*` (auto-generated)
-
-## Contributing
-
-1. Create a feature branch
-2. Make your changes
-3. Test thoroughly
-4. Submit a pull request
+### Production Environment
+Create a `.env.production` file for production-specific configurations. Ensure `EMAIL_BATCH_SIZE` and `CRON_SECRET` are properly set for production scale.
 
 ## License
-
 Private - All rights reserved
-
-## Support
-
-For issues or questions, contact the development team.
