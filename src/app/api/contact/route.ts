@@ -1,6 +1,5 @@
 import { sendMail } from "@/lib/mailer"
-import { connectMongo } from "@/lib/mongodb"
-import { ContactLead } from "@/models/ContactLead"
+import { getPayloadInstance } from "@/lib/cms-client"
 import { contactSchema } from "@/utils/schemas/contact.schema"
 import { NextResponse } from "next/server"
 
@@ -37,16 +36,21 @@ export async function POST(request: Request) {
   const lastName = lastNameParts.join(" ") || "-"
 
   try {
-    await connectMongo()
+    const payload = await getPayloadInstance()
 
-    await ContactLead.create({
-      firstName,
-      lastName,
-      emailOrPhone: email,
-      website,
-      message,
+    await payload.create({
+      collection: 'contact-leads',
+      data: {
+        firstName,
+        lastName,
+        emailOrPhone: email,
+        website,
+        message,
+        isQuote: false,
+      },
     })
-  } catch {
+  } catch (error) {
+    console.error("Failed to save contact lead to Payload", error)
     return NextResponse.json(
       {
         success: false,

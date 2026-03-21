@@ -32,10 +32,11 @@ export default function HeroSection() {
             <div ref={eyebrowRef} style={{ opacity: 0 }}>
               <Eyebrow
                 text={
-                  <>
-                    Architecture-First
-                    <span className="hidden sm:inline"> Software Development</span>
-                  </>
+                  <div className="flex items-center gap-1">
+                    <span>Architecture-First</span>
+                    <span className="hidden sm:inline"> Software</span>
+                    <span>Development</span>
+                  </div>
                 }
                 className="text-gradient-primary text-[9px] sm:text-[11px]"
               />

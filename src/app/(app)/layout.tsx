@@ -3,7 +3,7 @@ import { sora, plusJakartaSans } from "@/utils/fonts"
 import { organizationJsonLd, websiteJsonLd } from "@/utils/metadata"
 import { siteMetadata } from "@/lib/seo/site"
 import type { Metadata } from "next"
-import "../globals.css"
+import "./globals.css"
 
 export const metadata: Metadata = siteMetadata
 

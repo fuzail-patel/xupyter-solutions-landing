@@ -10,7 +10,7 @@ const inputVariants = cva(
         default:
           "h-10 rounded-md border border-input bg-background px-3 py-2 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
         minimal:
-          "h-14 bg-transparent border-0 border-b border-border px-0 text-base font-semibold focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary",
+          "h-14 bg-transparent border-0 border-b-[0.5px] border-border px-0 text-base font-semibold focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary",
       },
     },
     defaultVariants: {

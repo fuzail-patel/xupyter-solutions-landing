@@ -10,7 +10,6 @@ import {
   Input,
   Textarea,
 } from "@/components/ui"
-import { ArrowRightIcon } from "@heroicons/react/24/solid"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -20,13 +19,18 @@ import {
 } from "@/utils/schemas/contact.schema"
 import ContactSuccess from "./ContactSuccess"
 import ContactError from "./ContactError"
+import { useEffect } from "react"
 
 export default function ContactFormCard() {
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false
-    return window.sessionStorage.getItem("contact_submitted") === "true"
-  })
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  useEffect(() => {
+    const submitted = sessionStorage.getItem("contact_submitted") === "true"
+    if (submitted) {
+      setIsSubmitted(true)
+    }
+  }, [])
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),

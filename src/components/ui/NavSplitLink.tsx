@@ -12,23 +12,28 @@ export default function NavSplitLink({ href, label, active }: NavSplitLinkProps)
     <Link
       href={href}
       className={cn(
-        "relative py-2 group transition-colors duration-200 font-medium text-sm",
-        active ? "text-primary font-bold" : "text-foreground/80 hover:text-primary"
+        "relative py-1 group transition-all duration-300 font-medium text-sm",
+        active ? "text-primary font-semibold" : "text-foreground/80 hover:text-foreground"
       )}
     >
-      <span className="block">
+      <span className="relative z-10 block px-1">
         {label}
       </span>
 
-      {/* Dot indicator */}
+      {/* Underline indicator */}
       <span
         className={cn(
-          "absolute left-1/2 -translate-x-1/2 bottom-0 w-1 h-1 rounded-full bg-primary transition-all duration-200 ease-in-out",
+          "absolute left-0 bottom-0 h-[0.5px] bg-primary transition-all duration-300 ease-out rounded-full",
           active 
-            ? "opacity-100 scale-100" 
-            : "opacity-0 scale-0 group-hover:opacity-50 group-hover:scale-100"
+            ? "w-full opacity-100" 
+            : "w-0 opacity-0 group-hover:w-full group-hover:opacity-40"
         )}
       />
+      
+      {/* Subtle background glow for active item */}
+      {active && (
+        <span className="absolute inset-0 -z-0 bg-primary/5 blur-md rounded-lg scale-110" />
+      )}
     </Link>
   );
 }

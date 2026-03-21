@@ -78,6 +78,7 @@ export interface Config {
     industries: Industry;
     testimonials: Testimonial;
     clients: Client;
+    'contact-leads': ContactLead;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +97,7 @@ export interface Config {
     industries: IndustriesSelect<false> | IndustriesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     clients: ClientsSelect<false> | ClientsSelect<true>;
+    'contact-leads': ContactLeadsSelect<false> | ContactLeadsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -482,6 +484,25 @@ export interface Testimonial {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-leads".
+ */
+export interface ContactLead {
+  id: number;
+  firstName: string;
+  lastName: string;
+  emailOrPhone: string;
+  website?: string | null;
+  message: string;
+  status?: ('new' | 'contacted' | 'resolved') | null;
+  isQuote?: boolean | null;
+  companySize?: string | null;
+  budgetRange?: string | null;
+  serviceSlug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -547,6 +568,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'clients';
         value: number | Client;
+      } | null)
+    | ({
+        relationTo: 'contact-leads';
+        value: number | ContactLead;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -791,6 +816,24 @@ export interface ClientsSelect<T extends boolean = true> {
   logo?: T;
   industry?: T;
   website?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-leads_select".
+ */
+export interface ContactLeadsSelect<T extends boolean = true> {
+  firstName?: T;
+  lastName?: T;
+  emailOrPhone?: T;
+  website?: T;
+  message?: T;
+  status?: T;
+  isQuote?: T;
+  companySize?: T;
+  budgetRange?: T;
+  serviceSlug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
