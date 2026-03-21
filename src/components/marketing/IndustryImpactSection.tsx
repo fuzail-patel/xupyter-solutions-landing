@@ -31,9 +31,9 @@ export default function IndustryImpactSection() {
   })
 
   return (
-    <Section ref={ref} style={style}>
+    <Section ref={ref} style={style} className="[&_[data-impact-card]]:opacity-0">
       <div className="grid md:grid-cols-2 gap-12 items-start">
-        <div ref={leftColRef}>
+        <div ref={leftColRef} style={{ opacity: 0 }}>
           <SectionHeader
             align="left"
             eyebrow="PROVEN RESULTS"

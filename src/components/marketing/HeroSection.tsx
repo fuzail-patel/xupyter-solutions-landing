@@ -29,15 +29,21 @@ export default function HeroSection() {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-16 text-white">
         <div className="flex flex-col gap-7 lg:text-left ">
           <div className="space-y-2">
-            <div ref={eyebrowRef}>
+            <div ref={eyebrowRef} style={{ opacity: 0 }}>
               <Eyebrow
-                text="Architecture-First Software Development"
+                text={
+                  <>
+                    Architecture-First
+                    <span className="hidden sm:inline"> Software Development</span>
+                  </>
+                }
                 className="text-gradient-primary text-[9px] sm:text-[11px]"
               />
             </div>
             <h1
               ref={headingRef}
-              className="text-4xl sm:text-5xl lg:text-6xl leading-tight font-bold max-w-3xl tracking-tight"
+              style={{ opacity: 0 }}
+              className="text-4xl sm:text-5xl lg:text-6xl leading-tight font-bold max-w-3xl tracking-tight font-display"
             >
               <span className={cn("relative", "text-gradient-primary font-display")}>
                 We Build the Systems
@@ -51,16 +57,17 @@ export default function HeroSection() {
 
           <p
             ref={descriptionRef}
+            style={{ opacity: 0 }}
             className="mt-1 text-sm md:text-base text-muted-foreground/90 leading-relaxed max-w-xl font-semibold"
           >
-            We designs and builds custom SaaS platforms, ERP systems, CRMs, and
+            We design and build custom SaaS platforms, ERP systems, CRMs, and
             internal business tools — engineered for scale from day one, not
             patched together as you grow.
           </p>
 
           <div
             ref={ctaButtonsRef}
-            className="flex flex-col flex-wrap sm:flex-row gap-4"
+            className="flex flex-col flex-wrap sm:flex-row gap-4 [&>*]:opacity-0"
           >
             <ScheduleCallButton
               variant="primary"
@@ -74,7 +81,7 @@ export default function HeroSection() {
 
           <div
             ref={statsRef}
-            className="mt-12 flex flex-wrap gap-x-16 gap-y-8 text-center sm:text-left items-center justify-center sm:justify-between w-fit max-w-lg"
+            className="mt-12 flex flex-wrap gap-x-16 gap-y-8 text-center sm:text-left items-center justify-center sm:justify-between w-fit max-w-lg [&>*]:opacity-0"
           >
             <div>
               <p className="font-bold text-3xl md:text-4xl font-display">100+</p>
@@ -101,6 +108,7 @@ export default function HeroSection() {
 
         <div
           ref={heroMediaRef}
+          style={{ opacity: 0 }}
           className="mx-auto md:mx-0 w-full max-w-md md:max-w-none flex items-center justify-center"
         >
           <div className="relative w-full aspect-square max-w-lg">

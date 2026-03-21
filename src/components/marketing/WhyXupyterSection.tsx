@@ -83,8 +83,8 @@ export default function WhyXupyterSection() {
   })
 
   return (
-    <Section ref={ref} style={style}>
-      <div ref={headerRef}>
+    <Section ref={ref} style={style} className="[&_[data-why-card]]:opacity-0">
+      <div ref={headerRef} style={{ opacity: 0 }}>
         <SectionHeader
           align="center"
           eyebrow="Why Xupyter"

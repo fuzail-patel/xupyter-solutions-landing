@@ -1,4 +1,4 @@
 export interface EyebrowProps {
-  text: string
+  text: string | React.ReactNode
   className?: string
 }

@@ -111,47 +111,48 @@
 
 /* ============================================================
    .dark — Full Crimson theme
-   Deep near-black #050208 base, crimson as primary.
-   Every token carries a red undertone for a fully
-   consistent cinematic dark palette.
+   Lifted near-black base for readability on mobile & OLED.
+   Crimson DNA preserved — every token carries a red undertone.
    ============================================================ */
 .dark {
   /* ------------------------------------------------------------------
-     Base surfaces — near-black with red DNA
+     Base surfaces
+     Previously: bg oklch(0.068), card oklch(0.100) — too dark on mobile.
+     Now: bg oklch(0.115), card oklch(0.158) — clearly distinct surfaces,
+     readable under varying ambient light conditions.
   ------------------------------------------------------------------ */
-  --background:            oklch(0.068 0.022 15);   /* #050208 — blood base          */
-  --foreground:            oklch(0.92  0.010 15);   /* #f0e8e8 — warm off-white text */
+  --background:            oklch(0.115 0.022 15);   /* ~#120608 — lifted blood base         */
+  --foreground:            oklch(0.94  0.010 15);   /* #f0e8e8 — warm off-white text        */
 
-  --card:                  oklch(0.100 0.020 15);   /* #0f0508 — lifted card surface */
-  --card-foreground:       oklch(0.92  0.010 15);
+  --card:                  oklch(0.158 0.022 15);   /* ~#1e080a — visible card surface      */
+  --card-foreground:       oklch(0.94  0.010 15);
 
-  --popover:               oklch(0.090 0.018 15);   /* slightly deeper than card     */
-  --popover-foreground:    oklch(0.92  0.010 15);
+  --popover:               oklch(0.145 0.020 15);   /* sits between bg and card             */
+  --popover-foreground:    oklch(0.94  0.010 15);
 
   /* ------------------------------------------------------------------
      Primary — deep crimson #C0392B
-     Full-chroma red, readable on all dark surfaces
   ------------------------------------------------------------------ */
-  --primary:               oklch(0.48  0.20  22);   /* #C0392B                       */
-  --primary-foreground:    oklch(0.98  0.004 15);   /* near-white on crimson buttons */
+  --primary:               oklch(0.48  0.20  22);
+  --primary-foreground:    oklch(0.98  0.004 15);
 
   /* ------------------------------------------------------------------
      Secondary — dim crimson-tinted hover surface
   ------------------------------------------------------------------ */
-  --secondary:             oklch(0.130 0.022 15);   /* #1a0808                       */
-  --secondary-foreground:  oklch(0.78  0.012 15);   /* warm light text               */
+  --secondary:             oklch(0.185 0.022 15);   /* slightly above card                  */
+  --secondary-foreground:  oklch(0.78  0.012 15);
 
   /* ------------------------------------------------------------------
      Muted — barely-red dark fill
   ------------------------------------------------------------------ */
-  --muted:                 oklch(0.110 0.016 15);
-  --muted-foreground:      oklch(0.44  0.014 15);   /* subdued warm-gray             */
+  --muted:                 oklch(0.160 0.016 15);
+  --muted-foreground:      oklch(0.48  0.014 15);   /* lifted slightly for mobile contrast  */
 
   /* ------------------------------------------------------------------
-     Accent — brighter crimson for hover / focus state fills
+     Accent — brighter crimson hover / focus fills
   ------------------------------------------------------------------ */
-  --accent:                oklch(0.150 0.030 15);   /* crimson-tinted hover bg       */
-  --accent-foreground:     oklch(0.65  0.18  22);   /* #e74c3c — accent text         */
+  --accent:                oklch(0.200 0.030 15);   /* crimson-tinted hover bg              */
+  --accent-foreground:     oklch(0.65  0.18  22);
 
   /* ------------------------------------------------------------------
      Destructive — orange-red, distinct from crimson primary
@@ -161,29 +162,29 @@
   /* ------------------------------------------------------------------
      Border, input, ring
   ------------------------------------------------------------------ */
-  --border:                oklch(1     0     0   / 0.07);
-  --input:                 oklch(0.115 0.020 15);
-  --ring:                  oklch(0.48  0.20  22);   /* crimson focus ring            */
+  --border:                oklch(1     0     0   / 0.09);  /* slightly more visible border  */
+  --input:                 oklch(0.168 0.020 15);
+  --ring:                  oklch(0.48  0.20  22);
 
   /* ------------------------------------------------------------------
-     Charts — full crimson ramp, dark to warm light
+     Charts — full crimson ramp
   ------------------------------------------------------------------ */
-  --chart-1:               oklch(0.48  0.20  22);   /* #C0392B — primary crimson     */
-  --chart-2:               oklch(0.40  0.17  18);   /* deeper red                    */
-  --chart-3:               oklch(0.32  0.13  14);   /* dark red                      */
-  --chart-4:               oklch(0.58  0.18  28);   /* lighter red-orange            */
-  --chart-5:               oklch(0.68  0.14  34);   /* warm orange tail              */
+  --chart-1:               oklch(0.48  0.20  22);
+  --chart-2:               oklch(0.40  0.17  18);
+  --chart-3:               oklch(0.32  0.13  14);
+  --chart-4:               oklch(0.58  0.18  28);
+  --chart-5:               oklch(0.68  0.14  34);
 
   /* ------------------------------------------------------------------
-     Sidebar — deepest surface, crimson carried through
+     Sidebar — deepest surface, still above old background floor
   ------------------------------------------------------------------ */
-  --sidebar:               oklch(0.058 0.018 15);   /* #030106 — darkest surface     */
-  --sidebar-foreground:    oklch(0.76  0.012 15);   /* warm muted text               */
-  --sidebar-primary:       oklch(0.48  0.20  22);   /* crimson active nav item       */
+  --sidebar:               oklch(0.090 0.018 15);   /* deepest — anchors the layout         */
+  --sidebar-foreground:    oklch(0.76  0.012 15);
+  --sidebar-primary:       oklch(0.48  0.20  22);
   --sidebar-primary-foreground: oklch(0.98 0.004 15);
-  --sidebar-accent:        oklch(0.150 0.030 15);   /* hover fill                    */
-  --sidebar-accent-foreground: oklch(0.65 0.18 22); /* accent text on hover          */
-  --sidebar-border:        oklch(1     0     0   / 0.06);
+  --sidebar-accent:        oklch(0.200 0.030 15);
+  --sidebar-accent-foreground: oklch(0.65 0.18 22);
+  --sidebar-border:        oklch(1     0     0   / 0.07);
   --sidebar-ring:          oklch(0.48  0.20  22);
 }
 

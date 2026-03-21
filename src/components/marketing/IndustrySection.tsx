@@ -37,8 +37,8 @@ export default function IndustrySection() {
   })
 
   return (
-    <Section id="industries" ref={ref} style={style}>
-      <div ref={headerRef}>
+    <Section id="industries" ref={ref} style={style} className="[&_[data-industry-card]]:opacity-0">
+      <div ref={headerRef} style={{ opacity: 0 }}>
         <SectionHeader
           align="left"
           eyebrow="Industries"

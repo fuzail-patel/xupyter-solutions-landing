@@ -59,6 +59,7 @@ export default function PageHeader({
         "w-full hero-gradient border-b border-border relative flex flex-col justify-center",
         "min-h-[40vh] sm:min-h-[45vh] md:min-h-[50vh]",
         "py-20 sm:py-24 md:py-32",
+        "[&_[data-eyebrow]]:opacity-0 [&_[data-title]]:opacity-0 [&_[data-description]]:opacity-0",
         className
       )}
     >

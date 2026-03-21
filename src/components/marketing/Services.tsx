@@ -37,7 +37,7 @@ export default function Services() {
 
   return (
     <Section id="services" ref={ref} style={style}>
-      <div ref={headerRef}>
+      <div ref={headerRef} style={{ opacity: 0 }}>
         <SectionHeader
           align="center"
           size="md"
@@ -48,7 +48,7 @@ export default function Services() {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-12 mt-14">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-12 mt-14 [&>[data-service-card]]:opacity-0">
         {SERVICES.map((service, index) => {
           const Icon = SERVICE_ICON[service.title]
 
@@ -57,9 +57,9 @@ export default function Services() {
               key={`${service.title}-${index}`}
               href={service.href}
               data-service-card
-              className="relative transition-all hover:translate-x-1 group block"
+              className="relative transition-all hover:translate-x-1 group block px-5 md:px-0"
             >
-              <div className="flex flex-col items-center md:items-start gap-4 text-center md:text-left">
+              <div className="flex flex-col items-start gap-4">
 
                 <div className="relative w-8 h-8 flex items-center justify-center text-primary">
 
@@ -91,7 +91,7 @@ export default function Services() {
                 </div>
 
                 <div className="space-y-2 mt-5">
-                  <div className="flex items-center justify-center md:justify-start gap-1.5">
+                  <div className="flex items-start justify-between gap-1.5">
                     <h3 className="text-lg font-bold text-white uppercase tracking-tight">
                       {service.title}
                     </h3>

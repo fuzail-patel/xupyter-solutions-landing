@@ -33,8 +33,8 @@ export default function Process() {
   })
 
   return (
-    <Section id="about" ref={ref} style={style}>
-      <div ref={headerRef}>
+    <Section id="about" ref={ref} style={style} className="[&_[data-process-step]]:opacity-0">
+      <div ref={headerRef} style={{ opacity: 0 }}>
         <SectionHeader
           align="center"
           size="md"
