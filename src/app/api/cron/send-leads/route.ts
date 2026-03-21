@@ -36,8 +36,22 @@ export async function GET(request: Request) {
 
     for (const lead of pendingLeads) {
       try {
-        const subject = `New contact from ${lead.firstName} ${lead.lastName}`
-        const text = [
+        const isQuote = lead.isQuote
+        const subject = isQuote 
+          ? `New Service Quote Request: ${lead.serviceSlug}`
+          : `New contact from ${lead.firstName} ${lead.lastName}`
+        
+        const text = isQuote ? [
+          `*** SERVICE QUOTE REQUEST ***`,
+          `Service: ${lead.serviceSlug}`,
+          `Name: ${lead.firstName} ${lead.lastName}`,
+          `Work email: ${lead.emailOrPhone}`,
+          `Company size: ${lead.companySize}`,
+          `Budget range: ${lead.budgetRange}`,
+          "",
+          `Message:`,
+          lead.message || "No additional message provided.",
+        ].filter(Boolean).join("\n") : [
           `Name: ${lead.firstName} ${lead.lastName}`,
           `Contact: ${lead.emailOrPhone}`,
           lead.website ? `Website: ${lead.website}` : "",

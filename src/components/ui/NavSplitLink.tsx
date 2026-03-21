@@ -23,7 +23,7 @@ export default function NavSplitLink({ href, label, active }: NavSplitLinkProps)
       {/* Underline indicator */}
       <span
         className={cn(
-          "absolute left-0 bottom-0 h-[0.5px] bg-primary transition-all duration-300 ease-out rounded-full",
+          "absolute left-0 bottom-0 h-1 bg-primary transition-all duration-300 ease-out rounded-full",
           active 
             ? "w-full opacity-100" 
             : "w-0 opacity-0 group-hover:w-full group-hover:opacity-40"

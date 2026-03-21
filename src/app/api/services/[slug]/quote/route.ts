@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server"
-import { sendMail } from "@/lib/mailer"
 import { getPayloadInstance } from "@/lib/cms-client"
 import {
   serviceQuoteSchema,
@@ -62,30 +61,6 @@ export async function POST(
     })
   } catch (error) {
     console.error("Failed to save service quote lead to Payload", error)
-  }
-
-  try {
-    const subject = `New Service Quote Request: ${slug}`
-    const text = [
-      `*** SERVICE QUOTE REQUEST ***`,
-      `Service: ${slug}`,
-      `Name: ${fullName}`,
-      `Work email: ${workEmail}`,
-      `Company size: ${companySize}`,
-      `Budget range: ${budgetRange}`,
-      "",
-      `Message:`,
-      message || "No additional message provided.",
-    ]
-      .filter(Boolean)
-      .join("\n")
-
-    await sendMail({
-      subject,
-      text,
-    })
-  } catch (error) {
-    console.error("Failed to send service quote email", error)
     return NextResponse.json(
       {
         success: false,
