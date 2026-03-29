@@ -43,7 +43,4 @@ export const siteMetadata: Metadata = {
     ],
   },
   manifest: "/favicons/site.webmanifest",
-  alternates: {
-    canonical: SITE_URL,
-  },
 }

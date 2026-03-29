@@ -1,12 +1,14 @@
 import { CallToAction } from "@/components/marketing"
 import { CtaButton, PageHeader, SmartImage } from "@/components/ui"
-import { getCaseStudyByProject, getProjectBySlug } from "@/lib/cms-client"
+import { getCaseStudyByProject, getProjectBySlug, getProjects } from "@/lib/cms-client"
 import { getMediaUrl } from "@/utils/common"
 import { notFound } from "next/navigation"
 import Link from "next/link"
 import type { Metadata } from "next"
 import { portfolioProjects } from "@/lib/constants/portfolio"
 import { mapConstantToDisplayProject } from "@/utils/portfolio/mapProject"
+import { SITE_URL } from "@/lib/seo/site"
+import { generatePortfolioBreadcrumb } from "@/utils/schema/breadcrumb"
 
 export async function generateMetadata({
   params,
@@ -22,6 +24,14 @@ export async function generateMetadata({
       return {
         title: `${constantProject.name} | Case Study`,
         description: constantProject.outcome,
+        alternates: {
+          canonical: `${SITE_URL}/portfolio/${slug}`,
+        },
+        openGraph: {
+          title: constantProject.name,
+          description: constantProject.outcome,
+          url: `${SITE_URL}/portfolio/${slug}`,
+        },
       }
     }
     return {
@@ -32,7 +42,24 @@ export async function generateMetadata({
   return {
     title: `${project.title || 'Project'} | Case Study`,
     description: project.summary || '',
+    alternates: {
+      canonical: `${SITE_URL}/portfolio/${slug}`,
+    },
+    openGraph: {
+      title: project.title || 'Project',
+      description: project.summary || '',
+      url: `${SITE_URL}/portfolio/${slug}`,
+      images: project.coverImage ? [{ url: getMediaUrl(project.coverImage) || '' }] : undefined,
+    },
   }
+}
+
+export async function generateStaticParams() {
+  const projectsData = await getProjects({ limit: 100 }).catch(() => ({ docs: [] }))
+  const constantSlugs = portfolioProjects.map(p => ({ slug: p.slug }))
+  const cmsSlugs = projectsData.docs.map((project: any) => ({ slug: project.slug }))
+  
+  return [...constantSlugs, ...cmsSlugs]
 }
 
 export default async function ProjectDetailPage({
@@ -71,7 +98,13 @@ export default async function ProjectDetailPage({
   const industryName = (typeof project.industry === 'object' && project.industry !== null) ? project.industry.name : 'Tech'
   const clientName = (typeof project.client === 'object' && project.client !== null) ? project.client.name : (project.client || 'Proprietary')
 
+  const breadcrumbSchema = generatePortfolioBreadcrumb(project.title || 'Project', slug)
+
   return (    <main className="flex flex-col bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <PageHeader
         eyebrow={industryName}
         titlePrimary={project.title || 'Untitled Project'}

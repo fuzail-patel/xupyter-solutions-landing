@@ -2,6 +2,7 @@ import { jobs } from "@/lib/constants/careers"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import { JobApplicationForm } from "./JobApplicationForm"
+import { SITE_URL } from "@/lib/seo/site"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -26,6 +27,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
+    alternates: {
+      canonical: `${SITE_URL}/careers/${slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${SITE_URL}/careers/${slug}`,
+    },
   }
 }
 

@@ -10,6 +10,9 @@ import type { Metadata } from "next"
 import { blogPosts } from "@/lib/constants/blog"
 import { mapConstantToDisplayPost } from "@/utils/blog/mapPost"
 import { BlogArticleReveal } from "@/components/blog/BlogArticleReveal"
+import { SITE_URL } from "@/lib/seo/site"
+import { generateBlogBreadcrumb } from "@/utils/schema/breadcrumb"
+import { generateArticleSchema } from "@/utils/schema/article"
 
 export async function generateMetadata({
   params,
@@ -33,6 +36,15 @@ export async function generateMetadata({
       return {
         title: `${constantPost.title} | Insights`,
         description: constantPost.excerpt,
+        alternates: {
+          canonical: `${SITE_URL}/blog/${slug}`,
+        },
+        openGraph: {
+          title: constantPost.title,
+          description: constantPost.excerpt,
+          url: `${SITE_URL}/blog/${slug}`,
+          type: 'article',
+        },
       }
     }
     return {}
@@ -41,7 +53,25 @@ export async function generateMetadata({
   return {
     title: `${post?.title || 'Insight'} | Insights`,
     description: post?.excerpt || '',
+    alternates: {
+      canonical: `${SITE_URL}/blog/${slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt || '',
+      url: `${SITE_URL}/blog/${slug}`,
+      type: 'article',
+      images: post.coverImage ? [{ url: getMediaUrl(post.coverImage) || '' }] : undefined,
+    },
   }
+}
+
+export async function generateStaticParams() {
+  const postsData = await getPosts({ limit: 100 }).catch(() => ({ docs: [] }))
+  const constantSlugs = blogPosts.map(p => ({ slug: p.slug }))
+  const cmsSlugs = postsData.docs.map((post: Post) => ({ slug: post.slug }))
+  
+  return [...constantSlugs, ...cmsSlugs]
 }
 
 export default async function BlogArticlePage({
@@ -104,8 +134,28 @@ export default async function BlogArticlePage({
 
   const publishedDate = formatDate(post.publishedAt)
 
+  // Generate structured data
+  const breadcrumbSchema = generateBlogBreadcrumb(post.title, slug)
+  const articleSchema = generateArticleSchema({
+    headline: post.title,
+    description: post.excerpt || '',
+    image: getMediaUrl(post.coverImage) || undefined,
+    datePublished: post.publishedAt || new Date().toISOString(),
+    dateModified: post.updatedAt || new Date().toISOString(),
+    authorName: (post.author && typeof post.author === 'object' && post.author !== null) ? post.author.name : 'Xupyter Solutions',
+    url: `${SITE_URL}/blog/${slug}`,
+  })
+
   return (
     <main className="flex flex-col pt-15">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
       <BlogArticleReveal>
         <article className="bg-background">
           <header data-article-header className="bg-background">

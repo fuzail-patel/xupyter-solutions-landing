@@ -2,6 +2,45 @@ import { use } from "react"
 import Link from "next/link"
 import { ServiceDetail } from "@/components/services"
 import { SERVICES } from "@/lib/constants/services"
+import { SITE_URL } from "@/lib/seo/site"
+import type { Metadata } from "next"
+import { generateServiceBreadcrumb } from "@/utils/schema/breadcrumb"
+import { generateServiceSchema } from "@/utils/schema/service"
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const service = SERVICES.find((s) => s.href === `/services/${slug}`)
+  
+  if (!service) {
+    return {
+      title: "Service Not Found",
+    }
+  }
+  
+  return {
+    title: service.title,
+    description: service.description,
+    alternates: {
+      canonical: `${SITE_URL}/services/${slug}`,
+    },
+    openGraph: {
+      title: service.title,
+      description: service.description,
+      url: `${SITE_URL}/services/${slug}`,
+      type: 'website',
+    },
+  }
+}
+
+export async function generateStaticParams() {
+  return SERVICES.map((service) => ({
+    slug: service.href.split('/').pop() || '',
+  }))
+}
 
 export default function ServicePage({
   params,
@@ -17,8 +56,23 @@ export default function ServicePage({
     return <ServiceNotFound />
   }
 
+  const breadcrumbSchema = generateServiceBreadcrumb(service.title, slug)
+  const serviceSchema = generateServiceSchema({
+    name: service.title,
+    description: service.description,
+    url: `${SITE_URL}/services/${slug}`,
+  })
+
   return (
     <main className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       <ServiceDetail
         title={service.title}
         description={service.description}

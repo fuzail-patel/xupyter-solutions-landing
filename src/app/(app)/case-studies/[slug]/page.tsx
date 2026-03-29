@@ -1,13 +1,15 @@
 import { CallToAction } from "@/components/marketing"
 import { RichText } from "@/components/shared"
 import { CtaButton, PageHeader, SmartImage } from "@/components/ui"
-import { getCaseStudyBySlug } from "@/lib/cms-client"
+import { getCaseStudyBySlug, getCaseStudies } from "@/lib/cms-client"
 import { getMediaUrl } from "@/utils/common"
 import { notFound } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
 import type { Metadata } from "next"
 import { CASE_STUDIES } from "@/lib/constants/caseStudies"
+import { SITE_URL } from "@/lib/seo/site"
+import { generateCaseStudyBreadcrumb } from "@/utils/schema/breadcrumb"
 
 
 export async function generateMetadata({
@@ -24,6 +26,14 @@ export async function generateMetadata({
       return {
         title: `${constantCaseStudy.headline} | Case Study`,
         description: constantCaseStudy.challenge,
+        alternates: {
+          canonical: `${SITE_URL}/case-studies/${slug}`,
+        },
+        openGraph: {
+          title: constantCaseStudy.headline,
+          description: constantCaseStudy.challenge,
+          url: `${SITE_URL}/case-studies/${slug}`,
+        },
       }
     }
     return {
@@ -31,10 +41,29 @@ export async function generateMetadata({
     }
   }
 
+  const project = (typeof caseStudy.project === 'object' && caseStudy.project !== null) ? caseStudy.project : null
+
   return {
     title: `${caseStudy.title || 'Case Study'} | Case Study`,
-    description: "Case Study Detail",
+    description: project?.summary || caseStudy.title || '',
+    alternates: {
+      canonical: `${SITE_URL}/case-studies/${slug}`,
+    },
+    openGraph: {
+      title: caseStudy.title || 'Case Study',
+      description: project?.summary || '',
+      url: `${SITE_URL}/case-studies/${slug}`,
+      images: project?.coverImage ? [{ url: getMediaUrl(project.coverImage) || '' }] : undefined,
+    },
   }
+}
+
+export async function generateStaticParams() {
+  const caseStudiesData = await getCaseStudies({ limit: 100 }).catch(() => ({ docs: [] }))
+  const constantSlugs = CASE_STUDIES.map(cs => ({ slug: cs.slug }))
+  const cmsSlugs = caseStudiesData.docs.map((cs: any) => ({ slug: cs.slug }))
+  
+  return [...constantSlugs, ...cmsSlugs]
 }
 
 export default async function CaseStudyDetailPage({
@@ -87,8 +116,14 @@ export default async function CaseStudyDetailPage({
   // The project is usually a populated object
   const project = (typeof caseStudy.project === 'object' && caseStudy.project !== null) ? caseStudy.project : null
 
+  const breadcrumbSchema = generateCaseStudyBreadcrumb(caseStudy.title || 'Case Study', slug)
+
   return (
     <main className="flex flex-col bg-background min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* New Hero Layout inspired by image */}
       <section className="pt-20 pb-12 md:pt-28 md:pb-16 bg-muted/30">
         <div className="max-w-5xl mx-auto px-6">
