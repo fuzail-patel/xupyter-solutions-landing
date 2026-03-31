@@ -77,7 +77,7 @@ curl -X POST http://localhost:3000/api/authors \
 
 ## Posts
 
-Blog posts with rich content, SEO, and categorization.
+Blog posts with rich content, SEO, and categorization. **Now supports both Lexical Rich Text and Markdown formats!**
 
 ### Fields
 
@@ -86,7 +86,9 @@ Blog posts with rich content, SEO, and categorization.
 | `title` | text | ✅ | Post title |
 | `slug` | text | ✅ | URL slug (unique) |
 | `excerpt` | textarea | ❌ | Short summary |
-| `content` | richText | ✅ | Main content (Lexical editor) |
+| `contentType` | select | ❌ | "richText" or "markdown" (default: richText) |
+| `content` | richText | ❌* | Main content (Lexical editor) *if contentType=richText |
+| `markdownContent` | textarea | ❌* | Main content (Markdown) *if contentType=markdown |
 | `coverImage` | relationship | ❌ | Featured image (Media) |
 | `author` | relationship | ❌ | Post author (Authors) |
 | `tags` | relationship | ❌ | Multiple tags (Tags) |
@@ -95,6 +97,8 @@ Blog posts with rich content, SEO, and categorization.
 | `readTime` | text | ❌ | Estimated read time |
 | `seoTitle` | text | ❌ | SEO meta title |
 | `seoDescription` | textarea | ❌ | SEO meta description |
+
+> **💡 Tip**: Use Markdown for 85-90% storage savings! See [MARKDOWN_SUPPORT.md](./MARKDOWN_SUPPORT.md) for details.
 
 ### API Endpoint
 ```
@@ -201,7 +205,7 @@ curl -X POST http://localhost:3000/api/projects \
 
 ## Case Studies
 
-Detailed project case studies with problem-solution format.
+Detailed project case studies with problem-solution format. **Now supports both Lexical Rich Text and Markdown formats!**
 
 ### Fields
 
@@ -210,11 +214,12 @@ Detailed project case studies with problem-solution format.
 | `title` | text | ✅ | Case study title |
 | `slug` | text | ✅ | URL slug (unique) |
 | `project` | relationship | ✅ | Related project (Projects) |
-| `problem` | richText | ✅ | Problem statement |
-| `solution` | richText | ✅ | Solution description |
-| `architecture` | richText | ❌ | Technical architecture |
-| `results` | richText | ❌ | Outcomes and metrics |
+| `contentType` | select | ❌ | "richText" or "markdown" (default: richText) |
+| `content` | richText | ❌* | Full case study content *if contentType=richText |
+| `markdownContent` | textarea | ❌* | Full case study content *if contentType=markdown |
 | `images` | relationship | ❌ | Multiple images (Media) |
+
+> **💡 Tip**: Markdown is ideal for case studies with lots of technical content! See [CONTENT_FORMAT_COMPARISON.md](./CONTENT_FORMAT_COMPARISON.md) for storage savings.
 
 ### API Endpoint
 ```
@@ -235,10 +240,21 @@ curl -X POST http://localhost:3000/api/case-studies \
     "title": "Scaling E-Commerce to 1M Users",
     "slug": "scaling-ecommerce-1m-users",
     "project": "PROJECT_ID",
-    "problem": {
+    "contentType": "richText",
+    "content": {
       "root": {
         "type": "root",
         "children": [
+          {
+            "type": "heading",
+            "tag": "h2",
+            "children": [
+              {
+                "type": "text",
+                "text": "The Problem"
+              }
+            ]
+          },
           {
             "type": "paragraph",
             "children": [
@@ -247,14 +263,17 @@ curl -X POST http://localhost:3000/api/case-studies \
                 "text": "The client'\''s platform was experiencing severe performance issues..."
               }
             ]
-          }
-        ]
-      }
-    },
-    "solution": {
-      "root": {
-        "type": "root",
-        "children": [
+          },
+          {
+            "type": "heading",
+            "tag": "h2",
+            "children": [
+              {
+                "type": "text",
+                "text": "Our Solution"
+              }
+            ]
+          },
           {
             "type": "paragraph",
             "children": [
@@ -267,38 +286,22 @@ curl -X POST http://localhost:3000/api/case-studies \
         ]
       }
     },
-    "architecture": {
-      "root": {
-        "type": "root",
-        "children": [
-          {
-            "type": "paragraph",
-            "children": [
-              {
-                "type": "text",
-                "text": "The system uses Next.js for the frontend, Node.js microservices..."
-              }
-            ]
-          }
-        ]
-      }
-    },
-    "results": {
-      "root": {
-        "type": "root",
-        "children": [
-          {
-            "type": "paragraph",
-            "children": [
-              {
-                "type": "text",
-                "text": "Page load times reduced by 70%, conversion rate increased by 25%..."
-              }
-            ]
-          }
-        ]
-      }
-    },
+    "images": ["MEDIA_ID_1", "MEDIA_ID_2"]
+  }'
+```
+
+### Create Case Study with Markdown (cURL)
+
+```bash
+curl -X POST http://localhost:3000/api/case-studies \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -d '{
+    "title": "Scaling E-Commerce to 1M Users",
+    "slug": "scaling-ecommerce-1m-users",
+    "project": "PROJECT_ID",
+    "contentType": "markdown",
+    "markdownContent": "## The Problem\n\nThe client'\''s platform was experiencing severe performance issues...\n\n## Our Solution\n\nWe implemented a microservices architecture with...\n\n## Architecture\n\nThe system uses Next.js for the frontend, Node.js microservices...\n\n## Results\n\nPage load times reduced by 70%, conversion rate increased by 25%...",
     "images": ["MEDIA_ID_1", "MEDIA_ID_2"]
   }'
 ```
@@ -870,6 +873,69 @@ Provide the complete cURL command with all fields filled.
 
 1. Upload avatar image → Get `MEDIA_ID`
 2. Create testimonial with `MEDIA_ID`
+
+---
+
+## Markdown Support
+
+This CMS now supports **Markdown** as an alternative to Lexical Rich Text for Posts and Case Studies.
+
+### Why Use Markdown?
+
+- **85-90% storage savings** compared to Lexical JSON
+- **Developer-friendly** plain text format
+- **Version control friendly** with clean Git diffs
+- **Portable** - easy to migrate between systems
+- **Fast to write** - no visual editor needed
+
+### How to Use
+
+1. When creating a Post or Case Study, select **Content Type**
+2. Choose "Markdown" instead of "Rich Text (Lexical)"
+3. Write content using standard Markdown syntax
+4. The frontend automatically renders it properly
+
+### Markdown Example
+
+```markdown
+# Heading 1
+## Heading 2
+
+**Bold text** and *italic text*
+
+- Bullet list
+- Another item
+
+1. Numbered list
+2. Another item
+
+[Link](https://example.com)
+
+\`\`\`javascript
+const code = "block";
+\`\`\`
+```
+
+### API Usage with Markdown
+
+```bash
+curl -X POST http://localhost:3000/api/posts \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_TOKEN" \
+  -d '{
+    "title": "My Markdown Post",
+    "slug": "my-markdown-post",
+    "contentType": "markdown",
+    "markdownContent": "# Introduction\n\nThis is **markdown** content!\n\n- Easy to write\n- Compact storage\n- Great for developers",
+    "publishedAt": "2026-03-30T10:00:00.000Z"
+  }'
+```
+
+### Documentation
+
+- [MARKDOWN_SUPPORT.md](./MARKDOWN_SUPPORT.md) - Complete markdown guide
+- [MARKDOWN_EXAMPLE.md](./MARKDOWN_EXAMPLE.md) - Example blog post
+- [CONTENT_FORMAT_COMPARISON.md](./CONTENT_FORMAT_COMPARISON.md) - Storage comparison
 
 ---
 

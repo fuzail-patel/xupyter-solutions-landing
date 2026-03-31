@@ -41,4 +41,5 @@ export type ApplyModalFormProps = {
   onCancel?: () => void
   isSpecific: boolean
   showCancel?: boolean
+  isSubmitting?: boolean
 }

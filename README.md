@@ -17,9 +17,9 @@ A modern, full-stack company website built with Next.js 16, PayloadCMS, and Type
 
 ## Features
 
-- 📝 Blog with rich text editor (Lexical)
+- 📝 Blog with rich text editor (Lexical) **+ Markdown support**
 - 💼 Portfolio/Projects showcase
-- 📊 Case studies with detailed architecture
+- 📊 Case studies with detailed architecture **+ Markdown support**
 - 👥 Team/Authors management
 - 💬 Testimonials (text & video)
 - 🏢 Client & Industry management
@@ -29,6 +29,7 @@ A modern, full-stack company website built with Next.js 16, PayloadCMS, and Type
 - 📱 Fully responsive design
 - 🔍 SEO optimized with sitemap generation
 - 🖼️ Optimized image handling (WebP, Cloudinary)
+- ⚡ **NEW**: Markdown support for 85-90% storage savings
 
 ## Getting Started
 
@@ -122,6 +123,28 @@ Email templates are located in the `/templates` directory:
 - `quote-template.html`: Used for service quote requests.
 
 Templates use `{{variable}}` syntax for dynamic data replacement.
+
+## Content Formats: Lexical vs Markdown
+
+The CMS now supports **two content formats** for blog posts and case studies:
+
+### Lexical Rich Text (Default)
+- Visual WYSIWYG editor
+- Great for non-technical content creators
+- Larger storage footprint (~50-150 KB per article)
+
+### Markdown (New!)
+- Plain text format with simple syntax
+- **85-90% storage savings** compared to Lexical
+- Developer-friendly and version control friendly
+- Perfect for technical content and large-scale blogs
+
+**How to choose**: In the CMS admin, select "Content Type" when creating posts or case studies.
+
+**Documentation**:
+- [Markdown Support Guide](./docs/MARKDOWN_SUPPORT.md)
+- [Format Comparison](./docs/CONTENT_FORMAT_COMPARISON.md)
+- [Migration Guide](./docs/MARKDOWN_MIGRATION.md)
 
 ## Environment Variables
 

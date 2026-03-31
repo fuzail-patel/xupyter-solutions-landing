@@ -41,7 +41,7 @@ const HIGHLIGHTED_IDS = [
  */
 export default function WorldMap() {
   return (
-    <div className="w-full bg-white rounded-[2rem] overflow-hidden aspect-video border border-border/40 shadow-sm">
+    <div className="w-full bg-white rounded-[2rem] overflow-hidden aspect-video border border-border/40 shadow-sm pointer-events-none select-none">
       <ComposableMap
         projection="geoMercator"
         projectionConfig={{
@@ -50,29 +50,27 @@ export default function WorldMap() {
         }}
         className="w-full h-full"
       >
-        <ZoomableGroup center={[20, 10]} zoom={1}>
-          <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => {
-                const isHighlighted = HIGHLIGHTED_IDS.includes(geo.id)
-                return (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    fill={isHighlighted ? "#6B3FA0" : "#ddd8f5"}
-                    stroke="#ffffff"
-                    strokeWidth={0.5}
-                    style={{
-                      default: { outline: "none" },
-                      hover: { outline: "none", fill: isHighlighted ? "#5a3487" : "#cfc9f0" },
-                      pressed: { outline: "none" },
-                    }}
-                  />
-                )
-              })
-            }
-          </Geographies>
-        </ZoomableGroup>
+        <Geographies geography={geoUrl}>
+          {({ geographies }) =>
+            geographies.map((geo) => {
+              const isHighlighted = HIGHLIGHTED_IDS.includes(geo.id)
+              return (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  fill={isHighlighted ? "#6B3FA0" : "#ddd8f5"}
+                  stroke="#ffffff"
+                  strokeWidth={0.5}
+                  style={{
+                    default: { outline: "none" },
+                    hover: { outline: "none" },
+                    pressed: { outline: "none" },
+                  }}
+                />
+              )
+            })
+          }
+        </Geographies>
       </ComposableMap>
     </div>
   )

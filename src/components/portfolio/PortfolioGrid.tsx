@@ -23,7 +23,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
   })
 
   return (
-    <section ref={ref} style={style} className="py-20 md:py-24">
+    <section ref={ref} style={style} className="py-12 md:py-20">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((project) => (

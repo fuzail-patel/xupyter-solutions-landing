@@ -15,6 +15,7 @@ import { Industries } from './collections/industries'
 import { Testimonials } from './collections/testimonials'
 import { Clients } from './collections/clients'
 import { ContactLeads } from './collections/ContactLeads'
+import { JobApplications } from './collections/JobApplications'
 
 export default buildConfig({
     admin: {
@@ -34,6 +35,7 @@ export default buildConfig({
         Testimonials,
         Clients,
         ContactLeads,
+        JobApplications,
     ],
 
     editor: lexicalEditor(),

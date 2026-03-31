@@ -706,11 +706,25 @@
           "primaryKey": false,
           "notNull": false
         },
+        "content_type": {
+          "name": "content_type",
+          "type": "enum_posts_content_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'richText'"
+        },
         "content": {
           "name": "content",
           "type": "jsonb",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
+        },
+        "markdown_content": {
+          "name": "markdown_content",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
         },
         "cover_image_id": {
           "name": "cover_image_id",
@@ -1340,27 +1354,23 @@
           "primaryKey": false,
           "notNull": true
         },
-        "problem": {
-          "name": "problem",
-          "type": "jsonb",
+        "content_type": {
+          "name": "content_type",
+          "type": "enum_case_studies_content_type",
+          "typeSchema": "public",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false,
+          "default": "'richText'"
         },
-        "solution": {
-          "name": "solution",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "architecture": {
-          "name": "architecture",
+        "content": {
+          "name": "content",
           "type": "jsonb",
           "primaryKey": false,
           "notNull": false
         },
-        "results": {
-          "name": "results",
-          "type": "jsonb",
+        "markdown_content": {
+          "name": "markdown_content",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": false
         },
@@ -2349,6 +2359,143 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.job_applications": {
+      "name": "job_applications",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "full_name": {
+          "name": "full_name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "position": {
+          "name": "position",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "resume_id": {
+          "name": "resume_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cover_note": {
+          "name": "cover_note",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email_status": {
+          "name": "email_status",
+          "type": "enum_job_applications_email_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'pending'"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp(3) with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "job_applications_resume_idx": {
+          "name": "job_applications_resume_idx",
+          "columns": [
+            {
+              "expression": "resume_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "job_applications_updated_at_idx": {
+          "name": "job_applications_updated_at_idx",
+          "columns": [
+            {
+              "expression": "updated_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "job_applications_created_at_idx": {
+          "name": "job_applications_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "job_applications_resume_id_media_id_fk": {
+          "name": "job_applications_resume_id_media_id_fk",
+          "tableFrom": "job_applications",
+          "tableTo": "media",
+          "columnsFrom": [
+            "resume_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.payload_kv": {
       "name": "payload_kv",
       "schema": "",
@@ -2580,6 +2727,12 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": false
+        },
+        "job_applications_id": {
+          "name": "job_applications_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {
@@ -2807,6 +2960,21 @@
           "concurrently": false,
           "method": "btree",
           "with": {}
+        },
+        "payload_locked_documents_rels_job_applications_id_idx": {
+          "name": "payload_locked_documents_rels_job_applications_id_idx",
+          "columns": [
+            {
+              "expression": "job_applications_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
         }
       },
       "foreignKeys": {
@@ -2972,6 +3140,19 @@
           "tableTo": "contact_leads",
           "columnsFrom": [
             "contact_leads_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "payload_locked_documents_rels_job_applications_fk": {
+          "name": "payload_locked_documents_rels_job_applications_fk",
+          "tableFrom": "payload_locked_documents_rels",
+          "tableTo": "job_applications",
+          "columnsFrom": [
+            "job_applications_id"
           ],
           "columnsTo": [
             "id"
@@ -3294,6 +3475,22 @@
         "editor"
       ]
     },
+    "public.enum_posts_content_type": {
+      "name": "enum_posts_content_type",
+      "schema": "public",
+      "values": [
+        "richText",
+        "markdown"
+      ]
+    },
+    "public.enum_case_studies_content_type": {
+      "name": "enum_case_studies_content_type",
+      "schema": "public",
+      "values": [
+        "richText",
+        "markdown"
+      ]
+    },
     "public.enum_jobs_type": {
       "name": "enum_jobs_type",
       "schema": "public",
@@ -3336,6 +3533,15 @@
         "sent",
         "failed"
       ]
+    },
+    "public.enum_job_applications_email_status": {
+      "name": "enum_job_applications_email_status",
+      "schema": "public",
+      "values": [
+        "pending",
+        "sent",
+        "failed"
+      ]
     }
   },
   "schemas": {},
@@ -3348,6 +3554,6 @@
     "tables": {},
     "columns": {}
   },
-  "id": "81990926-c65a-4df0-a52b-e20f1480d785",
+  "id": "81de24f1-7ec4-421e-9f55-16721e140be4",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

@@ -11,6 +11,7 @@ import {
   WhyXupyterSection,
   ExpertiseMarquee,
 } from "@/components/marketing"
+import { HeroBackground } from "@/components/ui"
 import { pageSEO } from "@/lib/seo/pages"
 import type { Metadata } from "next"
 
@@ -37,9 +38,12 @@ export default async function Home() {
 
   return (
     <main className="flex flex-col">
-      <div className="hero-gradient">
-        <HeroSection />
-        <ExpertiseMarquee />
+      <div className="relative">
+        <HeroBackground />
+        <div className="relative z-10">
+          <HeroSection />
+          <ExpertiseMarquee />
+        </div>
       </div>
 
       <IndustriesSection />

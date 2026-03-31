@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui"
 import type { ApplyModalFormProps } from "@/types/careers"
+import { cn } from "@/utils/common"
 
 export function ApplyModalForm({
   form,
@@ -20,6 +21,7 @@ export function ApplyModalForm({
   onCancel,
   isSpecific,
   showCancel = true,
+  isSubmitting = false,
 }: ApplyModalFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -39,6 +41,7 @@ export function ApplyModalForm({
                       id="fullName"
                       placeholder=" "
                       variant="minimal"
+                      disabled={isSubmitting}
                       className="peer text-sm text-foreground/90"
                     />
                   </FormControl>
@@ -61,6 +64,7 @@ export function ApplyModalForm({
                       type="email"
                       placeholder=" "
                       variant="minimal"
+                      disabled={isSubmitting}
                       className="peer text-sm text-foreground/90"
                     />
                   </FormControl>
@@ -80,12 +84,14 @@ export function ApplyModalForm({
                 </FormLabel>
                 <FormControl>
                   <div 
-                    onClick={() => fileInputRef.current?.click()}
+                    onClick={() => !isSubmitting && fileInputRef.current?.click()}
                     onDragOver={(e) => {
+                      if (isSubmitting) return
                       e.preventDefault()
                       e.stopPropagation()
                     }}
                     onDrop={(e) => {
+                      if (isSubmitting) return
                       e.preventDefault()
                       e.stopPropagation()
                       const file = e.dataTransfer.files?.[0]
@@ -93,13 +99,18 @@ export function ApplyModalForm({
                         field.onChange(file)
                       }
                     }}
-                    className="group relative cursor-pointer rounded-xl border-2 border-dashed border-border/40 bg-card/40 p-8 transition-all hover:border-primary/40 hover:bg-card/60"
+                    className={cn(
+                        "group relative cursor-pointer rounded-xl border-2 border-dashed border-border/40 bg-card/40 p-8 transition-all",
+                        !isSubmitting && "hover:border-primary/40 hover:bg-card/60",
+                        isSubmitting && "opacity-50 cursor-not-allowed"
+                    )}
                   >
                     <input
                       ref={fileInputRef}
                       type="file"
                       className="hidden"
                       accept=".pdf,.doc,.docx"
+                      disabled={isSubmitting}
                       onChange={(event) => {
                         const file = event.target.files?.[0]
                         field.onChange(file)
@@ -139,6 +150,7 @@ export function ApplyModalForm({
                       id="phone"
                       placeholder=" "
                       variant="minimal"
+                      disabled={isSubmitting}
                       className="peer text-sm text-foreground/90"
                     />
                   </FormControl>
@@ -159,6 +171,7 @@ export function ApplyModalForm({
                       {...field}
                       id="position"
                       readOnly={isSpecific}
+                      disabled={isSubmitting}
                       placeholder=" "
                       variant="minimal"
                       className="peer text-sm text-foreground/90"
@@ -184,6 +197,7 @@ export function ApplyModalForm({
                     rows={4}
                     placeholder=" "
                     variant="minimal"
+                    disabled={isSubmitting}
                     className="peer text-sm text-foreground/90 pt-2 resize-none min-h-36"
                   />
                 </FormControl>
@@ -202,12 +216,20 @@ export function ApplyModalForm({
             <Button
               type="button"
               variant="ghost"
+              disabled={isSubmitting}
               onClick={onCancel}
             >
               Cancel
             </Button>
           )}
-          <CtaButton variant="primary" className="ms-auto" onClick={form.handleSubmit(onSubmit)}>Submit</CtaButton>
+          <CtaButton 
+            variant="primary" 
+            className="ms-auto" 
+            disabled={isSubmitting}
+            onClick={form.handleSubmit(onSubmit)}
+          >
+            {isSubmitting ? "Submitting..." : "Submit"}
+          </CtaButton>
         </div>
       </form>
     </Form>

@@ -29,7 +29,7 @@ export function AboutClient() {
   })
 
   return (
-    <section ref={ref} style={style} className="py-16 md:py-24">
+    <section ref={ref} style={style} className="py-10 md:py-16">
       <div className="max-w-7xl mx-auto px-8">
         <div className="grid gap-16 lg:grid-cols-[1.2fr_1fr] items-start">
           {/* Left Column: Interactive Map and Controls */}

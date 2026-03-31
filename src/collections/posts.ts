@@ -22,9 +22,43 @@ export const Posts: CollectionConfig = {
       type: 'textarea',
     },
     {
+      name: 'contentType',
+      type: 'select',
+      options: [
+        { label: 'Rich Text (Lexical)', value: 'richText' },
+        { label: 'Markdown', value: 'markdown' },
+      ],
+      defaultValue: 'richText',
+      admin: {
+        description: 'Choose content format. Markdown is more compact and efficient for storage.',
+      },
+    },
+    {
       name: 'content',
       type: 'richText',
-      required: true,
+      admin: {
+        condition: (data) => data.contentType === 'richText' || !data.contentType,
+      },
+    },
+    {
+      name: 'markdownContent',
+      type: 'code',
+      admin: {
+        condition: (data) => data.contentType === 'markdown',
+        description: 'Write your content in Markdown format',
+        language: 'markdown',
+      },
+      hooks: {
+        beforeChange: [
+          ({ value }) => {
+            // Ensure we are storing the raw string without any unexpected transformations
+            if (typeof value === 'string') {
+              return value;
+            }
+            return value;
+          },
+        ],
+      },
     },
     {
       name: 'coverImage',

@@ -1,5 +1,5 @@
 import { CallToAction } from "@/components/marketing"
-import { RichText } from "@/components/shared"
+import { RichText, Markdown } from "@/components/shared"
 import { CtaButton, PageHeader, SmartImage } from "@/components/ui"
 import { getCaseStudyBySlug, getCaseStudies } from "@/lib/cms-client"
 import { getMediaUrl } from "@/utils/common"
@@ -88,20 +88,28 @@ export default async function CaseStudyDetailPage({
           industry: { name: constantCaseStudy.industry } as any,
           coverImage: `/images/portfolio/${constantCaseStudy.slug.split('-')[0]}.jpg` as any, 
         } as any,
-        problem: { 
+        content: { 
           root: { 
-            children: [{ 
-              type: 'paragraph', 
-              children: [{ text: constantCaseStudy.challenge }] 
-            }] 
-          } 
-        } as any,
-        solution: { 
-          root: { 
-            children: [{ 
-              type: 'paragraph', 
-              children: [{ text: constantCaseStudy.systemBuilt }] 
-            }] 
+            children: [
+              { 
+                type: 'heading',
+                tag: 'h2',
+                children: [{ text: 'The Challenge' }] 
+              },
+              { 
+                type: 'paragraph', 
+                children: [{ text: constantCaseStudy.challenge }] 
+              },
+              { 
+                type: 'heading',
+                tag: 'h2',
+                children: [{ text: 'Our Solution' }] 
+              },
+              { 
+                type: 'paragraph', 
+                children: [{ text: constantCaseStudy.systemBuilt }] 
+              }
+            ] 
           } 
         } as any,
         updatedAt: new Date().toISOString(),
@@ -187,46 +195,16 @@ export default async function CaseStudyDetailPage({
         </div>
       </section>
 
-      {/* Main Content Sections */}
+      {/* Main Content */}
       <section className="py-12 md:py-20">
         <div className="max-w-4xl mx-auto px-6">
-          <div className="space-y-16 md:space-y-24">
-            {/* Problem Section */}
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-foreground">The Problem</h2>
-              <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
-                <RichText content={caseStudy.problem} />
-              </div>
+          {(caseStudy as any).contentType === 'markdown' && (caseStudy as any).markdownContent ? (
+            <Markdown content={(caseStudy as any).markdownContent} />
+          ) : (
+            <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
+              <RichText content={(caseStudy as any).content} />
             </div>
-
-            {/* Solution Section */}
-            <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-foreground">Our Solution</h2>
-              <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
-                <RichText content={caseStudy.solution} />
-              </div>
-            </div>
-
-            {/* Architecture Section */}
-            {caseStudy.architecture && (
-              <div className="space-y-6">
-                <h2 className="text-3xl font-bold text-foreground">Architecture</h2>
-                <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
-                  <RichText content={caseStudy.architecture} />
-                </div>
-              </div>
-            )}
-
-            {/* Results Section */}
-            {caseStudy.results && (
-              <div className="space-y-6">
-                <h2 className="text-3xl font-bold text-foreground">Results & Impact</h2>
-                <div className="prose prose-lg dark:prose-invert max-w-none text-muted-foreground leading-relaxed">
-                  <RichText content={caseStudy.results} />
-                </div>
-              </div>
-            )}
-          </div>
+          )}
 
           <div className="mt-24 pt-12 border-t border-border flex justify-between items-center">
             <Link href="/portfolio" className="group inline-flex items-center gap-2 text-sm font-semibold text-primary">

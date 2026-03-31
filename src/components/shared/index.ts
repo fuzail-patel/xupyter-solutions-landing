@@ -1,4 +1,5 @@
 export { RichText } from "./RichText"
+export { Markdown } from "./Markdown"
 export { default as ScheduleCallButton } from "./ScheduleCallButton"
 export { SystemList } from "./SystemList"
 export { SystemListItem } from "./SystemListItem"

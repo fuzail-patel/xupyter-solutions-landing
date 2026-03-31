@@ -3,12 +3,13 @@
 import { cn } from "@/utils/common"
 import type { SectionHeaderProps } from "@/types/ui"
 import SectionHeader from "./SectionHeader"
+import HeroBackground from "./HeroBackground"
 import { useSectionReveal } from "@/hooks/useSectionReveal"
 import { animateFade } from "@/utils/animations"
 
 /**
  * PageHeader component for main pages (About, Careers, etc.)
- * Features a minimum viewport height and the signature hero-gradient background.
+ * Features a minimum viewport height and a smooth hero background.
  */
 export default function PageHeader({
   eyebrow,
@@ -56,14 +57,15 @@ export default function PageHeader({
       ref={ref}
       style={style}
       className={cn(
-        "w-full hero-gradient border-b border-border relative flex flex-col justify-center",
-        "min-h-[40vh] sm:min-h-[45vh] md:min-h-[50vh]",
-        "py-20 sm:py-24 md:py-32",
+        "w-full relative flex flex-col justify-center overflow-hidden",
+        "min-h-[35vh] sm:min-h-[40vh] md:min-h-[45vh]",
+        "pt-24 pb-10 sm:pt-32 sm:pb-12 md:pt-40 md:pb-14",
         "[&_[data-eyebrow]]:opacity-0 [&_[data-title]]:opacity-0 [&_[data-description]]:opacity-0",
         className
       )}
     >
-      <div className="max-w-7xl mx-auto px-6 w-full">
+      <HeroBackground />
+      <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
         <SectionHeader
           eyebrow={eyebrow}
           titlePrimary={titlePrimary}

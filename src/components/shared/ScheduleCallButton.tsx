@@ -8,7 +8,7 @@ import type { ScheduleCallButtonProps } from "@/types/shared"
 export default function ScheduleCallButton({
   variant = "primary",
   className,
-  children = "Book a Strategy Call",
+  children = "Discuss Your Project",
 }: ScheduleCallButtonProps & { children?: React.ReactNode }) {
   const openCal = async () => {
     const cal = await getCalApi()

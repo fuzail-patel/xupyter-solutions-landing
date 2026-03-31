@@ -39,8 +39,22 @@ export async function GET(request: Request) {
       limit: BATCH_SIZE,
     })
 
-    summary.processed = pendingLeads.length
+    // Fetch pending job applications
+    const { docs: pendingApplications } = await payload.find({
+      collection: "job-applications",
+      where: {
+        email_status: {
+          equals: "pending",
+        },
+      },
+      sort: "createdAt",
+      limit: BATCH_SIZE,
+      depth: 1, // To get resume media data
+    })
 
+    summary.processed = pendingLeads.length + pendingApplications.length
+
+    // Process contact leads
     for (const lead of pendingLeads) {
       try {
         const isQuote = lead.isQuote
@@ -105,6 +119,66 @@ export async function GET(request: Request) {
         await payload.update({
           collection: "contact-leads",
           id: lead.id,
+          data: {
+            email_status: "failed",
+          },
+        })
+        summary.failed++
+      }
+    }
+
+    // Process job applications
+    for (const application of pendingApplications) {
+      try {
+        const name = application.fullName
+        const subject = `New Job Application: ${application.position} - ${name}`
+        
+        // Get resume URL from Cloudinary (assuming it's in the media collection)
+        const resumeUrl = (application.resume as any)?.url || ""
+        
+        const text = [
+          `*** NEW JOB APPLICATION ***`,
+          `Candidate: ${name}`,
+          `Email: ${application.email}`,
+          `Phone: ${application.phone || "N/A"}`,
+          `Position: ${application.position}`,
+          `Resume: ${resumeUrl}`,
+          "",
+          `Cover Note:`,
+          application.coverNote,
+        ].filter(Boolean).join("\n")
+
+        const html = getEmailTemplate("career-template", {
+          name,
+          email: application.email,
+          phone: application.phone || "N/A",
+          position: application.position,
+          resume_url: resumeUrl,
+          message: application.coverNote,
+        })
+
+        await sendMail({
+          subject,
+          text,
+          html,
+        })
+
+        // Update status to sent
+        await payload.update({
+          collection: "job-applications",
+          id: application.id,
+          data: {
+            email_status: "sent",
+          },
+        })
+        summary.sent++
+      } catch (error) {
+        console.error(`Failed to send email for application ${application.id}:`, error)
+        
+        // Update status to failed
+        await payload.update({
+          collection: "job-applications",
+          id: application.id,
           data: {
             email_status: "failed",
           },

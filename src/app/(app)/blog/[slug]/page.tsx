@@ -1,4 +1,4 @@
-import { RichText } from "@/components/shared"
+import { RichText, Markdown } from "@/components/shared"
 import { SmartImage } from "@/components/ui"
 import { getPosts } from "@/lib/cms-client"
 import { Post } from "@/payload-types"
@@ -196,15 +196,14 @@ export default async function BlogArticlePage({
         </header>
 
         <section data-article-content className="py-10 sm:py-12 md:py-14">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid gap-10 lg:grid-cols-[minmax(0,3fr)_minmax(0,1.1fr)]">
-              <div className="max-w-3xl prose prose-sm sm:prose-base dark:prose-invert">
+          <div className="max-w-3xl mx-auto px-6">
+            {(post as any).contentType === 'markdown' && (post as any).markdownContent ? (
+              <Markdown content={(post as any).markdownContent} />
+            ) : (
+              <div className="prose prose-sm sm:prose-base dark:prose-invert">
                 <RichText content={post.content} />
               </div>
-
-              <aside className="hidden lg:block">
-              </aside>
-            </div>
+            )}
           </div>
         </section>
 

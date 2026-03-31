@@ -79,6 +79,7 @@ export interface Config {
     testimonials: Testimonial;
     clients: Client;
     'contact-leads': ContactLead;
+    'job-applications': JobApplication;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -98,6 +99,7 @@ export interface Config {
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     clients: ClientsSelect<false> | ClientsSelect<true>;
     'contact-leads': ContactLeadsSelect<false> | ContactLeadsSelect<true>;
+    'job-applications': JobApplicationsSelect<false> | JobApplicationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -278,7 +280,11 @@ export interface Post {
   title: string;
   slug: string;
   excerpt?: string | null;
-  content: {
+  /**
+   * Choose content format. Markdown is more compact and efficient for storage.
+   */
+  contentType?: ('richText' | 'markdown') | null;
+  content?: {
     root: {
       type: string;
       children: {
@@ -292,7 +298,11 @@ export interface Post {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
+  /**
+   * Write your content in Markdown format
+   */
+  markdownContent?: string | null;
   coverImage?: (number | null) | Media;
   author?: (number | null) | Author;
   tags?: (number | Tag)[] | null;
@@ -362,37 +372,14 @@ export interface CaseStudy {
   title: string;
   slug: string;
   project: number | Project;
-  problem: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  solution: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  architecture?: {
+  /**
+   * Choose content format. Markdown is more compact and efficient for storage.
+   */
+  contentType?: ('richText' | 'markdown') | null;
+  /**
+   * Full case study content
+   */
+  content?: {
     root: {
       type: string;
       children: {
@@ -407,21 +394,10 @@ export interface CaseStudy {
     };
     [k: string]: unknown;
   } | null;
-  results?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  /**
+   * Full case study content in Markdown format
+   */
+  markdownContent?: string | null;
   images?: (number | Media)[] | null;
   updatedAt: string;
   createdAt: string;
@@ -504,6 +480,22 @@ export interface ContactLead {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-applications".
+ */
+export interface JobApplication {
+  id: number;
+  fullName: string;
+  email: string;
+  phone?: string | null;
+  position: string;
+  resume: number | Media;
+  coverNote: string;
+  email_status?: ('pending' | 'sent' | 'failed') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -573,6 +565,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'contact-leads';
         value: number | ContactLead;
+      } | null)
+    | ({
+        relationTo: 'job-applications';
+        value: number | JobApplication;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -707,7 +703,9 @@ export interface PostsSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   excerpt?: T;
+  contentType?: T;
   content?: T;
+  markdownContent?: T;
   coverImage?: T;
   author?: T;
   tags?: T;
@@ -750,10 +748,9 @@ export interface CaseStudiesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
   project?: T;
-  problem?: T;
-  solution?: T;
-  architecture?: T;
-  results?: T;
+  contentType?: T;
+  content?: T;
+  markdownContent?: T;
   images?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -835,6 +832,21 @@ export interface ContactLeadsSelect<T extends boolean = true> {
   companySize?: T;
   budgetRange?: T;
   serviceSlug?: T;
+  email_status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "job-applications_select".
+ */
+export interface JobApplicationsSelect<T extends boolean = true> {
+  fullName?: T;
+  email?: T;
+  phone?: T;
+  position?: T;
+  resume?: T;
+  coverNote?: T;
   email_status?: T;
   updatedAt?: T;
   createdAt?: T;
