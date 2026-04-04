@@ -12,6 +12,7 @@ export async function getProjects(options: any = {}) {
   const payload = await getPayloadInstance()
   return await payload.find({
     collection: 'projects',
+    depth: 2,
     ...options,
   }) as unknown as { docs: Project[], totalDocs: number, limit: number, totalPages: number, page: number, pagingCounter: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage: number | null, nextPage: number | null }
 }
@@ -59,6 +60,7 @@ export async function getCaseStudies(options: any = {}) {
   const payload = await getPayloadInstance()
   return await payload.find({
     collection: 'case-studies',
+    depth: 2,
     ...options,
   }) as unknown as { docs: CaseStudy[], totalDocs: number, limit: number, totalPages: number, page: number, pagingCounter: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage: number | null, nextPage: number | null }
 }
@@ -67,6 +69,7 @@ export async function getPosts(options: any = {}) {
   const payload = await getPayloadInstance()
   return await payload.find({
     collection: 'posts',
+    depth: 2,
     ...options,
   }) as unknown as { docs: Post[], totalDocs: number, limit: number, totalPages: number, page: number, pagingCounter: number, hasPrevPage: boolean, hasNextPage: boolean, prevPage: number | null, nextPage: number | null }
 }

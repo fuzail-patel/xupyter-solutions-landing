@@ -2,8 +2,16 @@ import { CollectionConfig } from 'payload'
 
 export const CaseStudies: CollectionConfig = {
   slug: 'case-studies',
+  timestamps: true,
+  access: {
+    read: () => true,
+    create: ({ req: { user } }) => !!user,
+    update: ({ req: { user } }) => !!user,
+    delete: ({ req: { user } }) => !!user,
+  },
   admin: {
     useAsTitle: 'title',
+    defaultColumns: ['title', 'slug', 'project', 'updatedAt'],
   },
   fields: [
     {
